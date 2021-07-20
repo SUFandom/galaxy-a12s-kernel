@@ -1186,6 +1186,9 @@ static int smsdvb_hotplug(struct smscore_device_t *coredev,
 	pr_info("DVB interface registered.\n");
 	return 0;
 
+media_graph_error:
+	smsdvb_debugfs_release(client);
+
 client_error:
 	dvb_unregister_frontend(&client->frontend);
 
