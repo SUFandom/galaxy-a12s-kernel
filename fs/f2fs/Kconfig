@@ -113,6 +113,7 @@ config F2FS_FAULT_INJECTION
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config F2FS_SEC_DEBUG_NODE
 	bool "SEC DEBUG NODE"
 	depends on F2FS_FS && DEBUG_FS
@@ -131,6 +132,8 @@ config F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 
 	  If unsure, say N.
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 config F2FS_FS_COMPRESSION
 	bool "F2FS compression feature"
 	depends on F2FS_FS
@@ -155,3 +158,15 @@ config F2FS_FS_LZ4
 	default y
 	help
 	  Support LZ4 compress algorithm, if unsure, say Y.
+<<<<<<< HEAD
+=======
+
+config F2FS_FS_ZSTD
+	bool "ZSTD compression support"
+	depends on F2FS_FS_COMPRESSION
+	select ZSTD_COMPRESS
+	select ZSTD_DECOMPRESS
+	default y
+	help
+	  Support ZSTD compress algorithm, if unsure, say Y.
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)

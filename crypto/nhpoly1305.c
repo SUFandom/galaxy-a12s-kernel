@@ -33,6 +33,10 @@
 #include <asm/unaligned.h>
 #include <crypto/algapi.h>
 #include <crypto/internal/hash.h>
+<<<<<<< HEAD
+=======
+#include <crypto/internal/poly1305.h>
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <crypto/nhpoly1305.h>
 #include <linux/crypto.h>
 #include <linux/kernel.h>
@@ -78,7 +82,11 @@ static void process_nh_hash_value(struct nhpoly1305_state *state,
 	BUILD_BUG_ON(NH_HASH_BYTES % POLY1305_BLOCK_SIZE != 0);
 
 	poly1305_core_blocks(&state->poly_state, &key->poly_key, state->nh_hash,
+<<<<<<< HEAD
 			     NH_HASH_BYTES / POLY1305_BLOCK_SIZE);
+=======
+			     NH_HASH_BYTES / POLY1305_BLOCK_SIZE, 1);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 /*
@@ -209,7 +217,11 @@ int crypto_nhpoly1305_final_helper(struct shash_desc *desc, u8 *dst, nh_t nh_fn)
 	if (state->nh_remaining)
 		process_nh_hash_value(state, key);
 
+<<<<<<< HEAD
 	poly1305_core_emit(&state->poly_state, dst);
+=======
+	poly1305_core_emit(&state->poly_state, NULL, dst);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return 0;
 }
 EXPORT_SYMBOL(crypto_nhpoly1305_final_helper);

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 CFLAGS += -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -Wall -lssl -lcrypto -llz4
 CFLAGS += -I../../../../../usr/include/
 CFLAGS += -I../../../../include/uapi/
@@ -16,3 +17,15 @@ all: $(OUTPUT)incfs_test
 
 clean:
 	rm -rf $(OUTPUT)incfs_test *.o
+=======
+CFLAGS += -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -Wall
+CFLAGS += -I../.. -I../../../../..
+
+LDLIBS := -llz4 -lcrypto
+EXTRA_SOURCES := utils.c
+TEST_GEN_PROGS := incfs_test
+
+$(TEST_GEN_PROGS): $(EXTRA_SOURCES)
+
+include ../../lib.mk
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)

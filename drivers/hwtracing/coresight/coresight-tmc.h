@@ -208,11 +208,14 @@ struct tmc_drvdata {
 	struct idr		idr;
 	struct mutex		idr_mutex;
 	struct etr_buf		*sysfs_buf;
+<<<<<<< HEAD
 
 	/* samsung coresight sfr */
 	bool			hwacg;
 	void __iomem		*sfr_base;
 	u32			q_offset;
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	struct etr_buf		*perf_buf;
 };
 

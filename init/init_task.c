@@ -11,7 +11,10 @@
 #include <linux/mm.h>
 #include <linux/audit.h>
 #include <linux/scs.h>
+<<<<<<< HEAD
 #include <linux/task_integrity.h>
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #include <asm/pgtable.h>
 #include <linux/uaccess.h>
@@ -80,6 +83,7 @@ struct task_struct init_task
 	.policy		= SCHED_NORMAL,
 	.cpus_allowed	= CPU_MASK_ALL,
 	.nr_cpus_allowed= NR_CPUS,
+	.cpus_requested	= CPU_MASK_ALL,
 	.mm		= NULL,
 	.active_mm	= &init_mm,
 	.restart_block	= {

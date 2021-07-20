@@ -23,10 +23,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+<<<<<<< HEAD
+=======
+#include <linux/moduleparam.h>
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <drm/ttm/ttm_execbuf_util.h>
 
 #include "virtgpu_drv.h"
 
+<<<<<<< HEAD
 static int virtio_gpu_resource_id_get(struct virtio_gpu_device *vgdev,
 				       uint32_t *resid)
 {
@@ -47,14 +53,46 @@ static int virtio_gpu_resource_id_get(struct virtio_gpu_device *vgdev,
 #endif
 
 	*resid = handle + 1;
+=======
+static int virtio_gpu_virglrenderer_workaround = 1;
+module_param_named(virglhack, virtio_gpu_virglrenderer_workaround, int, 0400);
+
+static int virtio_gpu_resource_id_get(struct virtio_gpu_device *vgdev,
+				       uint32_t *resid)
+{
+	if (virtio_gpu_virglrenderer_workaround) {
+		/*
+		 * Hack to avoid re-using resource IDs.
+		 *
+		 * virglrenderer versions up to (and including) 0.7.0
+		 * can't deal with that.  virglrenderer commit
+		 * "f91a9dd35715 Fix unlinking resources from hash
+		 * table." (Feb 2019) fixes the bug.
+		 */
+		static atomic_t seqno = ATOMIC_INIT(0);
+		int handle = atomic_inc_return(&seqno);
+		*resid = handle + 1;
+	} else {
+		int handle = ida_alloc(&vgdev->resource_ida, GFP_KERNEL);
+		if (handle < 0)
+			return handle;
+		*resid = handle + 1;
+	}
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return 0;
 }
 
 static void virtio_gpu_resource_id_put(struct virtio_gpu_device *vgdev, uint32_t id)
 {
+<<<<<<< HEAD
 #if 0
 	ida_free(&vgdev->resource_ida, id - 1);
 #endif
+=======
+	if (!virtio_gpu_virglrenderer_workaround) {
+		ida_free(&vgdev->resource_ida, id - 1);
+	}
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 static void virtio_gpu_ttm_bo_destroy(struct ttm_buffer_object *tbo)

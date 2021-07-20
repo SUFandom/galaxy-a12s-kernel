@@ -964,7 +964,11 @@ static struct genl_family genl_ctrl __ro_after_init = {
 static int genl_bind(struct net *net, int group)
 {
 	struct genl_family *f;
+<<<<<<< HEAD
 	int err = -ENOENT;
+=======
+	int err = 0;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	unsigned int id;
 
 	down_read(&cb_lock);

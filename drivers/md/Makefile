@@ -70,6 +70,10 @@ obj-$(CONFIG_DM_INTEGRITY)	+= dm-integrity.o
 obj-$(CONFIG_DM_ZONED)		+= dm-zoned.o
 obj-$(CONFIG_DM_WRITECACHE)	+= dm-writecache.o
 obj-$(CONFIG_DM_BOW)		+= dm-bow.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_DM_USER)		+= dm-user.o
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 ifeq ($(CONFIG_DM_UEVENT),y)
 dm-mod-objs			+= dm-uevent.o

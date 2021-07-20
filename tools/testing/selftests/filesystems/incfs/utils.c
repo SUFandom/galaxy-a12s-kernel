@@ -2,6 +2,7 @@
 /*
  * Copyright 2018 Google LLC
  */
+<<<<<<< HEAD
 #include <stdio.h>
 #include <fcntl.h>
 #include <dirent.h>
@@ -18,11 +19,34 @@
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs7.h>
+=======
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <poll.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <sys/ioctl.h>
+#include <sys/mount.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <openssl/sha.h>
 #include <openssl/md5.h>
 
 #include "utils.h"
 
+<<<<<<< HEAD
+=======
+#ifndef __S_IFREG
+#define __S_IFREG S_IFREG
+#endif
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 int mount_fs(const char *mount_dir, const char *backing_dir,
 	     int read_timeout_ms)
 {
@@ -184,7 +208,11 @@ int open_commands_file(const char *mount_dir)
 
 	snprintf(cmd_file, ARRAY_SIZE(cmd_file),
 			"%s/%s", mount_dir, INCFS_PENDING_READS_FILENAME);
+<<<<<<< HEAD
 	cmd_fd = open(cmd_file, O_RDONLY);
+=======
+	cmd_fd = open(cmd_file, O_RDONLY | O_CLOEXEC);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (cmd_fd < 0)
 		perror("Can't open commands file");
@@ -197,7 +225,11 @@ int open_log_file(const char *mount_dir)
 	int cmd_fd;
 
 	snprintf(cmd_file, ARRAY_SIZE(cmd_file), "%s/.log", mount_dir);
+<<<<<<< HEAD
 	cmd_fd = open(cmd_file, O_RDWR);
+=======
+	cmd_fd = open(cmd_file, O_RDWR | O_CLOEXEC);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (cmd_fd < 0)
 		perror("Can't open log file");
 	return cmd_fd;

@@ -19,6 +19,7 @@ config GCC_PLUGIN_STRUCTLEAK
 
 menu "Memory initialization"
 
+<<<<<<< HEAD
 config CC_HAS_AUTO_VAR_INIT
 	def_bool $(cc-option,-ftrivial-auto-var-init=pattern)
 
@@ -26,6 +27,18 @@ choice
 	prompt "Initialize kernel stack variables at function entry"
 	default GCC_PLUGIN_STRUCTLEAK_BYREF_ALL if COMPILE_TEST && GCC_PLUGINS
 	default INIT_STACK_ALL if COMPILE_TEST && CC_HAS_AUTO_VAR_INIT
+=======
+config CC_HAS_AUTO_VAR_INIT_PATTERN
+	def_bool $(cc-option,-ftrivial-auto-var-init=pattern)
+
+config CC_HAS_AUTO_VAR_INIT_ZERO
+	def_bool $(cc-option,-ftrivial-auto-var-init=zero -enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang)
+
+choice
+	prompt "Initialize kernel stack variables at function entry"
+	default GCC_PLUGIN_STRUCTLEAK_BYREF_ALL if COMPILE_TEST && GCC_PLUGINS
+	default INIT_STACK_ALL_PATTERN if COMPILE_TEST && CC_HAS_AUTO_VAR_INIT_PATTERN
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	default INIT_STACK_NONE
 	help
 	  This option enables initialization of stack variables at
@@ -58,9 +71,15 @@ choice
 		  of uninitialized stack variable exploits and information
 		  exposures.
 
+<<<<<<< HEAD
 	config INIT_STACK_ALL
 		bool "0xAA-init everything on the stack (strongest)"
 		depends on CC_HAS_AUTO_VAR_INIT
+=======
+	config INIT_STACK_ALL_PATTERN
+		bool "0xAA-init everything on the stack (strongest)"
+		depends on CC_HAS_AUTO_VAR_INIT_PATTERN
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		help
 		  Initializes everything on the stack with a 0xAA
 		  pattern. This is intended to eliminate all classes
@@ -68,6 +87,27 @@ choice
 		  exposures, even variables that were warned to have been
 		  left uninitialized.
 
+<<<<<<< HEAD
+=======
+		  Pattern initialization is known to provoke many existing bugs
+		  related to uninitialized locals, e.g. pointers receive
+		  non-NULL values, buffer sizes and indices are very big.
+
+	config INIT_STACK_ALL_ZERO
+		bool "zero-init everything on the stack (strongest and safest)"
+		depends on CC_HAS_AUTO_VAR_INIT_ZERO
+		help
+		  Initializes everything on the stack with a zero
+		  value. This is intended to eliminate all classes
+		  of uninitialized stack variable exploits and information
+		  exposures, even variables that were warned to have been
+		  left uninitialized.
+
+		  Zero initialization provides safe defaults for strings,
+		  pointers, indices and sizes, and is therefore
+		  more suitable as a security mitigation measure.
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 endchoice
 
 config GCC_PLUGIN_STRUCTLEAK_VERBOSE

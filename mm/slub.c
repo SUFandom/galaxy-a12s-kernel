@@ -268,7 +268,11 @@ static inline void *freelist_ptr(const struct kmem_cache *s, void *ptr,
 	 * freepointer to be restored incorrectly.
 	 */
 	return (void *)((unsigned long)ptr ^ s->random ^
+<<<<<<< HEAD
 			(unsigned long)kasan_reset_tag((void *)ptr_addr));
+=======
+			swab((unsigned long)kasan_reset_tag((void *)ptr_addr)));
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #else
 	return ptr;
 #endif
@@ -1777,6 +1781,13 @@ def_alloc:
 		SetPageSlabPfmemalloc(page);
 
 	kasan_poison_slab(page);
+<<<<<<< HEAD
+=======
+
+	start = page_address(page);
+
+	setup_page_debug(s, start, order);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	start = page_address(page);
 
@@ -4562,6 +4573,7 @@ void *__kmalloc_track_caller(size_t size, gfp_t gfpflags, unsigned long caller)
 
 	return ret;
 }
+EXPORT_SYMBOL(__kmalloc_track_caller);
 
 #ifdef CONFIG_NUMA
 void *__kmalloc_node_track_caller(size_t size, gfp_t gfpflags,
@@ -4592,6 +4604,7 @@ void *__kmalloc_node_track_caller(size_t size, gfp_t gfpflags,
 
 	return ret;
 }
+EXPORT_SYMBOL(__kmalloc_node_track_caller);
 #endif
 
 #ifdef CONFIG_SYSFS

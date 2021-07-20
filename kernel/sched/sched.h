@@ -829,6 +829,15 @@ struct root_domain {
 	 * CPUs of the rd. Protected by RCU.
 	 */
 	struct perf_domain	*pd;
+<<<<<<< HEAD
+=======
+
+	/* Vendor fields. */
+	/* First cpu with maximum and minimum original capacity */
+	int max_cap_orig_cpu, min_cap_orig_cpu;
+	/* First cpu with mid capacity */
+	int mid_cap_orig_cpu;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 };
 
 extern struct root_domain def_root_domain;
@@ -2467,6 +2476,7 @@ static inline unsigned long cpu_util_rt(struct rq *rq)
 	return READ_ONCE(rq->avg_rt.util_avg);
 }
 
+<<<<<<< HEAD
 static inline unsigned long cpu_util_freq(int cpu)
 {
 	struct rq *rq = cpu_rq(cpu);
@@ -2474,6 +2484,8 @@ static inline unsigned long cpu_util_freq(int cpu)
 	return min(cpu_util_cfs(rq) + cpu_util_rt(rq), capacity_orig_of(cpu));
 }
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #else /* CONFIG_CPU_FREQ_GOV_SCHEDUTIL */
 static inline unsigned long schedutil_cpu_util(int cpu, unsigned long util_cfs,
 				 unsigned long max, enum schedutil_type type,

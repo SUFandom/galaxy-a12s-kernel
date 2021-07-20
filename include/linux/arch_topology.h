@@ -10,7 +10,10 @@
 
 void topology_normalize_cpu_scale(void);
 int topology_update_cpu_topology(void);
+<<<<<<< HEAD
 void topology_update(void);
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 struct device_node;
 bool topology_parse_cpu_capacity(struct device_node *cpu_node, int cpu);

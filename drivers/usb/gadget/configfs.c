@@ -43,6 +43,31 @@ void set_usb_enumeration_state(int state);
 
 #define CHIPID_SIZE	(16)
 
+#ifdef CONFIG_USB_CONFIGFS_UEVENT
+#include <linux/platform_device.h>
+#include <linux/kdev_t.h>
+#include <linux/usb/ch9.h>
+
+#ifdef CONFIG_USB_CONFIGFS_F_ACC
+extern int acc_ctrlrequest(struct usb_composite_dev *cdev,
+				const struct usb_ctrlrequest *ctrl);
+void acc_disconnect(void);
+#endif
+static struct class *android_class;
+static struct device *android_device;
+static int index;
+
+struct device *create_function_device(char *name)
+{
+	if (android_device && !IS_ERR(android_device))
+		return device_create(android_class, android_device,
+			MKDEV(0, index++), NULL, name);
+	else
+		return ERR_PTR(-EINVAL);
+}
+EXPORT_SYMBOL_GPL(create_function_device);
+#endif
+
 int check_user_usb_string(const char *name,
 		struct usb_gadget_strings *stringtab_dev)
 {
@@ -1482,6 +1507,7 @@ static void android_work(struct work_struct *data)
 	if (status[0]) {
 		kobject_uevent_env(&android_device->kobj,
 					KOBJ_CHANGE, connected);
+<<<<<<< HEAD
 		pr_info("usb: %s: sent uevent %s\n", __func__, connected[0]);
 		uevent_sent = true;
 #ifdef CONFIG_USB_NOTIFY_PROC_LOG
@@ -1490,21 +1516,31 @@ static void android_work(struct work_struct *data)
 #ifdef CONFIG_USB_TYPEC_MANAGER_NOTIFIER
 		set_usb_enumeration_state(cdev->desc.bcdUSB);
 #endif
+=======
+		pr_info("%s: sent uevent %s\n", __func__, connected[0]);
+		uevent_sent = true;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	}
 
 	if (status[1]) {
 		kobject_uevent_env(&android_device->kobj,
 					KOBJ_CHANGE, configured);
+<<<<<<< HEAD
 		pr_info("usb: %s: sent uevent %s\n", __func__, configured[0]);
 		uevent_sent = true;
 #ifdef CONFIG_USB_NOTIFY_PROC_LOG
 		store_usblog_notify(NOTIFY_USBSTATE, (void *)configured[0], NULL);
 #endif
+=======
+		pr_info("%s: sent uevent %s\n", __func__, configured[0]);
+		uevent_sent = true;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	}
 
 	if (status[2]) {
 		kobject_uevent_env(&android_device->kobj,
 					KOBJ_CHANGE, disconnected);
+<<<<<<< HEAD
 		pr_info("usb: %s: sent uevent %s\n", __func__, disconnected[0]);
 		uevent_sent = true;
 #ifdef CONFIG_USB_NOTIFY_PROC_LOG
@@ -1514,6 +1550,14 @@ static void android_work(struct work_struct *data)
 
 	if (!uevent_sent) {
 		pr_info("usb: %s: did not send uevent (%d %d %pK)\n", __func__,
+=======
+		pr_info("%s: sent uevent %s\n", __func__, disconnected[0]);
+		uevent_sent = true;
+	}
+
+	if (!uevent_sent) {
+		pr_info("%s: did not send uevent (%d %d %p)\n", __func__,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			gi->connected, gi->sw_connected, cdev->config);
 	}
 }
@@ -1646,8 +1690,11 @@ static int android_setup(struct usb_gadget *gadget,
 	struct gadget_info *gi = container_of(cdev, struct gadget_info, cdev);
 	int value = -EOPNOTSUPP;
 	struct usb_function_instance *fi;
+<<<<<<< HEAD
 	struct usb_configuration *configuration;
 	struct usb_function *f;
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	spin_lock_irqsave(&cdev->lock, flags);
 	if (!gi->connected) {
@@ -1662,6 +1709,7 @@ static int android_setup(struct usb_gadget *gadget,
 				break;
 		}
 	}
+<<<<<<< HEAD
 	list_for_each_entry(configuration, &cdev->configs, list) {
 		list_for_each_entry(f, &configuration->functions, list) {
 			if (f != NULL && f->ctrlrequest != NULL) {
@@ -1675,12 +1723,19 @@ static int android_setup(struct usb_gadget *gadget,
 #ifdef CONFIG_USB_CONFIGFS_F_ACC
 	if (value < 0)
 		value = acc_ctrlrequest_composite(cdev, c);
+=======
+
+#ifdef CONFIG_USB_CONFIGFS_F_ACC
+	if (value < 0)
+		value = acc_ctrlrequest(cdev, c);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif
 
 	if (value < 0)
 		value = composite_setup(gadget, c);
 
 	spin_lock_irqsave(&cdev->lock, flags);
+<<<<<<< HEAD
 
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
 	if (c->bRequest == USB_REQ_SET_CONFIGURATION &&
@@ -1688,6 +1743,8 @@ static int android_setup(struct usb_gadget *gadget,
 		cdev->mute_switch = false;
 #endif
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (c->bRequest == USB_REQ_SET_CONFIGURATION &&
 						cdev->config) {
 		schedule_work(&gi->work);
@@ -1723,6 +1780,7 @@ static void android_disconnect(struct usb_gadget *gadget)
 	acc_disconnect();
 #endif
 	gi->connected = 0;
+<<<<<<< HEAD
 
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
 	printk(KERN_DEBUG "usb: %s con(%d), sw(%d)\n",
@@ -1752,6 +1810,10 @@ static void android_disconnect(struct usb_gadget *gadget)
 	schedule_work(&gi->work);
 	composite_disconnect(gadget);
 #endif
+=======
+	schedule_work(&gi->work);
+	composite_disconnect(gadget);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 #endif
 
@@ -1804,6 +1866,7 @@ static ssize_t state_show(struct device *pdev, struct device_attribute *attr,
 out:
 	return sprintf(buf, "%s\n", state);
 }
+<<<<<<< HEAD
 static DEVICE_ATTR(state, S_IRUGO, state_show, NULL);
 
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
@@ -1822,6 +1885,13 @@ static struct device_attribute *android_usb_attributes[] = {
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
 	&dev_attr_bcdUSB,
 #endif
+=======
+
+static DEVICE_ATTR(state, S_IRUGO, state_show, NULL);
+
+static struct device_attribute *android_usb_attributes[] = {
+	&dev_attr_state,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	NULL
 };
 

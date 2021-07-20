@@ -115,14 +115,22 @@ struct f2fs_super_block {
 	__u8 hot_ext_count;		/* # of hot file extension */
 	__le16  s_encoding;		/* Filename charset encoding */
 	__le16  s_encoding_flags;	/* Filename charset encoding flags */
+<<<<<<< HEAD
 	__u8 mount_opts[64];            /* default mount option for SEC */
 	__u8 reserved[242];		/* valid reserved region */
+=======
+	__u8 reserved[306];		/* valid reserved region */
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	__le32 crc;			/* checksum of superblock */
 } __packed;
 
 /*
  * For checkpoint
  */
+<<<<<<< HEAD
+=======
+#define CP_RESIZEFS_FLAG		0x00004000
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #define CP_DISABLED_QUICK_FLAG		0x00002000
 #define CP_DISABLED_FLAG		0x00001000
 #define CP_QUOTA_NEED_FSCK_FLAG		0x00000800

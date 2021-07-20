@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * fs/verity/enable.c: ioctl to enable verity on a file
+=======
+ * Ioctl to enable verity on a file
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * Copyright 2019 Google LLC
  */
@@ -329,6 +333,11 @@ rollback:
 
 /**
  * fsverity_ioctl_enable() - enable verity on a file
+<<<<<<< HEAD
+=======
+ * @filp: file to enable verity on
+ * @uarg: user pointer to fsverity_enable_arg
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * Enable fs-verity on a file.  See the "FS_IOC_ENABLE_VERITY" section of
  * Documentation/filesystems/fsverity.rst for the documentation.
@@ -396,9 +405,15 @@ int fsverity_ioctl_enable(struct file *filp, const void __user *uarg)
 	 * Some pages of the file may have been evicted from pagecache after
 	 * being used in the Merkle tree construction, then read into pagecache
 	 * again by another process reading from the file concurrently.  Since
+<<<<<<< HEAD
 	 * these pages didn't undergo verification against the file measurement
 	 * which fs-verity now claims to be enforcing, we have to wipe the
 	 * pagecache to ensure that all future reads are verified.
+=======
+	 * these pages didn't undergo verification against the file digest which
+	 * fs-verity now claims to be enforcing, we have to wipe the pagecache
+	 * to ensure that all future reads are verified.
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	 */
 	filemap_write_and_wait(inode->i_mapping);
 	invalidate_inode_pages2(inode->i_mapping);

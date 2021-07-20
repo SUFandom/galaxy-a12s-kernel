@@ -12,6 +12,7 @@
 
 #include <asm/unaligned.h>
 #include <crypto/algapi.h>
+<<<<<<< HEAD
 #include <crypto/chacha.h>
 #include <crypto/internal/skcipher.h>
 #include <linux/module.h>
@@ -39,6 +40,14 @@ static void chacha_docrypt(u32 *state, u8 *dst, const u8 *src,
 
 static int chacha_stream_xor(struct skcipher_request *req,
 			     struct chacha_ctx *ctx, u8 *iv)
+=======
+#include <crypto/internal/chacha.h>
+#include <crypto/internal/skcipher.h>
+#include <linux/module.h>
+
+static int chacha_stream_xor(struct skcipher_request *req,
+			     const struct chacha_ctx *ctx, const u8 *iv)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	struct skcipher_walk walk;
 	u32 state[16];
@@ -46,22 +55,34 @@ static int chacha_stream_xor(struct skcipher_request *req,
 
 	err = skcipher_walk_virt(&walk, req, false);
 
+<<<<<<< HEAD
 	crypto_chacha_init(state, ctx, iv);
+=======
+	chacha_init_generic(state, ctx->key, iv);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	while (walk.nbytes > 0) {
 		unsigned int nbytes = walk.nbytes;
 
 		if (nbytes < walk.total)
+<<<<<<< HEAD
 			nbytes = round_down(nbytes, walk.stride);
 
 		chacha_docrypt(state, walk.dst.virt.addr, walk.src.virt.addr,
 			       nbytes, ctx->nrounds);
+=======
+			nbytes = round_down(nbytes, CHACHA_BLOCK_SIZE);
+
+		chacha_crypt_generic(state, walk.dst.virt.addr,
+				     walk.src.virt.addr, nbytes, ctx->nrounds);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		err = skcipher_walk_done(&walk, walk.nbytes - nbytes);
 	}
 
 	return err;
 }
 
+<<<<<<< HEAD
 void crypto_chacha_init(u32 *state, struct chacha_ctx *ctx, u8 *iv)
 {
 	state[0]  = 0x61707865; /* "expa" */
@@ -114,15 +135,23 @@ int crypto_chacha12_setkey(struct crypto_skcipher *tfm, const u8 *key,
 EXPORT_SYMBOL_GPL(crypto_chacha12_setkey);
 
 int crypto_chacha_crypt(struct skcipher_request *req)
+=======
+static int crypto_chacha_crypt(struct skcipher_request *req)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
 	struct chacha_ctx *ctx = crypto_skcipher_ctx(tfm);
 
 	return chacha_stream_xor(req, ctx, req->iv);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(crypto_chacha_crypt);
 
 int crypto_xchacha_crypt(struct skcipher_request *req)
+=======
+
+static int crypto_xchacha_crypt(struct skcipher_request *req)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
 	struct chacha_ctx *ctx = crypto_skcipher_ctx(tfm);
@@ -131,8 +160,13 @@ int crypto_xchacha_crypt(struct skcipher_request *req)
 	u8 real_iv[16];
 
 	/* Compute the subkey given the original key and first 128 nonce bits */
+<<<<<<< HEAD
 	crypto_chacha_init(state, ctx, req->iv);
 	hchacha_block(state, subctx.key, ctx->nrounds);
+=======
+	chacha_init_generic(state, ctx->key, req->iv);
+	hchacha_block_generic(state, subctx.key, ctx->nrounds);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	subctx.nrounds = ctx->nrounds;
 
 	/* Build the real IV */
@@ -142,7 +176,10 @@ int crypto_xchacha_crypt(struct skcipher_request *req)
 	/* Generate the stream and XOR it with the data */
 	return chacha_stream_xor(req, &subctx, real_iv);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(crypto_xchacha_crypt);
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 static struct skcipher_alg algs[] = {
 	{
@@ -157,7 +194,11 @@ static struct skcipher_alg algs[] = {
 		.max_keysize		= CHACHA_KEY_SIZE,
 		.ivsize			= CHACHA_IV_SIZE,
 		.chunksize		= CHACHA_BLOCK_SIZE,
+<<<<<<< HEAD
 		.setkey			= crypto_chacha20_setkey,
+=======
+		.setkey			= chacha20_setkey,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		.encrypt		= crypto_chacha_crypt,
 		.decrypt		= crypto_chacha_crypt,
 	}, {
@@ -172,7 +213,11 @@ static struct skcipher_alg algs[] = {
 		.max_keysize		= CHACHA_KEY_SIZE,
 		.ivsize			= XCHACHA_IV_SIZE,
 		.chunksize		= CHACHA_BLOCK_SIZE,
+<<<<<<< HEAD
 		.setkey			= crypto_chacha20_setkey,
+=======
+		.setkey			= chacha20_setkey,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		.encrypt		= crypto_xchacha_crypt,
 		.decrypt		= crypto_xchacha_crypt,
 	}, {
@@ -187,7 +232,11 @@ static struct skcipher_alg algs[] = {
 		.max_keysize		= CHACHA_KEY_SIZE,
 		.ivsize			= XCHACHA_IV_SIZE,
 		.chunksize		= CHACHA_BLOCK_SIZE,
+<<<<<<< HEAD
 		.setkey			= crypto_chacha12_setkey,
+=======
+		.setkey			= chacha12_setkey,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		.encrypt		= crypto_xchacha_crypt,
 		.decrypt		= crypto_xchacha_crypt,
 	}

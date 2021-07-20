@@ -2408,11 +2408,19 @@ int policydb_read(struct policydb *p, void *fp)
 	if ((le32_to_cpu(buf[1]) & POLICYDB_CONFIG_ANDROID_NETLINK_ROUTE)) {
 		p->android_netlink_route = 1;
 	}
+<<<<<<< HEAD
 	
 	if ((le32_to_cpu(buf[1]) & POLICYDB_CONFIG_ANDROID_NETLINK_GETNEIGH)) {
 		p->android_netlink_getneigh = 1;
 	}
 	
+=======
+
+	if ((le32_to_cpu(buf[1]) & POLICYDB_CONFIG_ANDROID_NETLINK_GETNEIGH)) {
+		p->android_netlink_getneigh = 1;
+	}
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (p->policyvers >= POLICYDB_VERSION_POLCAP) {
 		rc = ebitmap_read(&p->policycaps, fp);
 		if (rc)

@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * fs/verity/open.c: opening fs-verity files
+=======
+ * Opening fs-verity files
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * Copyright 2019 Google LLC
  */
@@ -124,18 +128,31 @@ out_err:
 }
 
 /*
+<<<<<<< HEAD
  * Compute the file measurement by hashing the fsverity_descriptor excluding the
  * signature and with the sig_size field set to 0.
  */
 static int compute_file_measurement(struct fsverity_hash_alg *hash_alg,
 				    struct fsverity_descriptor *desc,
 				    u8 *measurement)
+=======
+ * Compute the file digest by hashing the fsverity_descriptor excluding the
+ * signature and with the sig_size field set to 0.
+ */
+static int compute_file_digest(struct fsverity_hash_alg *hash_alg,
+			       struct fsverity_descriptor *desc,
+			       u8 *file_digest)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	__le32 sig_size = desc->sig_size;
 	int err;
 
 	desc->sig_size = 0;
+<<<<<<< HEAD
 	err = fsverity_hash_buffer(hash_alg, desc, sizeof(*desc), measurement);
+=======
+	err = fsverity_hash_buffer(hash_alg, desc, sizeof(*desc), file_digest);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	desc->sig_size = sig_size;
 
 	return err;
@@ -199,6 +216,7 @@ struct fsverity_info *fsverity_create_info(const struct inode *inode,
 
 	memcpy(vi->root_hash, desc->root_hash, vi->tree_params.digest_size);
 
+<<<<<<< HEAD
 	err = compute_file_measurement(vi->tree_params.hash_alg, desc,
 				       vi->measurement);
 	if (err) {
@@ -208,6 +226,17 @@ struct fsverity_info *fsverity_create_info(const struct inode *inode,
 	pr_debug("Computed file measurement: %s:%*phN\n",
 		 vi->tree_params.hash_alg->name,
 		 vi->tree_params.digest_size, vi->measurement);
+=======
+	err = compute_file_digest(vi->tree_params.hash_alg, desc,
+				  vi->file_digest);
+	if (err) {
+		fsverity_err(inode, "Error %d computing file digest", err);
+		goto out;
+	}
+	pr_debug("Computed file digest: %s:%*phN\n",
+		 vi->tree_params.hash_alg->name,
+		 vi->tree_params.digest_size, vi->file_digest);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	err = fsverity_verify_signature(vi, desc, desc_size);
 out:
@@ -330,6 +359,10 @@ EXPORT_SYMBOL_GPL(fsverity_prepare_setattr);
 
 /**
  * fsverity_cleanup_inode() - free the inode's verity info, if present
+<<<<<<< HEAD
+=======
+ * @inode: an inode being evicted
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * Filesystems must call this on inode eviction to free ->i_verity_info.
  */
@@ -344,7 +377,11 @@ int __init fsverity_init_info_cache(void)
 {
 	fsverity_info_cachep = KMEM_CACHE_USERCOPY(fsverity_info,
 						   SLAB_RECLAIM_ACCOUNT,
+<<<<<<< HEAD
 						   measurement);
+=======
+						   file_digest);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (!fsverity_info_cachep)
 		return -ENOMEM;
 	return 0;

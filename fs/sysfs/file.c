@@ -15,6 +15,12 @@
 #include <linux/list.h>
 #include <linux/mutex.h>
 #include <linux/seq_file.h>
+<<<<<<< HEAD
+=======
+#ifndef __GENKSYMS__
+#include <linux/mm.h>
+#endif
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #include "sysfs.h"
 #include "../kernfs/kernfs-internal.h"

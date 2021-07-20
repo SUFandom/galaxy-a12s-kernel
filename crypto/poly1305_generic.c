@@ -13,40 +13,25 @@
 
 #include <crypto/algapi.h>
 #include <crypto/internal/hash.h>
-#include <crypto/poly1305.h>
+#include <crypto/internal/poly1305.h>
 #include <linux/crypto.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <asm/unaligned.h>
 
-static inline u64 mlt(u64 a, u64 b)
-{
-	return a * b;
-}
-
-static inline u32 sr(u64 v, u_char n)
-{
-	return v >> n;
-}
-
-static inline u32 and(u32 v, u32 mask)
-{
-	return v & mask;
-}
-
-int crypto_poly1305_init(struct shash_desc *desc)
+static int crypto_poly1305_init(struct shash_desc *desc)
 {
 	struct poly1305_desc_ctx *dctx = shash_desc_ctx(desc);
 
 	poly1305_core_init(&dctx->h);
 	dctx->buflen = 0;
-	dctx->rset = false;
+	dctx->rset = 0;
 	dctx->sset = false;
 
 	return 0;
 }
-EXPORT_SYMBOL_GPL(crypto_poly1305_init);
 
+<<<<<<< HEAD
 void poly1305_core_setkey(struct poly1305_key *key, const u8 *raw_key)
 {
 	/* r &= 0xffffffc0ffffffc0ffffffc0fffffff */
@@ -69,9 +54,17 @@ unsigned int crypto_poly1305_setdesckey(struct poly1305_desc_ctx *dctx,
 	if (!dctx->sset) {
 		if (!dctx->rset && srclen >= POLY1305_BLOCK_SIZE) {
 			poly1305_core_setkey(&dctx->r, src);
+=======
+static unsigned int crypto_poly1305_setdesckey(struct poly1305_desc_ctx *dctx,
+					       const u8 *src, unsigned int srclen)
+{
+	if (!dctx->sset) {
+		if (!dctx->rset && srclen >= POLY1305_BLOCK_SIZE) {
+			poly1305_core_setkey(&dctx->core_r, src);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			src += POLY1305_BLOCK_SIZE;
 			srclen -= POLY1305_BLOCK_SIZE;
-			dctx->rset = true;
+			dctx->rset = 2;
 		}
 		if (srclen >= POLY1305_BLOCK_SIZE) {
 			dctx->s[0] = get_unaligned_le32(src +  0);
@@ -85,8 +78,8 @@ unsigned int crypto_poly1305_setdesckey(struct poly1305_desc_ctx *dctx,
 	}
 	return srclen;
 }
-EXPORT_SYMBOL_GPL(crypto_poly1305_setdesckey);
 
+<<<<<<< HEAD
 static void poly1305_blocks_internal(struct poly1305_state *state,
 				     const struct poly1305_key *key,
 				     const void *src, unsigned int nblocks,
@@ -96,10 +89,17 @@ static void poly1305_blocks_internal(struct poly1305_state *state,
 	u32 s1, s2, s3, s4;
 	u32 h0, h1, h2, h3, h4;
 	u64 d0, d1, d2, d3, d4;
+=======
+static void poly1305_blocks(struct poly1305_desc_ctx *dctx, const u8 *src,
+			    unsigned int srclen)
+{
+	unsigned int datalen;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (!nblocks)
 		return;
 
+<<<<<<< HEAD
 	r0 = key->r[0];
 	r1 = key->r[1];
 	r2 = key->r[2];
@@ -176,10 +176,14 @@ static void poly1305_blocks(struct poly1305_desc_ctx *dctx,
 
 	poly1305_blocks_internal(&dctx->h, &dctx->r,
 				 src, srclen / POLY1305_BLOCK_SIZE, hibit);
+=======
+	poly1305_core_blocks(&dctx->h, &dctx->core_r, src,
+			     srclen / POLY1305_BLOCK_SIZE, 1);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
-int crypto_poly1305_update(struct shash_desc *desc,
-			   const u8 *src, unsigned int srclen)
+static int crypto_poly1305_update(struct shash_desc *desc,
+				  const u8 *src, unsigned int srclen)
 {
 	struct poly1305_desc_ctx *dctx = shash_desc_ctx(desc);
 	unsigned int bytes;
@@ -193,13 +197,17 @@ int crypto_poly1305_update(struct shash_desc *desc,
 
 		if (dctx->buflen == POLY1305_BLOCK_SIZE) {
 			poly1305_blocks(dctx, dctx->buf,
-					POLY1305_BLOCK_SIZE, 1 << 24);
+					POLY1305_BLOCK_SIZE);
 			dctx->buflen = 0;
 		}
 	}
 
 	if (likely(srclen >= POLY1305_BLOCK_SIZE)) {
+<<<<<<< HEAD
 		poly1305_blocks(dctx, src, srclen, 1 << 24);
+=======
+		poly1305_blocks(dctx, src, srclen);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		src += srclen - (srclen % POLY1305_BLOCK_SIZE);
 		srclen %= POLY1305_BLOCK_SIZE;
 	}
@@ -211,8 +219,8 @@ int crypto_poly1305_update(struct shash_desc *desc,
 
 	return 0;
 }
-EXPORT_SYMBOL_GPL(crypto_poly1305_update);
 
+<<<<<<< HEAD
 void poly1305_core_emit(const struct poly1305_state *state, void *dst)
 {
 	u32 h0, h1, h2, h3, h4;
@@ -266,10 +274,16 @@ int crypto_poly1305_final(struct shash_desc *desc, u8 *dst)
 	struct poly1305_desc_ctx *dctx = shash_desc_ctx(desc);
 	__le32 digest[4];
 	u64 f = 0;
+=======
+static int crypto_poly1305_final(struct shash_desc *desc, u8 *dst)
+{
+	struct poly1305_desc_ctx *dctx = shash_desc_ctx(desc);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (unlikely(!dctx->sset))
 		return -ENOKEY;
 
+<<<<<<< HEAD
 	if (unlikely(dctx->buflen)) {
 		dctx->buf[dctx->buflen++] = 1;
 		memset(dctx->buf + dctx->buflen, 0,
@@ -289,9 +303,11 @@ int crypto_poly1305_final(struct shash_desc *desc, u8 *dst)
 	f = (f >> 32) + le32_to_cpu(digest[3]) + dctx->s[3];
 	put_unaligned_le32(f, dst + 12);
 
+=======
+	poly1305_final_generic(dctx, dst);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return 0;
 }
-EXPORT_SYMBOL_GPL(crypto_poly1305_final);
 
 static struct shash_alg poly1305_alg = {
 	.digestsize	= POLY1305_DIGEST_SIZE,

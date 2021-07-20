@@ -55,6 +55,11 @@
 #define ARM64_SSBS				34
 #define ARM64_SPECTRE_BHB			36
 
+<<<<<<< HEAD
 #define ARM64_NCAPS				35
+=======
+/* kabi: reserve 36 - 62 for future cpu capabilities */
+#define ARM64_NCAPS				62
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #endif /* __ASM_CPUCAPS_H */

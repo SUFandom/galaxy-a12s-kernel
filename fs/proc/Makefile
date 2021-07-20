@@ -27,7 +27,10 @@ proc-y	+= softirqs.o
 proc-y	+= namespaces.o
 proc-y	+= self.o
 proc-y	+= thread_self.o
+<<<<<<< HEAD
 proc-$(CONFIG_PROC_FSLOG)	+= fslog.o
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 proc-$(CONFIG_PROC_UID)  += uid.o
 proc-$(CONFIG_PROC_SYSCTL)	+= proc_sysctl.o
 proc-$(CONFIG_NET)		+= proc_net.o

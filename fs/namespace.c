@@ -272,11 +272,15 @@ static struct mount *alloc_vfsmnt(const char *name)
 		mnt->mnt_count = 1;
 		mnt->mnt_writers = 0;
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_KDP_NS
 		kdp_set_ns_data(mnt->mnt, NULL);
 #else
 		mnt->mnt.data = NULL;
 #endif
+=======
+		mnt->mnt.data = NULL;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 		INIT_HLIST_NODE(&mnt->mnt_hash);
 		INIT_LIST_HEAD(&mnt->mnt_child);
@@ -660,11 +664,15 @@ int sb_prepare_remount_readonly(struct super_block *sb)
 
 static void free_vfsmnt(struct mount *mnt)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_KDP_NS
 	kfree(mnt->mnt->data);
 #else
 	kfree(mnt->mnt.data);
 #endif
+=======
+	kfree(mnt->mnt.data);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	kfree_const(mnt->mnt_devname);
 #ifdef CONFIG_SMP
 	free_percpu(mnt->mnt_pcp);
@@ -1094,6 +1102,7 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 		return ERR_PTR(-ENOMEM);
 
 	if (type->alloc_mnt_data) {
+<<<<<<< HEAD
 #ifdef CONFIG_KDP_NS
 		kdp_set_ns_data(mnt->mnt, type->alloc_mnt_data());
 		if (!mnt->mnt->data) {
@@ -1101,6 +1110,10 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 		mnt->mnt.data = type->alloc_mnt_data();
 		if (!mnt->mnt.data) {
 #endif
+=======
+		mnt->mnt.data = type->alloc_mnt_data();
+		if (!mnt->mnt.data) {
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			mnt_free_id(mnt);
 			free_vfsmnt(mnt);
 			return ERR_PTR(-ENOMEM);
@@ -1115,7 +1128,10 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 		mnt->mnt.mnt_flags = MNT_INTERNAL;
 
 	root = mount_fs(type, flags, name, &mnt->mnt, data);
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (IS_ERR(root)) {
 		mnt_free_id(mnt);
 		free_vfsmnt(mnt);
@@ -1174,6 +1190,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 		return ERR_PTR(-ENOMEM);
 
 	if (sb->s_op->clone_mnt_data) {
+<<<<<<< HEAD
 #ifdef CONFIG_KDP_NS
 		kdp_set_ns_data(mnt->mnt, sb->s_op->clone_mnt_data(old->mnt->data));
 		if (!mnt->mnt->data) {
@@ -1181,6 +1198,10 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 		mnt->mnt.data = sb->s_op->clone_mnt_data(old->mnt.data);
 		if (!mnt->mnt.data) {
 #endif
+=======
+		mnt->mnt.data = sb->s_op->clone_mnt_data(old->mnt.data);
+		if (!mnt->mnt.data) {
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			err = -ENOMEM;
 			goto out_free;
 		}

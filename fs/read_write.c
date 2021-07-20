@@ -467,6 +467,7 @@ ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
 
 	return ret;
 }
+EXPORT_SYMBOL_GPL(vfs_read);
 
 EXPORT_SYMBOL_GPL(vfs_read);
 
@@ -588,6 +589,7 @@ ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_
 
 	return ret;
 }
+EXPORT_SYMBOL_GPL(vfs_write);
 
 EXPORT_SYMBOL_GPL(vfs_write);
 

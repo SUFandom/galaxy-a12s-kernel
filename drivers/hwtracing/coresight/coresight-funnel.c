@@ -262,6 +262,10 @@ static int funnel_probe(struct device *dev, struct resource *res)
 	}
 
 	pm_runtime_put(dev);
+<<<<<<< HEAD
+=======
+	ret = 0;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 out_disable_clk:
 	if (ret && !IS_ERR_OR_NULL(drvdata->atclk))

@@ -34,13 +34,22 @@
 #include <linux/poll.h>
 #include <linux/reservation.h>
 #include <linux/mm.h>
+<<<<<<< HEAD
+=======
+#include <linux/sched/signal.h>
+#include <linux/fdtable.h>
+#include <linux/list_sort.h>
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <linux/mount.h>
 
 #include <uapi/linux/dma-buf.h>
 #include <uapi/linux/magic.h>
+<<<<<<< HEAD
 
 #include "dma-buf-container.h"
 #include "dma-buf-trace.h"
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 static inline int is_dma_buf_file(struct file *);
 
@@ -127,7 +136,11 @@ static int dma_buf_release(struct inode *inode, struct file *file)
 		reservation_object_fini(dmabuf->resv);
 
 	module_put(dmabuf->owner);
+<<<<<<< HEAD
 	kfree(dmabuf->exp_name);
+=======
+	kfree(dmabuf->name);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	kfree(dmabuf);
 	return 0;
 }
@@ -419,6 +432,7 @@ static long dma_buf_ioctl(struct file *file,
 				ret = dma_buf_begin_cpu_access(dmabuf, dir);
 
 		return ret;
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 	case DMA_BUF_COMPAT_IOCTL_MERGE:
 #endif
@@ -442,6 +456,11 @@ static long dma_buf_ioctl(struct file *file,
 		return -ENOTTY;
 #endif
 	case DMA_BUF_SET_NAME:
+=======
+
+	case DMA_BUF_SET_NAME_A:
+	case DMA_BUF_SET_NAME_B:
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		return dma_buf_set_name(dmabuf, (const char __user *)arg);
 
 	default:
@@ -483,12 +502,18 @@ static inline int is_dma_buf_file(struct file *file)
 	return file->f_op == &dma_buf_fops;
 }
 
+<<<<<<< HEAD
 #define MAX_EXP_FILE_NAME (DNAME_INLINE_LEN - 7) /* 7: strlen("dmabuf_") */
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static struct file *dma_buf_getfile(struct dma_buf *dmabuf, int flags)
 {
 	struct file *file;
 	struct inode *inode = alloc_anon_inode(dma_buf_mnt->mnt_sb);
+<<<<<<< HEAD
 	char filename[MAX_EXP_FILE_NAME];
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (IS_ERR(inode))
 		return ERR_CAST(inode);
@@ -496,6 +521,7 @@ static struct file *dma_buf_getfile(struct dma_buf *dmabuf, int flags)
 	inode->i_size = dmabuf->size;
 	inode_set_bytes(inode, dmabuf->size);
 
+<<<<<<< HEAD
 	/* In 4.19.87(q), this implementation is part of dma_buf_export()
 	 * It has been moved to this function due to the change in code
 	 * (4.19.131(stable)
@@ -503,6 +529,9 @@ static struct file *dma_buf_getfile(struct dma_buf *dmabuf, int flags)
 	snprintf(filename, MAX_EXP_FILE_NAME, "dmabuf_%s", dmabuf->exp_name);
 
 	file = alloc_file_pseudo(inode, dma_buf_mnt, filename,
+=======
+	file = alloc_file_pseudo(inode, dma_buf_mnt, "dmabuf",
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 				 flags, &dma_buf_fops);
 	if (IS_ERR(file))
 		goto err_alloc_file;
@@ -1358,6 +1387,21 @@ int dma_buf_get_flags(struct dma_buf *dmabuf, unsigned long *flags)
 }
 EXPORT_SYMBOL_GPL(dma_buf_get_flags);
 
+<<<<<<< HEAD
+=======
+int dma_buf_get_uuid(struct dma_buf *dmabuf, uuid_t *uuid)
+{
+	if (WARN_ON(!dmabuf) || !uuid)
+		return -EINVAL;
+
+	if (!dmabuf->ops->get_uuid)
+		return -ENODEV;
+
+	return dmabuf->ops->get_uuid(dmabuf, uuid);
+}
+EXPORT_SYMBOL_GPL(dma_buf_get_uuid);
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #ifdef CONFIG_DEBUG_FS
 static int dma_buf_debug_show(struct seq_file *s, void *unused)
 {

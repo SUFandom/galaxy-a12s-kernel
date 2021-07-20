@@ -21,7 +21,11 @@
  */
 static long nr_total_pages;
 
+<<<<<<< HEAD
 static void *ion_page_pool_alloc_pages(struct ion_page_pool *pool, bool nozero)
+=======
+static inline struct page *ion_page_pool_alloc_pages(struct ion_page_pool *pool)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	gfp_t gfpmask = pool->gfp_mask;
 	struct page *page;

@@ -30,6 +30,7 @@
 
 struct cpufreq_policy;
 
+<<<<<<< HEAD
 typedef int (*get_static_t)(cpumask_t *cpumask, int interval,
 			    unsigned long voltage, u32 *power);
 
@@ -70,6 +71,12 @@ struct cpufreq_cooling_device {
 	int *var_table;
 	unsigned int var_volt_size;
 	unsigned int var_temp_size;
+=======
+typedef int (*plat_mitig_t)(int cpu, u32 clip_freq);
+
+struct cpu_cooling_ops {
+	plat_mitig_t ceil_limit, floor_limit;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 };
 
 #ifdef CONFIG_CPU_THERMAL
@@ -81,6 +88,7 @@ struct thermal_cooling_device *
 cpufreq_cooling_register(struct cpufreq_policy *policy);
 
 struct thermal_cooling_device *
+<<<<<<< HEAD
 cpufreq_power_cooling_register(struct cpufreq_policy *policy,
 			       u32 capacitance, get_static_t plat_static_func);
 
@@ -116,6 +124,10 @@ exynos_cpufreq_cooling_register(struct device_node *np, struct cpufreq_policy *p
 }
 
 #endif
+=======
+cpufreq_platform_cooling_register(struct cpufreq_policy *policy,
+					struct cpu_cooling_ops *ops);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 /**
  * cpufreq_cooling_unregister - function to remove cpufreq cooling device.
@@ -129,6 +141,13 @@ static inline struct thermal_cooling_device *
 cpufreq_cooling_register(struct cpufreq_policy *policy)
 {
 	return ERR_PTR(-ENOSYS);
+}
+
+static inline struct thermal_cooling_device *
+cpufreq_platform_cooling_register(struct cpufreq_policy *policy,
+					struct cpu_cooling_ops *ops)
+{
+	return NULL;
 }
 
 static inline

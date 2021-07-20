@@ -630,7 +630,11 @@ bool __weak arch_bpf_jit_check_func(const struct bpf_prog *prog)
 {
 	return true;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(arch_bpf_jit_check_func);
+=======
+EXPORT_SYMBOL_GPL(arch_bpf_jit_check_func);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif
 
 struct bpf_binary_header *
@@ -1875,6 +1879,7 @@ const struct bpf_func_proto bpf_get_prandom_u32_proto __weak;
 const struct bpf_func_proto bpf_get_smp_processor_id_proto __weak;
 const struct bpf_func_proto bpf_get_numa_node_id_proto __weak;
 const struct bpf_func_proto bpf_ktime_get_ns_proto __weak;
+const struct bpf_func_proto bpf_ktime_get_boot_ns_proto __weak;
 
 const struct bpf_func_proto bpf_get_current_pid_tgid_proto __weak;
 const struct bpf_func_proto bpf_get_current_uid_gid_proto __weak;

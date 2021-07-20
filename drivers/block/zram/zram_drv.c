@@ -339,6 +339,7 @@ static ssize_t idle_store(struct device *dev,
 }
 
 #ifdef CONFIG_ZRAM_WRITEBACK
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 static int zram_wbd(void *);
 static struct zram *g_zram;
@@ -483,6 +484,8 @@ static void deinit_lru_writeback(struct zram *zram)
 }
 #endif
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static ssize_t writeback_limit_enable_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t len)
 {
@@ -730,6 +733,7 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 static unsigned long chunk_to_blk_idx(unsigned long idx)
 {
@@ -849,6 +853,8 @@ out:
 	free_chunk_bdev(zram, blk_to_chunk_idx(blk_idx));
 }
 #else
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static unsigned long alloc_block_bdev(struct zram *zram)
 {
 	unsigned long blk_idx = 1;
@@ -915,6 +921,7 @@ static int read_from_bdev_async(struct zram *zram, struct bio_vec *bvec,
 	return 1;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 static int zram_balance_ratio = 25;	/* nand writeback ratio */
 module_param(zram_balance_ratio, int, 0644);
@@ -1601,6 +1608,8 @@ void swap_writeback_list(struct zwbs **zwbs, struct list_head *list)
 }
 #endif
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #define HUGE_WRITEBACK 1
 #define IDLE_WRITEBACK 2
 
@@ -1651,6 +1660,7 @@ static ssize_t writeback_store(struct device *dev,
 		goto release_init_lock;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	if (mode == IDLE_WRITEBACK) {
 		if (is_bdev_avail(zram))
@@ -1660,6 +1670,8 @@ static ssize_t writeback_store(struct device *dev,
 		goto release_init_lock;
 	}
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	for (index = 0; index < nr_pages; index++) {
 		struct bio_vec bvec;
 
@@ -1735,9 +1747,12 @@ static ssize_t writeback_store(struct device *dev,
 		}
 
 		atomic64_inc(&zram->stats.bd_writes);
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 		count_vm_event(SQZR_WRITE);
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		/*
 		 * We released zram_slot_lock so need to check if the slot was
 		 * changed. If there is freeing for the slot, we can catch it
@@ -1758,6 +1773,7 @@ static ssize_t writeback_store(struct device *dev,
 		zram_free_page(zram, index);
 		zram_clear_flag(zram, index, ZRAM_UNDER_WB);
 		zram_set_flag(zram, index, ZRAM_WB);
+<<<<<<< HEAD
 		zram_set_element(zram, index, blk_idx << (PAGE_SHIFT * 2));
 		blk_idx = 0;
 		atomic64_inc(&zram->stats.pages_stored);
@@ -1765,6 +1781,11 @@ static ssize_t writeback_store(struct device *dev,
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 		count_vm_event(SQZR_OBJCNT);
 #endif
+=======
+		zram_set_element(zram, index, blk_idx);
+		blk_idx = 0;
+		atomic64_inc(&zram->stats.pages_stored);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		spin_lock(&zram->wb_limit_lock);
 		if (zram->wb_limit_enable && zram->bd_wb_limit > 0)
 			zram->bd_wb_limit -=  1UL << (PAGE_SHIFT - 12);
@@ -1774,7 +1795,11 @@ next:
 	}
 
 	if (blk_idx)
+<<<<<<< HEAD
 		free_block_bdev(zram, blk_idx, false);
+=======
+		free_block_bdev(zram, blk_idx);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	ret = len;
 	__free_page(page);
 release_init_lock:
@@ -1837,14 +1862,18 @@ static int read_from_bdev(struct zram *zram, struct bio_vec *bvec,
 			unsigned long entry, struct bio *parent, bool sync)
 {
 	atomic64_inc(&zram->stats.bd_reads);
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	count_vm_event(SQZR_READ);
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (sync)
 		return read_from_bdev_sync(zram, bvec, entry, parent);
 	else
 		return read_from_bdev_async(zram, bvec, entry, parent);
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 static void zram_handle_remain(struct zram *zram, struct page *page,
@@ -2038,6 +2067,8 @@ static int read_comp_from_bdev(struct zram *zram, struct bio_vec *bvec,
 	return 1;
 }
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #else
 static inline void reset_bdev(struct zram *zram) {};
 static int read_from_bdev(struct zram *zram, struct bio_vec *bvec,
@@ -2298,6 +2329,7 @@ static ssize_t bd_stat_show(struct device *dev,
 	ssize_t ret;
 
 	down_read(&zram->init_lock);
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	ret = scnprintf(buf, PAGE_SIZE,
 		"%8llu %8llu %8llu %8llu %8llu %8llu %8llu %8llu %8llu "
@@ -2320,16 +2352,22 @@ static ssize_t bd_stat_show(struct device *dev,
 			FOUR_K((u64)atomic64_read(&zram->stats.bd_objreads)),
 			FOUR_K((u64)atomic64_read(&zram->stats.bd_objwrites)));
 #else
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	ret = scnprintf(buf, PAGE_SIZE,
 		"%8llu %8llu %8llu\n",
 			FOUR_K((u64)atomic64_read(&zram->stats.bd_count)),
 			FOUR_K((u64)atomic64_read(&zram->stats.bd_reads)),
 			FOUR_K((u64)atomic64_read(&zram->stats.bd_writes)));
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	up_read(&zram->init_lock);
 
 	return ret;
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 static ssize_t bd_stat_store(struct device *dev,
@@ -2340,6 +2378,8 @@ static ssize_t bd_stat_store(struct device *dev,
 	return len;
 }
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif
 
 static ssize_t debug_stat_show(struct device *dev,
@@ -2363,7 +2403,11 @@ static ssize_t debug_stat_show(struct device *dev,
 static DEVICE_ATTR_RO(io_stat);
 static DEVICE_ATTR_RO(mm_stat);
 #ifdef CONFIG_ZRAM_WRITEBACK
+<<<<<<< HEAD
 static DEVICE_ATTR_RW(bd_stat);
+=======
+static DEVICE_ATTR_RO(bd_stat);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif
 static DEVICE_ATTR_RO(debug_stat);
 
@@ -2430,6 +2474,7 @@ static void zram_free_page(struct zram *zram, size_t index)
 	}
 
 	if (zram_test_flag(zram, index, ZRAM_WB)) {
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 		int size;
 		bool ppr = zram_test_flag(zram, index, ZRAM_PPR);
@@ -2452,6 +2497,10 @@ static void zram_free_page(struct zram *zram, size_t index)
 		zram_clear_flag(zram, index, ZRAM_WB);
 		free_block_bdev(zram, zram_get_element(zram, index) >> (PAGE_SHIFT * 2));
 #endif
+=======
+		zram_clear_flag(zram, index, ZRAM_WB);
+		free_block_bdev(zram, zram_get_element(zram, index));
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		goto out;
 	}
 
@@ -2477,6 +2526,7 @@ out:
 	atomic64_dec(&zram->stats.pages_stored);
 	zram_set_handle(zram, index, 0);
 	zram_set_obj_size(zram, index, 0);
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	if (zram_test_flag(zram, index, ZRAM_UNDER_PPR))
 		zram_clear_flag(zram, index, ZRAM_UNDER_PPR);
@@ -2485,6 +2535,8 @@ out:
 		list_del_init(&zram->table[index].lru_list);
 	spin_unlock_irqrestore(&zram->list_lock, flags);
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	WARN_ON_ONCE(zram->table[index].flags &
 		~(1UL << ZRAM_LOCK | 1UL << ZRAM_UNDER_WB));
 }
@@ -2496,6 +2548,7 @@ static int __zram_bvec_read(struct zram *zram, struct page *page, u32 index,
 	unsigned long handle;
 	unsigned int size;
 	void *src, *dst;
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	unsigned long flags;
 #endif
@@ -2528,6 +2581,23 @@ static int __zram_bvec_read(struct zram *zram, struct page *page, u32 index,
 				bio, partial_io);
 	}
 
+=======
+
+	zram_slot_lock(zram, index);
+	if (zram_test_flag(zram, index, ZRAM_WB)) {
+		struct bio_vec bvec;
+
+		zram_slot_unlock(zram, index);
+
+		bvec.bv_page = page;
+		bvec.bv_len = PAGE_SIZE;
+		bvec.bv_offset = 0;
+		return read_from_bdev(zram, &bvec,
+				zram_get_element(zram, index),
+				bio, partial_io);
+	}
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	handle = zram_get_handle(zram, index);
 	if (!handle || zram_test_flag(zram, index, ZRAM_SAME)) {
 		unsigned long value;
@@ -2644,9 +2714,12 @@ static int __zram_bvec_write(struct zram *zram, struct bio_vec *bvec,
 	struct page *page = bvec->bv_page;
 	unsigned long element = 0;
 	enum zram_pageflags flags = 0;
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	unsigned long irq_flags;
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	mem = kmap_atomic(page);
 	if (page_same_filled(mem, &element)) {
@@ -3234,6 +3307,7 @@ static int zram_add(void)
 #ifdef CONFIG_ZRAM_WRITEBACK
 	spin_lock_init(&zram->wb_limit_lock);
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	INIT_LIST_HEAD(&zram->list);
 	spin_lock_init(&zram->list_lock);
@@ -3241,6 +3315,8 @@ static int zram_add(void)
 	spin_lock_init(&zram->bitmap_lock);
 	mutex_init(&zram->blk_bitmap_lock);
 #endif
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	queue = blk_alloc_queue(GFP_KERNEL);
 	if (!queue) {
 		pr_err("Error allocating disk queue for device %d\n",

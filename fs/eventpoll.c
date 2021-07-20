@@ -1388,8 +1388,14 @@ static int ep_create_wakeup_source(struct epitem *epi)
 			return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	name = epi->ffd.file->f_path.dentry->d_name.name;
 	ws = wakeup_source_register(NULL, name);
+=======
+	take_dentry_name_snapshot(&n, epi->ffd.file->f_path.dentry);
+	ws = wakeup_source_register(NULL, n.name);
+	release_dentry_name_snapshot(&n);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (!ws)
 		return -ENOMEM;

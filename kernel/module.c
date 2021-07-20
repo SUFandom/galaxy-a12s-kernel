@@ -4171,8 +4171,15 @@ int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
 static void cfi_init(struct module *mod)
 {
 #ifdef CONFIG_CFI_CLANG
+<<<<<<< HEAD
 	mod->cfi_check =
 		(cfi_check_fn)mod_find_symname(mod, CFI_CHECK_FN_NAME);
+=======
+	preempt_disable();
+	mod->cfi_check =
+		(cfi_check_fn)mod_find_symname(mod, CFI_CHECK_FN_NAME);
+	preempt_enable();
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	cfi_module_add(mod, module_addr_min, module_addr_max);
 #endif
 }

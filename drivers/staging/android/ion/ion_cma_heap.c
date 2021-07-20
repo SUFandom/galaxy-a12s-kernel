@@ -235,5 +235,8 @@ int ion_add_cma_heaps(void)
 
 #ifndef CONFIG_ION_MODULE
 device_initcall(ion_add_cma_heaps);
+<<<<<<< HEAD
 #endif /* CONFIG_ION_EXYNOS */
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif

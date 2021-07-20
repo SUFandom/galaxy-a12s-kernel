@@ -750,9 +750,16 @@ SYSCALL_DEFINE3(inotify_add_watch, int, fd, const char __user *, pathname,
 		goto fput_and_out;
 
 	/* support stacked filesystems */
+<<<<<<< HEAD
 	if(path.dentry && path.dentry->d_op) {
 		if (path.dentry->d_op->d_canonical_path) {
 			path.dentry->d_op->d_canonical_path(&path, &alteredpath);
+=======
+	if (path.dentry && path.dentry->d_op) {
+		if (path.dentry->d_op->d_canonical_path) {
+			path.dentry->d_op->d_canonical_path(&path,
+							    &alteredpath);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			canonical_path = &alteredpath;
 			path_put(&path);
 		}

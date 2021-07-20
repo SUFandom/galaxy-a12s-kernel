@@ -332,6 +332,7 @@ static __init int vdso_setup(char *s)
 	return 0;
 }
 __setup("vdso=", vdso_setup);
+<<<<<<< HEAD
 #endif
 
 #ifdef CONFIG_X86_64
@@ -366,6 +367,8 @@ static int vgetcpu_online(unsigned int cpu)
 {
 	return smp_call_function_single(cpu, vgetcpu_cpu_init, NULL, 1);
 }
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 static int __init init_vdso(void)
 {
@@ -375,9 +378,7 @@ static int __init init_vdso(void)
 	init_vdso_image(&vdso_image_x32);
 #endif
 
-	/* notifier priority > KVM */
-	return cpuhp_setup_state(CPUHP_AP_X86_VDSO_VMA_ONLINE,
-				 "x86/vdso/vma:online", vgetcpu_online, NULL);
+	return 0;
 }
 subsys_initcall(init_vdso);
 #endif /* CONFIG_X86_64 */

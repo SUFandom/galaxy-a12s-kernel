@@ -10,7 +10,10 @@
 #include <linux/nospec.h>
 
 #include <linux/kcov.h>
+<<<<<<< HEAD
 #include <linux/debug-snapshot.h>
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <linux/scs.h>
 
 #include <asm/switch_to.h>
@@ -760,7 +763,11 @@ static struct uclamp_se uclamp_default[UCLAMP_CNT];
 
 static inline unsigned int uclamp_bucket_id(unsigned int clamp_value)
 {
+<<<<<<< HEAD
 	return clamp_value / UCLAMP_BUCKET_DELTA;
+=======
+	return min_t(unsigned int, clamp_value / UCLAMP_BUCKET_DELTA, UCLAMP_BUCKETS - 1);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 static inline unsigned int uclamp_bucket_base_value(unsigned int clamp_value)
@@ -1195,6 +1202,7 @@ static void uclamp_fork(struct task_struct *p)
 		return;
 
 	for_each_clamp_id(clamp_id) {
+<<<<<<< HEAD
 		unsigned int clamp_value = uclamp_none(clamp_id);
 
 		/* By default, RT tasks always get 100% boost */
@@ -1206,6 +1214,10 @@ static void uclamp_fork(struct task_struct *p)
 		}
 
 		uclamp_se_set(&p->uclamp_req[clamp_id], clamp_value, false);
+=======
+		uclamp_se_set(&p->uclamp_req[clamp_id],
+			      uclamp_none(clamp_id), false);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	}
 }
 
@@ -1332,8 +1344,11 @@ static inline void enqueue_task(struct rq *rq, struct task_struct *p, int flags)
 		psi_enqueue(p, flags & ENQUEUE_WAKEUP);
 	}
 
+<<<<<<< HEAD
 	update_cpu_active_ratio(rq, p, EMS_PART_ENQUEUE);
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	uclamp_rq_inc(rq, p);
 	p->sched_class->enqueue_task(rq, p, flags);
 }
@@ -1348,8 +1363,11 @@ static inline void dequeue_task(struct rq *rq, struct task_struct *p, int flags)
 		psi_dequeue(p, flags & DEQUEUE_SLEEP);
 	}
 
+<<<<<<< HEAD
 	update_cpu_active_ratio(rq, p, EMS_PART_DEQUEUE);
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	uclamp_rq_dec(rq, p);
 	p->sched_class->dequeue_task(rq, p, flags);
 }
@@ -3034,6 +3052,10 @@ void wake_up_new_task(struct task_struct *p)
 	 * as we're not fully set-up yet.
 	 */
 	p->recent_used_cpu = task_cpu(p);
+<<<<<<< HEAD
+=======
+	rseq_migrate(p);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	__set_task_cpu(p, select_task_rq(p, task_cpu(p), SD_BALANCE_FORK, 0, 1));
 #endif
 	rq = __task_rq_lock(p, &rf);
@@ -3682,8 +3704,12 @@ void scheduler_tick(void)
 	cpu_load_update_active(rq);
 	calc_global_load_tick(rq);
 	psi_task_tick(rq);
+<<<<<<< HEAD
 	if (!cpu)
 		frt_update_available_cpus();
+=======
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	rq_unlock(rq, &rf);
 
 	perf_event_task_tick();
@@ -5545,6 +5571,7 @@ out_put_task:
 	put_task_struct(p);
 	return retval;
 }
+EXPORT_SYMBOL_GPL(sched_setaffinity);
 
 static int get_user_cpu_mask(unsigned long __user *user_mask_ptr, unsigned len,
 			     struct cpumask *new_mask)
@@ -6839,7 +6866,10 @@ void __init sched_init(void)
 
 	psi_init();
 
+<<<<<<< HEAD
 	init_ems();
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	init_uclamp();
 
 	scheduler_running = 1;

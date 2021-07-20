@@ -58,7 +58,10 @@
 #define REISER2FS_JR_SUPER_MAGIC_STRING	"ReIsEr3Fs"
 
 #define SDCARDFS_SUPER_MAGIC	0x5dca2df5
+<<<<<<< HEAD
 #define SDFAT_SUPER_MAGIC	0x5EC5DFA4
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #define SMB_SUPER_MAGIC		0x517B
 #define CGROUP_SUPER_MAGIC	0x27e0eb

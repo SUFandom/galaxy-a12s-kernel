@@ -1252,8 +1252,13 @@ static void binder_do_set_priority(struct task_struct *task,
 		long min_nice = rlimit_to_nice(task_rlimit(task, RLIMIT_NICE));
 
 		if (min_nice > MAX_NICE) {
+<<<<<<< HEAD
 			binder_user_error("%d(%s) RLIMIT_NICE not set\n",
 					  task->pid, task->comm);
+=======
+			binder_user_error("%d RLIMIT_NICE not set\n",
+					  task->pid);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			return;
 		} else if (priority < min_nice) {
 			priority = min_nice;
@@ -1263,8 +1268,13 @@ static void binder_do_set_priority(struct task_struct *task,
 	if (policy != desired.sched_policy ||
 	    to_kernel_prio(policy, priority) != desired.prio)
 		binder_debug(BINDER_DEBUG_PRIORITY_CAP,
+<<<<<<< HEAD
 			     "%d(%s): priority %d not allowed, using %d instead\n",
 			      task->pid, task->comm, desired.prio,
+=======
+			     "%d: priority %d not allowed, using %d instead\n",
+			      task->pid, desired.prio,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			      to_kernel_prio(policy, priority));
 
 	trace_binder_set_priority(task->tgid, task->pid, task->normal_prio,
@@ -2465,8 +2475,13 @@ static void binder_transaction_buffer_release(struct binder_proc *proc,
 	binder_size_t off_start_offset, buffer_offset, off_end_offset;
 
 	binder_debug(BINDER_DEBUG_TRANSACTION,
+<<<<<<< HEAD
 		     "%d(%s) buffer release %d, size %zd-%zd, failed at %llx\n",
 		     proc->pid, proc->tsk->comm, buffer->debug_id,
+=======
+		     "%d buffer release %d, size %zd-%zd, failed at %llx\n",
+		     proc->pid, buffer->debug_id,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		     buffer->data_size, buffer->offsets_size,
 		     (unsigned long long)failed_at);
 
@@ -2830,8 +2845,13 @@ static int binder_translate_fd_array(struct binder_fd_array_object *fda,
 	fda_offset = (parent->buffer - (uintptr_t)t->buffer->user_data) +
 		fda->parent_offset;
 	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32))) {
+<<<<<<< HEAD
 		binder_user_error("%d:%d(%s:%s) parent offset not aligned correctly.\n",
 				  proc->pid, thread->pid, proc->tsk->comm, thread->task->comm);
+=======
+		binder_user_error("%d:%d parent offset not aligned correctly.\n",
+				  proc->pid, thread->pid);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		return -EINVAL;
 	}
 	for (fdi = 0; fdi < fda->num_fds; fdi++) {
@@ -3251,6 +3271,7 @@ static void binder_transaction(struct binder_proc *proc,
 			goto err_dead_binder;
 		}
 		e->to_node = target_node->debug_id;
+<<<<<<< HEAD
 
 #ifdef CONFIG_SAMSUNG_FREECESS
 		freecess_sync_binder_report(proc, target_proc, tr);
@@ -3264,6 +3285,10 @@ static void binder_transaction(struct binder_proc *proc,
 		}
 		if (security_binder_transaction(proc->cred,
 						target_proc->cred) < 0) {
+=======
+		if (security_binder_transaction(proc->tsk,
+						target_proc->tsk) < 0) {
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			return_error = BR_FAILED_REPLY;
 			return_error_param = -EPERM;
 			return_error_line = __LINE__;
@@ -3394,6 +3419,32 @@ static void binder_transaction(struct binder_proc *proc,
 		/* Otherwise, fall back to the default priority */
 		t->priority = target_proc->default_priority;
 	}
+<<<<<<< HEAD
+=======
+
+	if (target_node && target_node->txn_security_ctx) {
+		u32 secid;
+		size_t added_size;
+
+		security_task_getsecid(proc->tsk, &secid);
+		ret = security_secid_to_secctx(secid, &secctx, &secctx_sz);
+		if (ret) {
+			return_error = BR_FAILED_REPLY;
+			return_error_param = ret;
+			return_error_line = __LINE__;
+			goto err_get_secctx_failed;
+		}
+		added_size = ALIGN(secctx_sz, sizeof(u64));
+		extra_buffers_size += added_size;
+		if (extra_buffers_size < added_size) {
+			/* integer overflow of extra_buffers_size */
+			return_error = BR_FAILED_REPLY;
+			return_error_param = EINVAL;
+			return_error_line = __LINE__;
+			goto err_bad_extra_size;
+		}
+	}
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	if (target_node && target_node->txn_security_ctx) {
 		u32 secid;
@@ -3442,7 +3493,7 @@ retry_lowmem:
 
 	t->buffer = binder_alloc_new_buf(&target_proc->alloc, tr->data_size,
 		tr->offsets_size, extra_buffers_size,
-		!reply && (t->flags & TF_ONE_WAY));
+		!reply && (t->flags & TF_ONE_WAY), current->tgid);
 	if (IS_ERR(t->buffer)) {
 		/*
 		 * -ESRCH indicates VMA cleared. The target is dying.
@@ -3478,8 +3529,13 @@ retry_lowmem:
 				(const void __user *)
 					(uintptr_t)tr->data.ptr.buffer,
 				tr->data_size)) {
+<<<<<<< HEAD
 		binder_user_error("%d:%d(%s:%s) got transaction with invalid data ptr\n",
 				proc->pid, thread->pid, proc->tsk->comm, thread->task->comm);
+=======
+		binder_user_error("%d:%d got transaction with invalid data ptr\n",
+				proc->pid, thread->pid);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		return_error = BR_FAILED_REPLY;
 		return_error_param = -EFAULT;
 		return_error_line = __LINE__;
@@ -3492,8 +3548,13 @@ retry_lowmem:
 				(const void __user *)
 					(uintptr_t)tr->data.ptr.offsets,
 				tr->offsets_size)) {
+<<<<<<< HEAD
 		binder_user_error("%d:%d(%s:%s) got transaction with invalid offsets ptr\n",
 				proc->pid, thread->pid, proc->tsk->comm, thread->task->comm);
+=======
+		binder_user_error("%d:%d got transaction with invalid offsets ptr\n",
+				proc->pid, thread->pid);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		return_error = BR_FAILED_REPLY;
 		return_error_param = -EFAULT;
 		return_error_line = __LINE__;
@@ -3516,6 +3577,7 @@ retry_lowmem:
 		return_error_line = __LINE__;
 		goto err_bad_offset;
 	}
+<<<<<<< HEAD
 
 #ifdef CONFIG_SAMSUNG_FREECESS
 	freecess_async_binder_report(proc, target_proc, tr, t); 
@@ -3535,6 +3597,22 @@ retry_lowmem:
 		struct binder_object object;
 		binder_size_t object_offset;
 
+=======
+	off_start_offset = ALIGN(tr->data_size, sizeof(void *));
+	buffer_offset = off_start_offset;
+	off_end_offset = off_start_offset + tr->offsets_size;
+	sg_buf_offset = ALIGN(off_end_offset, sizeof(void *));
+	sg_buf_end_offset = sg_buf_offset + extra_buffers_size -
+		ALIGN(secctx_sz, sizeof(u64));
+	off_min = 0;
+	for (buffer_offset = off_start_offset; buffer_offset < off_end_offset;
+	     buffer_offset += sizeof(binder_size_t)) {
+		struct binder_object_header *hdr;
+		size_t object_size;
+		struct binder_object object;
+		binder_size_t object_offset;
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		binder_alloc_copy_from_buffer(&target_proc->alloc,
 					      &object_offset,
 					      t->buffer,
@@ -3543,8 +3621,13 @@ retry_lowmem:
 		object_size = binder_get_object(target_proc, t->buffer,
 						object_offset, &object);
 		if (object_size == 0 || object_offset < off_min) {
+<<<<<<< HEAD
 			binder_user_error("%d:%d(%s:%s) got transaction with invalid offset (%lld, min %lld max %lld) or object.\n",
 					  proc->pid, thread->pid, proc->tsk->comm, thread->task->comm,
+=======
+			binder_user_error("%d:%d got transaction with invalid offset (%lld, min %lld max %lld) or object.\n",
+					  proc->pid, thread->pid,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 					  (u64)object_offset,
 					  (u64)off_min,
 					  (u64)t->buffer->data_size);
@@ -3674,8 +3757,13 @@ retry_lowmem:
 						(const void __user *)
 							(uintptr_t)bp->buffer,
 						bp->length)) {
+<<<<<<< HEAD
 				binder_user_error("%d:%d(%s:%s) got transaction with invalid offsets ptr\n",
 						  proc->pid, thread->pid, proc->tsk->comm, thread->task->comm);
+=======
+				binder_user_error("%d:%d got transaction with invalid offsets ptr\n",
+						  proc->pid, thread->pid);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 				return_error_param = -EFAULT;
 				return_error = BR_FAILED_REPLY;
 				return_error_line = __LINE__;
@@ -3896,17 +3984,10 @@ static int binder_thread_write(struct binder_proc *proc,
 				struct binder_node *ctx_mgr_node;
 				mutex_lock(&context->context_mgr_node_lock);
 				ctx_mgr_node = context->binder_context_mgr_node;
-				if (ctx_mgr_node) {
-					if (ctx_mgr_node->proc == proc) {
-						binder_user_error("%d:%d context manager tried to acquire desc 0\n",
-								  proc->pid, thread->pid);
-						mutex_unlock(&context->context_mgr_node_lock);
-						return -EINVAL;
-					}
+				if (ctx_mgr_node)
 					ret = binder_inc_ref_for_node(
 							proc, ctx_mgr_node,
 							strong, NULL, &rdata);
-				}
 				mutex_unlock(&context->context_mgr_node_lock);
 			}
 			if (ret)
@@ -5783,7 +5864,11 @@ static void print_binder_transaction_ilocked(struct seq_file *m,
 	spin_lock(&t->lock);
 	to_proc = t->to_proc;
 	seq_printf(m,
+<<<<<<< HEAD
 		   "%s %d: %pK from %d:%d(%s:%s) to %d:%d(%s:%s) code %x flags %x pri %d:%d r%d",
+=======
+		   "%s %d: %pK from %d:%d to %d:%d code %x flags %x pri %d:%d r%d",
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		   prefix, t->debug_id, t,
 		   t->from ? t->from->proc->pid : 0,
 		   t->from ? t->from->pid : 0,
@@ -5791,8 +5876,11 @@ static void print_binder_transaction_ilocked(struct seq_file *m,
 		   t->from ? t->from->task->comm : "",
 		   to_proc ? to_proc->pid : 0,
 		   t->to_thread ? t->to_thread->pid : 0,
+<<<<<<< HEAD
 		   to_proc ? to_proc->tsk->comm : "",
 		   t->to_thread ? t->to_thread->task->comm : "",
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		   t->code, t->flags, t->priority.sched_policy,
 		   t->priority.prio, t->need_reply);
 	spin_unlock(&t->lock);

@@ -448,6 +448,10 @@ static int binderfs_binder_ctl_create(struct super_block *sb)
 	inode->i_uid = info->root_uid;
 	inode->i_gid = info->root_gid;
 
+<<<<<<< HEAD
+=======
+	refcount_set(&device->ref, 1);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	device->binderfs_inode = inode;
 	device->miscdev.minor = minor;
 
@@ -657,7 +661,11 @@ static int binderfs_fill_super(struct super_block *sb, void *data, int silent)
 	int ret;
 	struct binderfs_info *info;
 	struct inode *inode = NULL;
+<<<<<<< HEAD
 	struct binderfs_device device_info = { };
+=======
+	struct binderfs_device device_info = { 0 };
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	const char *name;
 	size_t len;
 

@@ -29,5 +29,8 @@ obj-$(CONFIG_USB_NET_RNDIS_WLAN)	+= rndis_wlan.o
 obj-$(CONFIG_MAC80211_HWSIM)	+= mac80211_hwsim.o
 
 obj-$(CONFIG_VIRT_WIFI)	+= virt_wifi.o
+<<<<<<< HEAD
 
 obj-$(CONFIG_SCSC_WLAN) += scsc/
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)

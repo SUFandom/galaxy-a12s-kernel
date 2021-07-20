@@ -195,7 +195,11 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
 	if (ret)
 		goto out_free;
 
+<<<<<<< HEAD
 	buf = memdup_user(u64_to_user_ptr(exbuf->command), exbuf->size);
+=======
+	buf = vmemdup_user(u64_to_user_ptr(exbuf->command), exbuf->size);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (IS_ERR(buf)) {
 		ret = PTR_ERR(buf);
 		goto out_unresv;
@@ -230,7 +234,11 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
 	return 0;
 
 out_memdup:
+<<<<<<< HEAD
 	kfree(buf);
+=======
+	kvfree(buf);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 out_unresv:
 	ttm_eu_backoff_reservation(&ticket, &validate_list);
 out_free:

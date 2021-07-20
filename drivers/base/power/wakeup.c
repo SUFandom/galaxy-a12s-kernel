@@ -15,7 +15,13 @@
 #include <linux/seq_file.h>
 #include <linux/debugfs.h>
 #include <linux/pm_wakeirq.h>
+<<<<<<< HEAD
 #include <linux/types.h>
+=======
+#include <linux/irq.h>
+#include <linux/irqdesc.h>
+#include <linux/wakeup_reason.h>
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #include <trace/events/power.h>
 #include <linux/memory_hotplug.h>
 #include <linux/wakeup_reason.h>
@@ -76,6 +82,7 @@ static struct wakeup_source deleted_ws = {
 };
 
 static DEFINE_IDA(wakeup_ida);
+<<<<<<< HEAD
 
 /**
  * wakeup_source_prepare - Prepare a new wakeup source for initialization.
@@ -93,6 +100,8 @@ void wakeup_source_prepare(struct wakeup_source *ws, const char *name)
 	}
 }
 EXPORT_SYMBOL_GPL(wakeup_source_prepare);
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 /**
  * wakeup_source_create - Create a struct wakeup_source object.
@@ -101,12 +110,27 @@ EXPORT_SYMBOL_GPL(wakeup_source_prepare);
 struct wakeup_source *wakeup_source_create(const char *name)
 {
 	struct wakeup_source *ws;
+<<<<<<< HEAD
+=======
+	const char *ws_name;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	int id;
 
-	ws = kmalloc(sizeof(*ws), GFP_KERNEL);
+	ws = kzalloc(sizeof(*ws), GFP_KERNEL);
 	if (!ws)
-		return NULL;
+		goto err_ws;
 
+	ws_name = kstrdup_const(name, GFP_KERNEL);
+	if (!ws_name)
+		goto err_name;
+	ws->name = ws_name;
+
+	id = ida_alloc(&wakeup_ida, GFP_KERNEL);
+	if (id < 0)
+		goto err_id;
+	ws->id = id;
+
+<<<<<<< HEAD
 	wakeup_source_prepare(ws, name ? kstrdup_const(name, GFP_KERNEL) : NULL);
 
 	id = ida_alloc(&wakeup_ida, GFP_KERNEL);
@@ -114,30 +138,22 @@ struct wakeup_source *wakeup_source_create(const char *name)
 		goto err_id;
 	ws->id = id;
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return ws;
 
 err_id:
 	kfree_const(ws->name);
+<<<<<<< HEAD
 	kfree(ws);
+=======
+err_name:
+	kfree(ws);
+err_ws:
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return NULL;
 }
 EXPORT_SYMBOL_GPL(wakeup_source_create);
-
-/**
- * wakeup_source_drop - Prepare a struct wakeup_source object for destruction.
- * @ws: Wakeup source to prepare for destruction.
- *
- * Callers must ensure that __pm_stay_awake() or __pm_wakeup_event() will never
- * be run in parallel with this function for the same wakeup source object.
- */
-void wakeup_source_drop(struct wakeup_source *ws)
-{
-	if (!ws)
-		return;
-
-	__pm_relax(ws);
-}
-EXPORT_SYMBOL_GPL(wakeup_source_drop);
 
 /*
  * Record wakeup_source statistics being deleted into a dummy wakeup_source.
@@ -185,7 +201,7 @@ void wakeup_source_destroy(struct wakeup_source *ws)
 	if (!ws)
 		return;
 
-	wakeup_source_drop(ws);
+	__pm_relax(ws);
 	wakeup_source_record(ws);
 	wakeup_source_free(ws);
 }
@@ -917,6 +933,7 @@ bool pm_wakeup_pending(void)
 {
 	unsigned long flags;
 	bool ret = false;
+	char suspend_abort[MAX_SUSPEND_ABORT_LEN];
 
 	raw_spin_lock_irqsave(&events_lock, flags);
 	if (events_check_enabled) {
@@ -929,8 +946,15 @@ bool pm_wakeup_pending(void)
 	raw_spin_unlock_irqrestore(&events_lock, flags);
 
 	if (ret) {
+<<<<<<< HEAD
 		pr_info("PM: Wakeup pending, aborting suspend\n");
 		pm_print_active_wakeup_sources();
+=======
+		pm_get_active_wakeup_sources(suspend_abort,
+					     MAX_SUSPEND_ABORT_LEN);
+		log_suspend_abort_reason(suspend_abort);
+		pr_info("PM: %s\n", suspend_abort);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	}
 
 	return ret || atomic_read(&pm_abort_suspend) > 0;
@@ -958,6 +982,18 @@ void pm_wakeup_clear(bool reset)
 void pm_system_irq_wakeup(unsigned int irq_number)
 {
 	if (pm_wakeup_irq == 0) {
+		struct irq_desc *desc;
+		const char *name = "null";
+
+		desc = irq_to_desc(irq_number);
+		if (desc == NULL)
+			name = "stray irq";
+		else if (desc->action && desc->action->name)
+			name = desc->action->name;
+
+		log_irq_wakeup_reason(irq_number);
+		pr_warn("%s: %d triggered %s\n", __func__, irq_number, name);
+
 		pm_wakeup_irq = irq_number;
 		pm_system_wakeup();
 		log_wakeup_reason(irq_number);

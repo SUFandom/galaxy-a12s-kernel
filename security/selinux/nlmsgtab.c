@@ -225,7 +225,10 @@ static void nlmsg_set_perm_for_type(u32 perm, u16 type)
  * Similarly, use nlmsg_getneigh for RTM_GETNEIGH and RTM_GETNEIGHTBL if the
  * netlink_route_getneigh policy capability is set. Otherwise use nlmsg_read.
  */
+<<<<<<< HEAD
  
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 void selinux_nlmsg_init(void)
 {
 	if (selinux_android_nlroute_getlink())

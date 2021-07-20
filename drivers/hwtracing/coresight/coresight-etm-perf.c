@@ -126,10 +126,17 @@ static void free_sink_buffer(struct etm_event_data *event_data)
 	cpumask_t *mask = &event_data->mask;
 	struct coresight_device *sink;
 
+<<<<<<< HEAD
 	if (WARN_ON(cpumask_empty(mask)))
 		return;
 
 	if (!event_data->snk_config)
+=======
+	if (!event_data->snk_config)
+		return;
+
+	if (WARN_ON(cpumask_empty(mask)))
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		return;
 
 	cpu = cpumask_first(mask);
@@ -309,6 +316,16 @@ static void etm_event_start(struct perf_event *event, int flags)
 	event_data = perf_aux_output_begin(handle, event);
 	if (!event_data)
 		goto fail;
+
+	/*
+	 * Check if this ETM is allowed to trace, as decided
+	 * at etm_setup_aux(). This could be due to an unreachable
+	 * sink from this ETM. We can't do much in this case if
+	 * the sink was specified or hinted to the driver. For
+	 * now, simply don't record anything on this ETM.
+	 */
+	if (!cpumask_test_cpu(cpu, &event_data->mask))
+		goto fail_end_stop;
 
 	path = etm_event_cpu_path(event_data, cpu);
 	/* We need a sink, no need to continue without one */

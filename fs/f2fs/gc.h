@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
+=======
+/* SPDX-License-Identifier: GPL-2.0 */
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 /*
  * fs/f2fs/gc.h
  *

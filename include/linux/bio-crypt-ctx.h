@@ -43,7 +43,19 @@ struct blk_crypto_key {
 	unsigned int data_unit_size;
 	unsigned int data_unit_size_bits;
 	unsigned int size;
+<<<<<<< HEAD
 	unsigned int hash;
+=======
+
+	/*
+	 * Hack to avoid breaking KMI: pack both hash and dun_bytes into the
+	 * hash field...
+	 */
+#define BLK_CRYPTO_KEY_HASH_MASK		0xffffff
+#define BLK_CRYPTO_KEY_DUN_BYTES_SHIFT		24
+	unsigned int hash;
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	bool is_hw_wrapped;
 	u8 raw[BLK_CRYPTO_MAX_WRAPPED_KEY_SIZE];
 };
@@ -51,6 +63,29 @@ struct blk_crypto_key {
 #define BLK_CRYPTO_MAX_IV_SIZE		32
 #define BLK_CRYPTO_DUN_ARRAY_SIZE	(BLK_CRYPTO_MAX_IV_SIZE/sizeof(u64))
 
+<<<<<<< HEAD
+=======
+static inline void
+blk_crypto_key_set_hash_and_dun_bytes(struct blk_crypto_key *key,
+				      u32 hash, unsigned int dun_bytes)
+{
+	key->hash = (dun_bytes << BLK_CRYPTO_KEY_DUN_BYTES_SHIFT) |
+		    (hash & BLK_CRYPTO_KEY_HASH_MASK);
+}
+
+static inline u32
+blk_crypto_key_hash(const struct blk_crypto_key *key)
+{
+	return key->hash & BLK_CRYPTO_KEY_HASH_MASK;
+}
+
+static inline unsigned int
+blk_crypto_key_dun_bytes(const struct blk_crypto_key *key)
+{
+	return key->hash >> BLK_CRYPTO_KEY_DUN_BYTES_SHIFT;
+}
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 /**
  * struct bio_crypt_ctx - an inline encryption context
  * @bc_key: the key, algorithm, and data unit size to use

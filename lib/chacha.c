@@ -9,9 +9,11 @@
  * (at your option) any later version.
  */
 
+#include <linux/bug.h>
 #include <linux/kernel.h>
 #include <linux/export.h>
 #include <linux/bitops.h>
+#include <linux/string.h>
 #include <linux/cryptohash.h>
 #include <asm/unaligned.h>
 #include <crypto/chacha.h>
@@ -76,7 +78,11 @@ static void chacha_permute(u32 *x, int nrounds)
  * The caller has already converted the endianness of the input.  This function
  * also handles incrementing the block counter in the input matrix.
  */
+<<<<<<<< HEAD:lib/chacha.c
 void chacha_block(u32 *state, u8 *stream, int nrounds)
+========
+void chacha_block_generic(u32 *state, u8 *stream, int nrounds)
+>>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable):lib/crypto/chacha.c
 {
 	u32 x[16];
 	int i;
@@ -90,11 +96,19 @@ void chacha_block(u32 *state, u8 *stream, int nrounds)
 
 	state[12]++;
 }
+<<<<<<<< HEAD:lib/chacha.c
 EXPORT_SYMBOL(chacha_block);
 
 /**
  * hchacha_block - abbreviated ChaCha core, for XChaCha
  * @in: input state matrix (16 32-bit words)
+========
+EXPORT_SYMBOL(chacha_block_generic);
+
+/**
+ * hchacha_block_generic - abbreviated ChaCha core, for XChaCha
+ * @state: input state matrix (16 32-bit words)
+>>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable):lib/crypto/chacha.c
  * @out: output (8 32-bit words)
  * @nrounds: number of rounds (20 or 12; 20 is recommended)
  *
@@ -103,6 +117,7 @@ EXPORT_SYMBOL(chacha_block);
  * skips the final addition of the initial state, and outputs only certain words
  * of the state.  It should not be used for streaming directly.
  */
+<<<<<<<< HEAD:lib/chacha.c
 void hchacha_block(const u32 *in, u32 *out, int nrounds)
 {
 	u32 x[16];
@@ -115,3 +130,17 @@ void hchacha_block(const u32 *in, u32 *out, int nrounds)
 	memcpy(&out[4], &x[12], 16);
 }
 EXPORT_SYMBOL(hchacha_block);
+========
+void hchacha_block_generic(const u32 *state, u32 *stream, int nrounds)
+{
+	u32 x[16];
+
+	memcpy(x, state, 64);
+
+	chacha_permute(x, nrounds);
+
+	memcpy(&stream[0], &x[0], 16);
+	memcpy(&stream[4], &x[12], 16);
+}
+EXPORT_SYMBOL(hchacha_block_generic);
+>>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable):lib/crypto/chacha.c

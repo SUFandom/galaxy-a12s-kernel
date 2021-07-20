@@ -26,12 +26,16 @@
 #include <linux/thermal.h>
 #include <linux/cpufreq.h>
 #include <linux/err.h>
-#include <linux/idr.h>
 #include <linux/pm_opp.h>
 #include <linux/slab.h>
 #include <linux/cpu.h>
 #include <linux/cpu_cooling.h>
+<<<<<<< HEAD
 #include <linux/debug-snapshot.h>
+=======
+#include <linux/energy_model.h>
+#include <linux/of_device.h>
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #include <trace/events/thermal.h>
 
@@ -58,6 +62,7 @@ extern int exynos_build_static_power_table(struct device_node *np, int **var_tab
  */
 
 /**
+<<<<<<< HEAD
  * struct freq_table - frequency table along with power entries
  * @frequency:	frequency in KHz
  * @power:	power in mW
@@ -75,6 +80,8 @@ static BLOCKING_NOTIFIER_HEAD(cpu_notifier);
 static enum tmu_noti_state_t cpu_tstate = TMU_NORMAL;
 
 /**
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  * struct time_in_idle - Idle time stats
  * @time: previous reading of the absolute time that this cpu was idle
  * @timestamp: wall time of the last invocation of get_cpu_idle_time_us()
@@ -84,13 +91,52 @@ struct time_in_idle {
 	u64 timestamp;
 };
 
+<<<<<<< HEAD
 static DEFINE_IDA(cpufreq_ida);
+=======
+/**
+ * struct cpufreq_cooling_device - data for cooling device with cpufreq
+ * @id: unique integer value corresponding to each cpufreq_cooling_device
+ *	registered.
+ * @last_load: load measured by the latest call to cpufreq_get_requested_power()
+ * @cpufreq_state: integer value representing the current state of cpufreq
+ *	cooling	devices.
+ * @clipped_freq: integer value representing the absolute value of the clipped
+ *	frequency.
+ * @max_level: maximum cooling level. One less than total number of valid
+ *	cpufreq frequencies.
+ * @em: Reference on the Energy Model of the device
+ * @cdev: thermal_cooling_device pointer to keep track of the
+ *	registered cooling device.
+ * @policy: cpufreq policy.
+ * @node: list_head to link all cpufreq_cooling_device together.
+ * @idle_time: idle time stats
+ *
+ * This structure is required for keeping information of each registered
+ * cpufreq_cooling_device.
+ */
+struct cpufreq_cooling_device {
+	int id;
+	u32 last_load;
+	unsigned int cpufreq_state;
+	unsigned int clipped_freq;
+	unsigned int max_level;
+	struct em_perf_domain *em;
+	struct thermal_cooling_device *cdev;
+	struct cpufreq_policy *policy;
+	struct list_head node;
+	struct time_in_idle *idle_time;
+	struct cpu_cooling_ops *plat_ops;
+};
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static DEFINE_MUTEX(cooling_list_lock);
 static LIST_HEAD(cpufreq_cdev_list);
 
 /* Below code defines functions to be used for cpufreq as cooling device */
 
 /**
+<<<<<<< HEAD
  * get_level: Find the level for a particular frequency
  * @cpufreq_cdev: cpufreq_cdev for which the property is required
  * @freq: Frequency
@@ -142,6 +188,8 @@ unsigned long cpufreq_cooling_get_level(unsigned int cpu, unsigned int freq)
 EXPORT_SYMBOL_GPL(cpufreq_cooling_get_level);
 
 /**
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  * cpufreq_thermal_notifier - notifier callback for cpufreq policy change.
  * @nb:	struct notifier_block * with callback info.
  * @event: value showing cpufreq event for which this function invoked.
@@ -196,81 +244,28 @@ static int cpufreq_thermal_notifier(struct notifier_block *nb,
 	return NOTIFY_OK;
 }
 
+#ifdef CONFIG_ENERGY_MODEL
 /**
- * update_freq_table() - Update the freq table with power numbers
- * @cpufreq_cdev:	the cpufreq cooling device in which to update the table
- * @capacitance: dynamic power coefficient for these cpus
+ * get_level: Find the level for a particular frequency
+ * @cpufreq_cdev: cpufreq_cdev for which the property is required
+ * @freq: Frequency
  *
- * Update the freq table with power numbers.  This table will be used in
- * cpu_power_to_freq() and cpu_freq_to_power() to convert between power and
- * frequency efficiently.  Power is stored in mW, frequency in KHz.  The
- * resulting table is in descending order.
- *
- * Return: 0 on success, -EINVAL if there are no OPPs for any CPUs,
- * or -ENOMEM if we run out of memory.
+ * Return: level corresponding to the frequency.
  */
-static int update_freq_table(struct cpufreq_cooling_device *cpufreq_cdev,
-			     u32 capacitance)
+static unsigned long get_level(struct cpufreq_cooling_device *cpufreq_cdev,
+			       unsigned int freq)
 {
-	struct freq_table *freq_table = cpufreq_cdev->freq_table;
-	struct dev_pm_opp *opp;
-	struct device *dev = NULL;
-	int num_opps = 0, cpu = cpufreq_cdev->policy->cpu, i;
+	int i;
 
-	dev = get_cpu_device(cpu);
-	if (unlikely(!dev)) {
-		dev_warn(&cpufreq_cdev->cdev->device,
-			 "No cpu device for cpu %d\n", cpu);
-		return -ENODEV;
+	for (i = cpufreq_cdev->max_level - 1; i >= 0; i--) {
+		if (freq > cpufreq_cdev->em->table[i].frequency)
+			break;
 	}
 
-	num_opps = dev_pm_opp_get_opp_count(dev);
-	if (num_opps < 0)
-		return num_opps;
-
-	/*
-	 * The cpufreq table is also built from the OPP table and so the count
-	 * should match.
-	 */
-	if (num_opps != cpufreq_cdev->max_level + 1) {
-		dev_warn(dev, "Number of OPPs not matching with max_levels\n");
-		return -EINVAL;
-	}
-
-	for (i = 0; i <= cpufreq_cdev->max_level; i++) {
-		unsigned long freq = freq_table[i].frequency * 1000;
-		u32 freq_mhz = freq_table[i].frequency / 1000;
-		u64 power;
-		u32 voltage_mv;
-
-		/*
-		 * Find ceil frequency as 'freq' may be slightly lower than OPP
-		 * freq due to truncation while converting to kHz.
-		 */
-		opp = dev_pm_opp_find_freq_ceil(dev, &freq);
-		if (IS_ERR(opp)) {
-			dev_err(dev, "failed to get opp for %lu frequency\n",
-				freq);
-			return -EINVAL;
-		}
-
-		voltage_mv = dev_pm_opp_get_voltage(opp) / 1000;
-		dev_pm_opp_put(opp);
-
-		/*
-		 * Do the multiplication with MHz and millivolt so as
-		 * to not overflow.
-		 */
-		power = (u64)capacitance * freq_mhz * voltage_mv * voltage_mv;
-		do_div(power, 1000000000);
-
-		/* power is stored in mW */
-		freq_table[i].power = power;
-	}
-
-	return 0;
+	return cpufreq_cdev->max_level - i - 1;
 }
 
+<<<<<<< HEAD
 static int lookup_static_power(struct cpufreq_cooling_device *cpufreq_cdev,
 		unsigned long voltage, int temperature, u32 *power)
 {
@@ -318,31 +313,42 @@ static int lookup_static_power(struct cpufreq_cooling_device *cpufreq_cdev,
 
 	return 0;
 }
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 static u32 cpu_freq_to_power(struct cpufreq_cooling_device *cpufreq_cdev,
 			     u32 freq)
 {
 	int i;
-	struct freq_table *freq_table = cpufreq_cdev->freq_table;
 
-	for (i = 1; i <= cpufreq_cdev->max_level; i++)
-		if (freq > freq_table[i].frequency)
+	for (i = cpufreq_cdev->max_level - 1; i >= 0; i--) {
+		if (freq > cpufreq_cdev->em->table[i].frequency)
 			break;
+	}
 
-	return freq_table[i - 1].power;
+	return cpufreq_cdev->em->table[i + 1].power;
 }
 
 static u32 cpu_power_to_freq(struct cpufreq_cooling_device *cpufreq_cdev,
 			     u32 power)
 {
 	int i;
-	struct freq_table *freq_table = cpufreq_cdev->freq_table;
 
+<<<<<<< HEAD
 	for (i = 1; i <= cpufreq_cdev->max_level; i++)
 		if (power > freq_table[i].power)
+=======
+	for (i = cpufreq_cdev->max_level - 1; i >= 0; i--) {
+		if (power > cpufreq_cdev->em->table[i].power)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 			break;
+	}
 
+<<<<<<< HEAD
 	return freq_table[i - 1].frequency;
+=======
+	return cpufreq_cdev->em->table[i + 1].frequency;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 /**
@@ -454,6 +460,7 @@ static u32 get_dynamic_power(struct cpufreq_cooling_device *cpufreq_cdev,
 	raw_cpu_power = cpu_freq_to_power(cpufreq_cdev, freq);
 	return (raw_cpu_power * cpufreq_cdev->last_load) / 100;
 }
+#endif
 
 /* cpufreq cooling device callback functions are defined below */
 
@@ -496,6 +503,30 @@ static int cpufreq_get_cur_state(struct thermal_cooling_device *cdev,
 	return 0;
 }
 
+static unsigned int get_state_freq(struct cpufreq_cooling_device *cpufreq_cdev,
+			      unsigned long state)
+{
+	struct cpufreq_policy *policy;
+	unsigned long idx;
+
+#ifdef CONFIG_ENERGY_MODEL
+	/* Use the Energy Model table if available */
+	if (cpufreq_cdev->em) {
+		idx = cpufreq_cdev->max_level - state;
+		return cpufreq_cdev->em->table[idx].frequency;
+	}
+#endif
+
+	/* Otherwise, fallback on the CPUFreq table */
+	policy = cpufreq_cdev->policy;
+	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
+		idx = cpufreq_cdev->max_level - state;
+	else
+		idx = state;
+
+	return policy->freq_table[idx].frequency;
+}
+
 /**
  * cpufreq_set_cur_state - callback function to set the current cooling state.
  * @cdev: thermal cooling device pointer.
@@ -520,15 +551,25 @@ static int cpufreq_set_cur_state(struct thermal_cooling_device *cdev,
 	if (cpufreq_cdev->cpufreq_state == state)
 		return 0;
 
-	clip_freq = cpufreq_cdev->freq_table[state].frequency;
+	clip_freq = get_state_freq(cpufreq_cdev, state);
 	cpufreq_cdev->cpufreq_state = state;
 	cpufreq_cdev->clipped_freq = clip_freq;
 
-	cpufreq_update_policy(cpufreq_cdev->policy->cpu);
+	/* Check if the device has a platform mitigation function that
+	 * can handle the CPU freq mitigation, if not, notify cpufreq
+	 * framework.
+	 */
+	if (cpufreq_cdev->plat_ops &&
+		cpufreq_cdev->plat_ops->ceil_limit)
+		cpufreq_cdev->plat_ops->ceil_limit(cpufreq_cdev->policy->cpu,
+							clip_freq);
+	else
+		cpufreq_update_policy(cpufreq_cdev->policy->cpu);
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static int exynos_cpufreq_cooling_get_level(struct thermal_cooling_device *cdev,
 				 unsigned long value)
 {
@@ -541,6 +582,9 @@ static int exynos_cpufreq_cooling_get_level(struct thermal_cooling_device *cdev,
 	return level;
 }
 
+=======
+#ifdef CONFIG_ENERGY_MODEL
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 /**
  * cpufreq_get_requested_power() - get the current power
  * @cdev:	&thermal_cooling_device pointer
@@ -643,9 +687,13 @@ static int cpufreq_state2power(struct thermal_cooling_device *cdev,
 			       struct thermal_zone_device *tz,
 			       unsigned long state, u32 *power)
 {
+<<<<<<< HEAD
 	unsigned int freq, num_cpus;
 	u32 static_power, dynamic_power;
 	int ret;
+=======
+	unsigned int freq, num_cpus, idx;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	struct cpufreq_cooling_device *cpufreq_cdev = cdev->devdata;
 
 	/* Request state should be less than max_level */
@@ -654,11 +702,17 @@ static int cpufreq_state2power(struct thermal_cooling_device *cdev,
 
 	num_cpus = cpumask_weight(cpufreq_cdev->policy->cpus);
 
+<<<<<<< HEAD
 	freq = cpufreq_cdev->freq_table[state].frequency;
 	dynamic_power = cpu_freq_to_power(cpufreq_cdev, freq) * num_cpus;
 	ret = get_static_power(cpufreq_cdev, tz, freq, &static_power);
 	if (ret)
 		return ret;
+=======
+	idx = cpufreq_cdev->max_level - state;
+	freq = cpufreq_cdev->em->table[idx].frequency;
+	*power = cpu_freq_to_power(cpufreq_cdev, freq) * num_cpus;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	*power = static_power + dynamic_power;
 	return ret;
@@ -730,6 +784,7 @@ static int cpufreq_power2state(struct thermal_cooling_device *cdev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int cpufreq_set_cur_temp(struct thermal_cooling_device *cdev,
 				bool suspended, int temp)
 {
@@ -764,6 +819,8 @@ static struct thermal_cooling_device_ops cpufreq_cooling_ops = {
 	.set_cur_temp = cpufreq_set_cur_temp,
 };
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static struct thermal_cooling_device_ops cpufreq_power_cooling_ops = {
 	.get_max_state		= cpufreq_get_max_state,
 	.get_cur_state		= cpufreq_get_cur_state,
@@ -773,12 +830,22 @@ static struct thermal_cooling_device_ops cpufreq_power_cooling_ops = {
 	.power2state		= cpufreq_power2state,
 	.set_cur_temp = cpufreq_set_cur_temp,
 };
+#endif
+
+/* Bind cpufreq callbacks to thermal cooling device ops */
+
+static struct thermal_cooling_device_ops cpufreq_cooling_ops = {
+	.get_max_state = cpufreq_get_max_state,
+	.get_cur_state = cpufreq_get_cur_state,
+	.set_cur_state = cpufreq_set_cur_state,
+};
 
 /* Notifier for cpufreq policy change */
 static struct notifier_block thermal_cpufreq_notifier_block = {
 	.notifier_call = cpufreq_thermal_notifier,
 };
 
+<<<<<<< HEAD
 int exynos_tmu_add_notifier(struct notifier_block *n)
 {
 	return blocking_notifier_chain_register(&cpu_notifier, n);
@@ -798,14 +865,23 @@ static unsigned int find_next_max(struct cpufreq_frequency_table *table,
 	return max;
 }
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 /**
  * __cpufreq_cooling_register - helper function to create cpufreq cooling device
  * @np: a valid struct device_node to the cooling device device tree node
  * @policy: cpufreq policy
  * Normally this should be same as cpufreq policy->related_cpus.
+<<<<<<< HEAD
  * @capacitance: dynamic power coefficient for these cpus
  * @plat_static_func: function to calculate the static power consumed by these
  *                    cpus (optional)
+=======
+ * @try_model: true if a power model should be used
+ * @plat_mitig_func: function that does the mitigation by changing the
+ *                   frequencies (Optional). By default, cpufreq framweork will
+ *                   be notified of the new limits.
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * This interface function registers the cpufreq cooling device with the name
  * "thermal-cpufreq-%x". This api can support multiple instances of cpufreq
@@ -817,14 +893,18 @@ static unsigned int find_next_max(struct cpufreq_frequency_table *table,
  */
 static struct thermal_cooling_device *
 __cpufreq_cooling_register(struct device_node *np,
+<<<<<<< HEAD
 			struct cpufreq_policy *policy, u32 capacitance,
 			get_static_t plat_static_func)
+=======
+			struct cpufreq_policy *policy, bool try_model,
+			struct cpu_cooling_ops *plat_ops)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 {
 	struct thermal_cooling_device *cdev;
 	struct cpufreq_cooling_device *cpufreq_cdev;
 	char dev_name[THERMAL_NAME_LENGTH];
-	unsigned int freq, i, num_cpus;
-	int ret;
+	unsigned int i, num_cpus;
 	struct thermal_cooling_device_ops *cooling_ops;
 	bool first;
 
@@ -857,23 +937,26 @@ __cpufreq_cooling_register(struct device_node *np,
 	/* max_level is an index, not a counter */
 	cpufreq_cdev->max_level = i - 1;
 
-	cpufreq_cdev->freq_table = kmalloc_array(i,
-					sizeof(*cpufreq_cdev->freq_table),
-					GFP_KERNEL);
-	if (!cpufreq_cdev->freq_table) {
-		cdev = ERR_PTR(-ENOMEM);
-		goto free_idle_time;
-	}
+#ifdef CONFIG_ENERGY_MODEL
+	if (try_model) {
+		struct em_perf_domain *em = em_cpu_get(policy->cpu);
 
-	ret = ida_simple_get(&cpufreq_ida, 0, 0, GFP_KERNEL);
-	if (ret < 0) {
-		cdev = ERR_PTR(ret);
-		goto free_table;
-	}
-	cpufreq_cdev->id = ret;
+		if (!em || !cpumask_equal(policy->related_cpus,
+					  to_cpumask(em->cpus))) {
+			cdev = ERR_PTR(-EINVAL);
+			goto free_idle_time;
+		}
+		cpufreq_cdev->em = em;
+		cooling_ops = &cpufreq_power_cooling_ops;
+	} else
+#endif
+		cooling_ops = &cpufreq_cooling_ops;
+
+	cpufreq_cdev->id = policy->cpu;
 
 	snprintf(dev_name, sizeof(dev_name), "thermal-cpufreq-%d",
 		 cpufreq_cdev->id);
+<<<<<<< HEAD
 
 	/* Fill freq-table in descending order of frequencies */
 	for (i = 0, freq = -1; i <= cpufreq_cdev->max_level; i++) {
@@ -905,13 +988,16 @@ __cpufreq_cooling_register(struct device_node *np,
 	} else {
 		cooling_ops = &cpufreq_cooling_ops;
 	}
+=======
+	cpufreq_cdev->plat_ops = plat_ops;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	cdev = thermal_of_cooling_device_register(np, dev_name, cpufreq_cdev,
 						  cooling_ops);
 	if (IS_ERR(cdev))
-		goto remove_ida;
+		goto free_idle_time;
 
-	cpufreq_cdev->clipped_freq = cpufreq_cdev->freq_table[0].frequency;
+	cpufreq_cdev->clipped_freq = get_state_freq(cpufreq_cdev, 0);
 	cpufreq_cdev->cdev = cdev;
 
 	mutex_lock(&cooling_list_lock);
@@ -926,10 +1012,6 @@ __cpufreq_cooling_register(struct device_node *np,
 
 	return cdev;
 
-remove_ida:
-	ida_simple_remove(&cpufreq_ida, cpufreq_cdev->id);
-free_table:
-	kfree(cpufreq_cdev->freq_table);
 free_idle_time:
 	kfree(cpufreq_cdev->idle_time);
 free_cdev:
@@ -951,7 +1033,11 @@ free_cdev:
 struct thermal_cooling_device *
 cpufreq_cooling_register(struct cpufreq_policy *policy)
 {
+<<<<<<< HEAD
 	return __cpufreq_cooling_register(NULL, policy, 0, NULL);
+=======
+	return __cpufreq_cooling_register(NULL, policy, false, NULL);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 EXPORT_SYMBOL_GPL(cpufreq_cooling_register);
 
@@ -979,7 +1065,6 @@ of_cpufreq_cooling_register(struct cpufreq_policy *policy)
 {
 	struct device_node *np = of_get_cpu_node(policy->cpu, NULL);
 	struct thermal_cooling_device *cdev = NULL;
-	u32 capacitance = 0;
 
 	if (!np) {
 		pr_err("cpu_cooling: OF node not available for cpu%d\n",
@@ -988,11 +1073,15 @@ of_cpufreq_cooling_register(struct cpufreq_policy *policy)
 	}
 
 	if (of_find_property(np, "#cooling-cells", NULL)) {
+<<<<<<< HEAD
 		of_property_read_u32(np, "dynamic-power-coefficient",
 				     &capacitance);
 
 		cdev = __cpufreq_cooling_register(np, policy, capacitance,
 						  NULL);
+=======
+		cdev = __cpufreq_cooling_register(np, policy, true, NULL);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 		if (IS_ERR(cdev)) {
 			pr_err("cpu_cooling: cpu%d is not running as cooling device: %ld\n",
 			       policy->cpu, PTR_ERR(cdev));
@@ -1004,6 +1093,37 @@ of_cpufreq_cooling_register(struct cpufreq_policy *policy)
 	return cdev;
 }
 EXPORT_SYMBOL_GPL(of_cpufreq_cooling_register);
+
+/**
+ * cpufreq_platform_cooling_register() - create cpufreq cooling device with
+ * additional platform specific mitigation function.
+ *
+ * @clip_cpus: cpumask of cpus where the frequency constraints will happen
+ * @plat_ops: the platform mitigation functions that will be called insted of
+ * cpufreq, if provided.
+ *
+ * Return: a valid struct thermal_cooling_device pointer on success,
+ * on failure, it returns a corresponding ERR_PTR().
+ */
+struct thermal_cooling_device *
+cpufreq_platform_cooling_register(struct cpufreq_policy *policy,
+				  struct cpu_cooling_ops *plat_ops)
+{
+	struct device_node *cpu_node;
+	struct thermal_cooling_device *cdev = NULL;
+
+	cpu_node = of_cpu_device_node_get(policy->cpu);
+	if (!cpu_node) {
+		pr_err("No cpu node\n");
+		return ERR_PTR(-EINVAL);
+	}
+	cdev = __cpufreq_cooling_register(cpu_node, policy, false,
+					  plat_ops);
+
+	of_node_put(cpu_node);
+	return cdev;
+}
+EXPORT_SYMBOL(cpufreq_platform_cooling_register);
 
 /**
  * cpufreq_cooling_unregister - function to remove cpufreq cooling device.
@@ -1032,9 +1152,7 @@ void cpufreq_cooling_unregister(struct thermal_cooling_device *cdev)
 					    CPUFREQ_POLICY_NOTIFIER);
 
 	thermal_cooling_device_unregister(cpufreq_cdev->cdev);
-	ida_simple_remove(&cpufreq_ida, cpufreq_cdev->id);
 	kfree(cpufreq_cdev->idle_time);
-	kfree(cpufreq_cdev->freq_table);
 	kfree(cpufreq_cdev);
 }
 EXPORT_SYMBOL_GPL(cpufreq_cooling_unregister);

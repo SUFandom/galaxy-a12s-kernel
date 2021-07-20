@@ -66,7 +66,11 @@
 #include <scsi/scsi_tcq.h>
 #include <scsi/scsi_dbg.h>
 #include <scsi/scsi_eh.h>
+<<<<<<< HEAD
 #include <scsi/scsi_ioctl.h>
+=======
+#include <linux/android_kabi.h>
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #include "ufs.h"
 #include "ufshci.h"
@@ -378,6 +382,7 @@ struct ufs_hba_variant_ops {
 	void	(*dbg_register_dump)(struct ufs_hba *hba);
 	u8      (*get_unipro_result)(struct ufs_hba *hba, u32 num);
 	int	(*phy_initialization)(struct ufs_hba *);
+<<<<<<< HEAD
 	int	(*crypto_engine_cfg)(struct ufs_hba *hba,
 					struct ufshcd_lrb *lrbp);
 	int	(*crypto_engine_clear)(struct ufs_hba *hba,
@@ -386,6 +391,15 @@ struct ufs_hba_variant_ops {
 	int	(*access_control_abort)(struct ufs_hba *hba);
 	int	(*program_key)(struct ufs_hba *hba,
 			       const union ufs_crypto_cfg_entry *cfg, int slot);
+=======
+	int	(*program_key)(struct ufs_hba *hba,
+			       const union ufs_crypto_cfg_entry *cfg, int slot);
+
+	ANDROID_KABI_RESERVE(1);
+	ANDROID_KABI_RESERVE(2);
+	ANDROID_KABI_RESERVE(3);
+	ANDROID_KABI_RESERVE(4);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 };
 
 struct keyslot_mgmt_ll_ops;
@@ -404,10 +418,22 @@ struct ufs_hba_crypto_variant_ops {
 	int (*prepare_lrbp_crypto)(struct ufs_hba *hba,
 				   struct scsi_cmnd *cmd,
 				   struct ufshcd_lrb *lrbp);
+<<<<<<< HEAD
+=======
+	int (*map_sg_crypto)(struct ufs_hba *hba, struct ufshcd_lrb *lrbp);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	int (*complete_lrbp_crypto)(struct ufs_hba *hba,
 				    struct scsi_cmnd *cmd,
 				    struct ufshcd_lrb *lrbp);
 	void *priv;
+<<<<<<< HEAD
+=======
+
+	ANDROID_KABI_RESERVE(1);
+	ANDROID_KABI_RESERVE(2);
+	ANDROID_KABI_RESERVE(3);
+	ANDROID_KABI_RESERVE(4);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 };
 
 /* clock gating state  */
@@ -723,6 +749,7 @@ struct ufs_hba {
 	 * enabled via HCE register.
 	 */
 	#define UFSHCI_QUIRK_BROKEN_HCE				0x400
+<<<<<<< HEAD
 	
 	#define UFSHCD_QUIRK_GET_GENERRCODE_DIRECT		0x800
 
@@ -732,6 +759,8 @@ struct ufs_hba {
 
 	#define UFSHCD_QUIRK_DUMP_DEBUG_INFO			0x4000
 	
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	/*
 	 * This quirk needs to be enabled if the host controller advertises
@@ -833,9 +862,12 @@ struct ufs_hba {
 	 * inline crypto engine, if it is present
 	 */
 #define UFSHCD_CAP_CRYPTO (1 << 7)
+<<<<<<< HEAD
 
 	/* Allow only hibern8 without clk gating */
 #define UFSHCD_CAP_FAKE_CLK_GATING (1 << 6)
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	struct devfreq *devfreq;
 	struct ufs_clk_scaling clk_scaling;
@@ -853,9 +885,12 @@ struct ufs_hba {
 	struct rw_semaphore clk_scaling_lock;
 	struct ufs_desc_size desc_size;
 	atomic_t scsi_block_reqs_cnt;
+<<<<<<< HEAD
 	struct ufs_secure_log secure_log;
 
 	bool dbg_dump_chk;
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #ifdef CONFIG_SCSI_UFS_CRYPTO
 	/* crypto */
@@ -864,6 +899,14 @@ struct ufs_hba {
 	u32 crypto_cfg_register;
 	struct keyslot_manager *ksm;
 #endif /* CONFIG_SCSI_UFS_CRYPTO */
+<<<<<<< HEAD
+=======
+
+	ANDROID_KABI_RESERVE(1);
+	ANDROID_KABI_RESERVE(2);
+	ANDROID_KABI_RESERVE(3);
+	ANDROID_KABI_RESERVE(4);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 };
 
 /* Returns true if clocks can be gated. Otherwise false */

@@ -77,7 +77,12 @@ static int fscrypt_zeroout_range_inlinecrypt(const struct inode *inode,
 			lblk += blocks_this_page;
 			pblk += blocks_this_page;
 			len -= blocks_this_page;
+<<<<<<< HEAD
 		} while (++i != BIO_MAX_PAGES && len != 0);
+=======
+		} while (++i != BIO_MAX_PAGES && len != 0 &&
+			 fscrypt_mergeable_bio(bio, inode, lblk));
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 		err = submit_bio_wait(bio);
 		if (err)

@@ -1750,9 +1750,16 @@ struct xhci_hcd {
 	struct xhci_doorbell_array __iomem *dba;
 	/* Our HCD's current interrupter register set */
 	struct	xhci_intr_reg __iomem *ir_set;
+<<<<<<< HEAD
 #ifdef CONFIG_SND_EXYNOS_USB_AUDIO
 	struct	xhci_intr_reg __iomem *ir_set_audio;
 #endif
+=======
+	/* secondary interrupter */
+	struct	xhci_intr_reg __iomem **sec_ir_set;
+
+	int		core_id;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	/* Cached register copies of read-only HC data */
 	__u32		hcs_params1;
@@ -1797,6 +1804,7 @@ struct xhci_hcd {
 	struct xhci_ring	*event_ring;
 	struct xhci_erst	erst;
 
+<<<<<<< HEAD
 #ifdef CONFIG_SND_EXYNOS_USB_AUDIO
 	struct xhci_ring	*event_ring_audio;
 	struct xhci_erst	erst_audio;
@@ -1807,6 +1815,11 @@ struct xhci_hcd {
 	dma_addr_t in_dma;
 	void *in_addr;
 #endif
+=======
+	/* secondary event ring and erst */
+	struct xhci_ring	**sec_event_ring;
+	struct xhci_erst	*sec_erst;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	/* Scratchpad */
 	struct xhci_scratchpad  *scratchpad;
@@ -2082,6 +2095,8 @@ struct xhci_container_ctx *xhci_alloc_container_ctx(struct xhci_hcd *xhci,
 		int type, gfp_t flags);
 void xhci_free_container_ctx(struct xhci_hcd *xhci,
 		struct xhci_container_ctx *ctx);
+int xhci_sec_event_ring_setup(struct usb_hcd *hcd, unsigned int intr_num);
+int xhci_sec_event_ring_cleanup(struct usb_hcd *hcd, unsigned int intr_num);
 
 /* xHCI host controller glue */
 typedef void (*xhci_get_quirks_t)(struct device *, struct xhci_hcd *);

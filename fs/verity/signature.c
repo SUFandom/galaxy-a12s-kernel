@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * fs/verity/signature.c: verification of builtin signatures
+=======
+ * Verification of builtin signatures
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
  *
  * Copyright 2019 Google LLC
  */
@@ -27,6 +31,7 @@ static int fsverity_require_signatures;
 static struct key *fsverity_keyring;
 
 /**
+<<<<<<< HEAD
  * fsverity_verify_signature() - check a verity file's signature
  *
  * If the file's fs-verity descriptor includes a signature of the file
@@ -44,6 +49,32 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
 	struct fsverity_signed_digest *d;
 	int err;
 
+=======
+ * __fsverity_verify_signature() - check a verity file's signature
+ * @inode: the file's inode
+ * @signature: the file's signature
+ * @sig_size: size of @signature. Can be 0 if there is no signature
+ * @file_digest: the file's digest
+ * @digest_algorithm: the digest algorithm used
+ *
+ * Takes the file's digest and optional signature and verifies the signature
+ * against the digest and the fs-verity keyring if appropriate
+ *
+ * Return: 0 on success (signature valid or not required); -errno on failure
+ */
+int __fsverity_verify_signature(const struct inode *inode, const u8 *signature,
+				u32 sig_size, const u8 *file_digest,
+				unsigned int digest_algorithm)
+{
+	struct fsverity_formatted_digest *d;
+	struct fsverity_hash_alg *hash_alg = fsverity_get_hash_alg(inode,
+							digest_algorithm);
+	int err;
+
+	if (IS_ERR(hash_alg))
+		return PTR_ERR(hash_alg);
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	if (sig_size == 0) {
 		if (fsverity_require_signatures) {
 			fsverity_err(inode,
@@ -53,21 +84,31 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (sig_size > desc_size - sizeof(*desc)) {
 		fsverity_err(inode, "Signature overflows verity descriptor");
 		return -EBADMSG;
 	}
 
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	d = kzalloc(sizeof(*d) + hash_alg->digest_size, GFP_KERNEL);
 	if (!d)
 		return -ENOMEM;
 	memcpy(d->magic, "FSVerity", 8);
 	d->digest_algorithm = cpu_to_le16(hash_alg - fsverity_hash_algs);
 	d->digest_size = cpu_to_le16(hash_alg->digest_size);
+<<<<<<< HEAD
 	memcpy(d->digest, vi->measurement, hash_alg->digest_size);
 
 	err = verify_pkcs7_signature(d, sizeof(*d) + hash_alg->digest_size,
 				     desc->signature, sig_size,
+=======
+	memcpy(d->digest, file_digest, hash_alg->digest_size);
+
+	err = verify_pkcs7_signature(d, sizeof(*d) + hash_alg->digest_size,
+				     signature, sig_size,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 				     fsverity_keyring,
 				     VERIFYING_UNSPECIFIED_SIGNATURE,
 				     NULL, NULL);
@@ -87,10 +128,46 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
 		return err;
 	}
 
+<<<<<<< HEAD
 	pr_debug("Valid signature for file measurement %s:%*phN\n",
 		 hash_alg->name, hash_alg->digest_size, vi->measurement);
 	return 0;
 }
+=======
+	pr_debug("Valid signature for file digest %s:%*phN\n",
+		 hash_alg->name, hash_alg->digest_size, file_digest);
+	return 0;
+}
+EXPORT_SYMBOL_GPL(__fsverity_verify_signature);
+
+/**
+ * fsverity_verify_signature() - check a verity file's signature
+ * @vi: the file's fsverity_info
+ * @desc: the file's fsverity_descriptor
+ * @desc_size: size of @desc
+ *
+ * If the file's fs-verity descriptor includes a signature of the file digest,
+ * verify it against the certificates in the fs-verity keyring.
+ *
+ * Return: 0 on success (signature valid or not required); -errno on failure
+ */
+int fsverity_verify_signature(const struct fsverity_info *vi,
+			      const struct fsverity_descriptor *desc,
+			      size_t desc_size)
+{
+	const struct inode *inode = vi->inode;
+	const struct fsverity_hash_alg *hash_alg = vi->tree_params.hash_alg;
+	const u32 sig_size = le32_to_cpu(desc->sig_size);
+
+	if (sig_size > desc_size - sizeof(*desc)) {
+		fsverity_err(inode, "Signature overflows verity descriptor");
+		return -EBADMSG;
+	}
+
+	return __fsverity_verify_signature(inode, desc->signature, sig_size,
+				vi->file_digest, hash_alg - fsverity_hash_algs);
+}
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 #ifdef CONFIG_SYSCTL
 static struct ctl_table_header *fsverity_sysctl_header;

@@ -402,8 +402,13 @@ static void __init omap2_gp_clockevent_init(int gptimer_id,
 			omap_hwmod_lookup(clockevent_gpt.name);
 	}
 
+<<<<<<< HEAD
 	pr_info("OMAP clockevent source: %s at %lu Hz\n", clockevent_gpt.name,
 		clkev.rate);
+=======
+	pr_info("OMAP clockevent source: %s at %lu Hz\n", clkevt->dev.name,
+		timer->rate);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 /* Clocksource code */
@@ -543,7 +548,16 @@ static void __init __omap_sync32k_timer_init(int clkev_nr, const char *clkev_src
 {
 	omap_clk_init();
 	omap_dmtimer_init();
+<<<<<<< HEAD
 	omap2_gp_clockevent_init(clkev_nr, clkev_src, clkev_prop);
+=======
+	dmtimer_clkevt_init_common(&clockevent, clkev_nr, clkev_src,
+				   CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT,
+				   cpu_possible_mask, clkev_prop, 300, "clockevent");
+	clockevents_config_and_register(&clockevent.dev, clockevent.timer.rate,
+					3, /* Timer internal resynch latency */
+					0xffffffff);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	/* Enable the use of clocksource="gp_timer" kernel parameter */
 	if (use_gptimer_clksrc || gptimer)

@@ -1305,6 +1305,15 @@ int security_sidtab_hash_stats(struct selinux_state *state, char *page)
 {
 	int rc;
 
+<<<<<<< HEAD
+=======
+	if (!state->initialized) {
+		pr_err("SELinux: %s:  called before initial load_policy\n",
+		       __func__);
+		return -EINVAL;
+	}
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	read_lock(&state->ss->policy_rwlock);
 	rc = sidtab_hash_stats(state->ss->sidtab, page);
 	read_unlock(&state->ss->policy_rwlock);
@@ -2194,6 +2203,15 @@ int security_load_policy(struct selinux_state *state, void *data, size_t len)
 	newpolicydb = oldpolicydb + 1;
 
 	policydb = &state->ss->policydb;
+<<<<<<< HEAD
+=======
+
+	newsidtab = kmalloc(sizeof(*newsidtab), GFP_KERNEL);
+	if (!newsidtab) {
+		rc = -ENOMEM;
+		goto out;
+	}
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	newsidtab = kmalloc(sizeof(*newsidtab), GFP_KERNEL);
 	if (!newsidtab) {

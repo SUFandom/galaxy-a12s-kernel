@@ -80,6 +80,11 @@ int ufshcd_prepare_lrbp_crypto(struct ufs_hba *hba,
 			       struct scsi_cmnd *cmd,
 			       struct ufshcd_lrb *lrbp);
 
+<<<<<<< HEAD
+=======
+int ufshcd_map_sg_crypto(struct ufs_hba *hba, struct ufshcd_lrb *lrbp);
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 int ufshcd_complete_lrbp_crypto(struct ufs_hba *hba,
 				struct scsi_cmnd *cmd,
 				struct ufshcd_lrb *lrbp);
@@ -133,6 +138,15 @@ static inline int ufshcd_prepare_lrbp_crypto(struct ufs_hba *hba,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline int ufshcd_map_sg_crypto(struct ufs_hba *hba,
+				       struct ufshcd_lrb *lrbp)
+{
+	return 0;
+}
+
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 static inline bool ufshcd_lrbp_crypto_enabled(struct ufshcd_lrb *lrbp)
 {
 	return false;

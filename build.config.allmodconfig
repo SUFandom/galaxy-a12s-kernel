@@ -1,16 +1,26 @@
 DEFCONFIG=allmodconfig
 
+<<<<<<< HEAD
 # XFS_FS is currently broken on this branch with clang-9
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 POST_DEFCONFIG_CMDS="update_config"
 function update_config() {
     ${KERNEL_DIR}/scripts/config --file ${OUT_DIR}/.config \
          -d TEST_KMOD  \
+<<<<<<< HEAD
          -d XFS_FS \
+=======
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
          -d CPU_BIG_ENDIAN \
          -d STM \
          -d TEST_MEMCAT_P \
          -e UNWINDER_FRAME_POINTER \
 
     (cd ${OUT_DIR} && \
+<<<<<<< HEAD
      make O=${OUT_DIR} $archsubarch CC=${CC} CROSS_COMPILE=${CROSS_COMPILE} olddefconfig)
+=======
+     make O=${OUT_DIR} $archsubarch CROSS_COMPILE=${CROSS_COMPILE} "${TOOL_ARGS[@]}" ${MAKE_ARGS} olddefconfig)
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }

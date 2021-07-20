@@ -2350,16 +2350,33 @@ static struct keyslot_mgmt_ll_ops dm_ksm_ll_ops = {
 
 static int dm_init_inline_encryption(struct mapped_device *md)
 {
+<<<<<<< HEAD
 	unsigned int mode_masks[BLK_ENCRYPTION_MODE_MAX];
 
 	/*
 	 * Start out with all crypto mode support bits set.  Any unsupported
 	 * bits will be cleared later when calculating the device restrictions.
 	 */
+=======
+	unsigned int features;
+	unsigned int mode_masks[BLK_ENCRYPTION_MODE_MAX];
+
+	/*
+	 * Initially declare support for all crypto settings.  Anything
+	 * unsupported by a child device will be removed later when calculating
+	 * the device restrictions.
+	 */
+	features = BLK_CRYPTO_FEATURE_STANDARD_KEYS |
+		   BLK_CRYPTO_FEATURE_WRAPPED_KEYS;
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	memset(mode_masks, 0xFF, sizeof(mode_masks));
 
 	md->queue->ksm = keyslot_manager_create_passthrough(NULL,
 							    &dm_ksm_ll_ops,
+<<<<<<< HEAD
+=======
+							    features,
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 							    mode_masks, md);
 	if (!md->queue->ksm)
 		return -ENOMEM;

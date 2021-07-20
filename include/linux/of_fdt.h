@@ -48,6 +48,11 @@ extern char __dtb_end[];
 extern u64 of_flat_dt_translate_address(unsigned long node);
 extern void of_fdt_limit_memory(int limit);
 extern int of_fdt_get_ddrtype(void);
+<<<<<<< HEAD
+=======
+extern int of_fdt_get_ddrrank(int channel);
+extern int of_fdt_get_ddrhbb(int channel, int rank);
+>>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 #endif /* CONFIG_OF_FLATTREE */
 
 #ifdef CONFIG_OF_EARLY_FLATTREE
