@@ -5274,8 +5274,8 @@
 		gpu_pmqos_cpu_cluster_num = <0x02>;
 		gpu_pmu_status_reg_offset = <0x1d04>;
 		gpu_pmu_status_local_pwr_mask = <0x01>;
-		gpu_max_clock = <0x123fe0>;
-		gpu_max_clock_limit = <0x123fe0>;
+		gpu_max_clock = <0xf4628>;
+		gpu_max_clock_limit = <0xf4628>;
 		gpu_min_clock = <0x5c0a8>;
 		gpu_dvfs_start_clock = <0x5c0a8>;
 		gpu_dvfs_bl_config_clock = <0x5c0a8>;
