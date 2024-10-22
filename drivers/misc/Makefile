@@ -59,7 +59,7 @@ obj-$(CONFIG_PCI_ENDPOINT_TEST)	+= pci_endpoint_test.o
 obj-$(CONFIG_OCXL)		+= ocxl/
 obj-$(CONFIG_MISC_RTSX)		+= cardreader/
 obj-$(CONFIG_UID_SYS_STATS)	+= uid_sys_stats.o
-<<<<<<< HEAD
+
 obj-$(CONFIG_EXYNOS_PASR)	+= exynos_pasr.o
 obj-y				+= samsung/
 
@@ -67,5 +67,5 @@ obj-y				+= samsung/
 ccflags-$(CONFIG_TZDEV) += -I$(srctree)/drivers/misc/tzdev/include
 obj-$(CONFIG_TZDEV)		+= tzdev/
 obj-$(CONFIG_SAMSUNG_TUI)	+= tui/
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+

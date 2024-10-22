@@ -821,10 +821,10 @@ static int get_checkpoint_version(struct f2fs_sb_info *sbi, block_t cp_addr,
 		unsigned long long *version)
 {
 	size_t crc_offset = 0;
-<<<<<<< HEAD
+
 	unsigned long blk_size = sbi->blocksize;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	__u32 crc;
 
 	*cp_page = f2fs_get_meta_page(sbi, cp_addr);
@@ -838,22 +838,22 @@ static int get_checkpoint_version(struct f2fs_sb_info *sbi, block_t cp_addr,
 			crc_offset > CP_CHKSUM_OFFSET) {
 		f2fs_put_page(*cp_page, 1);
 		f2fs_warn(sbi, "invalid crc_offset: %zu", crc_offset);
-<<<<<<< HEAD
+
 		goto error;
-=======
+
 		return -EINVAL;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	crc = f2fs_checkpoint_chksum(sbi, *cp_block);
 	if (crc != cur_cp_crc(*cp_block)) {
 		f2fs_put_page(*cp_page, 1);
 		f2fs_warn(sbi, "invalid crc value");
-<<<<<<< HEAD
+
 		goto error;
-=======
+
 		return -EINVAL;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	*version = cur_cp_version(*cp_block);
@@ -1181,7 +1181,7 @@ static bool __need_flush_quota(struct f2fs_sb_info *sbi)
 	return ret;
 }
 
-<<<<<<< HEAD
+
 /* @fs.sec -- 2ef667bb57e25110542e58d9cc8a0bb5 -- */
 #ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 #define sec_dbg_inc_cnt(node, type)			\
@@ -1198,8 +1198,8 @@ static bool __need_flush_quota(struct f2fs_sb_info *sbi)
 #define sec_dbg_add_time(node, type, start) (0)
 #define sec_dbg_start_jiffies(val) (0)
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 /*
  * Freeze all the FS-operations for checkpoint.
  */
@@ -1212,7 +1212,7 @@ static int block_operations(struct f2fs_sb_info *sbi)
 	};
 	int err = 0, cnt = 0;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 	struct f2fs_sec_blkops_dbg dbg_entry = {0, };
 	u64 s_jiffies, elapsed_time;
@@ -1220,8 +1220,8 @@ static int block_operations(struct f2fs_sb_info *sbi)
 	dbg_entry.start_time = local_clock();
 #endif
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	/*
 	 * Let's flush inline_data in dirty node pages.
 	 */
@@ -1256,12 +1256,12 @@ retry_flush_dents:
 		f2fs_unlock_all(sbi);
 		err = f2fs_sync_dirty_inodes(sbi, DIR_INODE);
 		if (err)
-<<<<<<< HEAD
+
 			goto out;
 		sec_dbg_add_time(dbg_entry, DENTS, s_jiffies);
-=======
+
 			return err;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		cond_resched();
 		goto retry_flush_quotas;
 	}
@@ -1278,12 +1278,12 @@ retry_flush_dents:
 		f2fs_unlock_all(sbi);
 		err = f2fs_sync_inode_meta(sbi);
 		if (err)
-<<<<<<< HEAD
+
 			goto out;
 		sec_dbg_add_time(dbg_entry, IMETA, s_jiffies);
-=======
+
 			return err;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		cond_resched();
 		goto retry_flush_quotas;
 	}
@@ -1314,7 +1314,7 @@ retry_flush_nodes:
 	 */
 	__prepare_cp_block(sbi);
 	up_write(&sbi->node_change);
-<<<<<<< HEAD
+
 out:
 #ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 	dbg_entry.end_time = local_clock();
@@ -1334,8 +1334,8 @@ out:
 		}
 	}
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	return err;
 }
 
@@ -1358,14 +1358,14 @@ void f2fs_wait_on_all_pages(struct f2fs_sb_info *sbi, int type)
 		if (unlikely(f2fs_cp_error(sbi)))
 			break;
 
-<<<<<<< HEAD
+
 		io_schedule_timeout(HZ/50);
-=======
+
 		if (type == F2FS_DIRTY_META)
 			f2fs_sync_meta_pages(sbi, META, LONG_MAX,
 							FS_CP_META_IO);
 		io_schedule_timeout(DEFAULT_IO_TIMEOUT);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 	finish_wait(&sbi->cp_wait, &wait);
 }
@@ -1407,14 +1407,14 @@ static void update_ckpt_flags(struct f2fs_sb_info *sbi, struct cp_control *cpc)
 		is_sbi_flag_set(sbi, SBI_IS_RESIZEFS))
 		__set_ckpt_flags(ckpt, CP_FSCK_FLAG);
 
-<<<<<<< HEAD
-=======
+
+
 	if (is_sbi_flag_set(sbi, SBI_IS_RESIZEFS))
 		__set_ckpt_flags(ckpt, CP_RESIZEFS_FLAG);
 	else
 		__clear_ckpt_flags(ckpt, CP_RESIZEFS_FLAG);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (is_sbi_flag_set(sbi, SBI_CP_DISABLED))
 		__set_ckpt_flags(ckpt, CP_DISABLED_FLAG);
 	else
@@ -1648,7 +1648,7 @@ static int do_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
 	return unlikely(f2fs_cp_error(sbi)) ? -EIO : 0;
 }
 
-<<<<<<< HEAD
+
 #define	CP_TIME_RECORD_UNIT	1000000
 static void f2fs_update_max_cp_interval(struct f2fs_sb_info *sbi)
 {
@@ -1670,8 +1670,8 @@ out:
 /*
  * We guarantee that this checkpoint procedure will not fail.
  */
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 int f2fs_write_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
 {
 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
@@ -1686,12 +1686,12 @@ int f2fs_write_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
 			return 0;
 		f2fs_warn(sbi, "Start checkpoint disabled!");
 	}
-<<<<<<< HEAD
+
 	mutex_lock(&sbi->cp_mutex);
-=======
+
 	if (cpc->reason != CP_RESIZE)
 		mutex_lock(&sbi->cp_mutex);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (!is_sbi_flag_set(sbi, SBI_IS_DIRTY) &&
 		((cpc->reason & CP_FASTBOOT) || (cpc->reason & CP_SYNC) ||

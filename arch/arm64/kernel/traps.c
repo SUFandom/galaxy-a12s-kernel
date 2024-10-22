@@ -35,13 +35,13 @@
 #include <linux/sizes.h>
 #include <linux/syscalls.h>
 #include <linux/mm_types.h>
-<<<<<<< HEAD
+
 #include <linux/debug-snapshot.h>
 #include <linux/kasan.h>
 #include <linux/sec_debug.h>
 =======
 #include <linux/kasan.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #include <asm/atomic.h>
 #include <asm/bug.h>

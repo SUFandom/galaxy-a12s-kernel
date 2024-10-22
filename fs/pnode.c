@@ -684,21 +684,21 @@ void propagate_remount(struct mount *mnt)
 {
 	struct mount *parent = mnt->mnt_parent;
 	struct mount *p = mnt, *m;
-<<<<<<< HEAD
+
 #ifdef CONFIG_KDP_NS
 	struct super_block *sb = mnt->mnt->mnt_sb;
 #else
 	struct super_block *sb = mnt->mnt.mnt_sb;
 #endif
-=======
+
 	struct super_block *sb = mnt->mnt.mnt_sb;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (!sb->s_op->copy_mnt_data)
 		return;
 	for (p = propagation_next(parent, parent); p;
 				p = propagation_next(p, parent)) {
-<<<<<<< HEAD
+
 #ifdef CONFIG_KDP_NS
 		m = __lookup_mnt(p->mnt, mnt->mnt_mountpoint);
 		if (m)
@@ -708,10 +708,10 @@ void propagate_remount(struct mount *mnt)
 		if (m)
 			sb->s_op->copy_mnt_data(m->mnt.data, mnt->mnt.data);
 #endif
-=======
+
 		m = __lookup_mnt(&p->mnt, mnt->mnt_mountpoint);
 		if (m)
 			sb->s_op->copy_mnt_data(m->mnt.data, mnt->mnt.data);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 }

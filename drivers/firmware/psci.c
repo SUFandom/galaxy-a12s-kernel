@@ -402,7 +402,7 @@ static int psci_suspend_finisher(unsigned long state_id)
 	return psci_ops.cpu_suspend(state_id,
 				    __pa_symbol(cpu_resume));
 }
-<<<<<<< HEAD
+
 
 /**
  * Pack PSCI power state to integer
@@ -452,7 +452,7 @@ static int psci_suspend_customized_finisher(unsigned long index)
 int psci_cpu_suspend_enter(unsigned long index)
 =======
 int psci_cpu_suspend_enter(unsigned long state_id)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	int ret;
 
@@ -463,7 +463,7 @@ int psci_cpu_suspend_enter(unsigned long state_id)
 	if (WARN_ON_ONCE(!state_id))
 		return -EINVAL;
 
-<<<<<<< HEAD
+
 	if (unlikely(index >= PSCI_CUSTOMIZED_INDEX))
 		return cpu_suspend(index, psci_suspend_customized_finisher);
 
@@ -472,7 +472,7 @@ int psci_cpu_suspend_enter(unsigned long state_id)
 =======
 	if (!psci_power_state_loses_context(state_id))
 		ret = psci_ops.cpu_suspend(state_id, 0);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	else
 		ret = cpu_suspend(state_id, psci_suspend_finisher);
 

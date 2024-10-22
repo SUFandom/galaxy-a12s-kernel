@@ -2,7 +2,7 @@
 /*
  * Copyright 2018 Google LLC
  */
-<<<<<<< HEAD
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -24,7 +24,7 @@
 #include "../../kselftest.h"
 
 #include "lz4.h"
-=======
+
 #include <alloca.h>
 #include <dirent.h>
 #include <errno.h>
@@ -48,7 +48,7 @@
 
 #include <kselftest.h>
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include "utils.h"
 
 #define TEST_FAILURE 1
@@ -234,11 +234,11 @@ int open_file_by_id(const char *mnt_dir, incfs_uuid_t id, bool use_ioctl)
 {
 	char *path = get_index_filename(mnt_dir, id);
 	int cmd_fd = open_commands_file(mnt_dir);
-<<<<<<< HEAD
+
 	int fd = open(path, O_RDWR);
-=======
+
 	int fd = open(path, O_RDWR | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	struct incfs_permit_fill permit_fill = {
 		.file_descriptor = fd,
 	};
@@ -311,11 +311,11 @@ static int emit_test_blocks(char *mnt_dir, struct test_file *file,
 		.fill_blocks = ptr_to_u64(block_buf),
 	};
 	ssize_t write_res = 0;
-<<<<<<< HEAD
+
 	int fd;
-=======
+
 	int fd = -1;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int error = 0;
 	int i = 0;
 	int blocks_written = 0;
@@ -478,11 +478,11 @@ static loff_t read_whole_file(char *filename)
 	loff_t bytes_read = 0;
 	uint8_t buff[16 * 1024];
 
-<<<<<<< HEAD
+
 	fd = open(filename, O_RDONLY);
-=======
+
 	fd = open(filename, O_RDONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (fd <= 0)
 		return fd;
 
@@ -514,11 +514,11 @@ static int read_test_file(uint8_t *buf, size_t len, char *filename,
 	size_t bytes_to_read = len;
 	off_t offset = ((off_t)block_idx) * INCFS_DATA_FILE_BLOCK_SIZE;
 
-<<<<<<< HEAD
+
 	fd = open(filename, O_RDONLY);
-=======
+
 	fd = open(filename, O_RDONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (fd <= 0)
 		return fd;
 
@@ -951,11 +951,11 @@ static bool iterate_directory(char *dir_to_iterate, bool root, int file_count)
 	int i;
 
 	/* Test directory iteration */
-<<<<<<< HEAD
+
 	int fd = open(dir_to_iterate, O_RDONLY | O_DIRECTORY);
-=======
+
 	int fd = open(dir_to_iterate, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (fd < 0) {
 		print_error("Can't open directory\n");
@@ -1156,11 +1156,11 @@ static int basic_file_ops_test(char *mount_dir)
 		char *path = concat_file_name(mount_dir, file->name);
 		int fd;
 
-<<<<<<< HEAD
+
 		fd = open(path, O_RDWR);
-=======
+
 		fd = open(path, O_RDWR | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		free(path);
 		if (fd <= 0) {
 			print_error("Can't open file");
@@ -1996,11 +1996,11 @@ static int validate_logs(char *mount_dir, int log_fd, struct test_file *file,
 	char *filename = concat_file_name(mount_dir, file->name);
 	int fd;
 
-<<<<<<< HEAD
+
 	fd = open(filename, O_RDONLY);
-=======
+
 	fd = open(filename, O_RDONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	free(filename);
 	if (fd <= 0)
 		return TEST_FAILURE;
@@ -2232,11 +2232,11 @@ static int read_log_test(char *mount_dir)
 	/*
 	 * Remount and check that logs start working again
 	 */
-<<<<<<< HEAD
+
 	drop_caches = open("/proc/sys/vm/drop_caches", O_WRONLY);
-=======
+
 	drop_caches = open("/proc/sys/vm/drop_caches", O_WRONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (drop_caches == -1)
 		goto failure;
 	i = write(drop_caches, "3", 1);
@@ -2326,11 +2326,11 @@ static int validate_ranges(const char *mount_dir, struct test_file *file)
 	int cmd_fd = -1;
 	struct incfs_permit_fill permit_fill;
 
-<<<<<<< HEAD
+
 	fd = open(filename, O_RDONLY);
-=======
+
 	fd = open(filename, O_RDONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	free(filename);
 	if (fd <= 0)
 		return TEST_FAILURE;
@@ -2568,11 +2568,11 @@ static int validate_hash_ranges(const char *mount_dir, struct test_file *file)
 	if (file->size <= 4096 / 32 * 4096)
 		return 0;
 
-<<<<<<< HEAD
+
 	fd = open(filename, O_RDONLY);
-=======
+
 	fd = open(filename, O_RDONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	free(filename);
 	if (fd <= 0)
 		return TEST_FAILURE;
@@ -2766,11 +2766,11 @@ int main(int argc, char *argv[])
 	// NOTE - this abuses the concept of randomness - do *not* ever do this
 	// on a machine for production use - the device will think it has good
 	// randomness when it does not.
-<<<<<<< HEAD
+
 	fd = open("/dev/urandom", O_WRONLY);
-=======
+
 	fd = open("/dev/urandom", O_WRONLY | O_CLOEXEC);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	count = 4096;
 	for (int i = 0; i < 128; ++i)
 		ioctl(fd, RNDADDTOENTCNT, &count);

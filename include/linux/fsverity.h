@@ -121,7 +121,7 @@ static inline struct fsverity_info *fsverity_get_info(const struct inode *inode)
 
 /* enable.c */
 
-<<<<<<< HEAD
+
 extern int fsverity_ioctl_enable(struct file *filp, const void __user *arg);
 
 /* measure.c */
@@ -139,7 +139,7 @@ extern void fsverity_cleanup_inode(struct inode *inode);
 extern bool fsverity_verify_page(struct page *page);
 extern void fsverity_verify_bio(struct bio *bio);
 extern void fsverity_enqueue_verify_work(struct work_struct *work);
-=======
+
 int fsverity_ioctl_enable(struct file *filp, const void __user *arg);
 
 /* measure.c */
@@ -157,7 +157,7 @@ void fsverity_cleanup_inode(struct inode *inode);
 bool fsverity_verify_page(struct page *page);
 void fsverity_verify_bio(struct bio *bio);
 void fsverity_enqueue_verify_work(struct work_struct *work);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #else /* !CONFIG_FS_VERITY */
 
@@ -220,10 +220,10 @@ static inline void fsverity_enqueue_verify_work(struct work_struct *work)
 
 /**
  * fsverity_active() - do reads from the inode need to go through fs-verity?
-<<<<<<< HEAD
-=======
+
+
  * @inode: inode to check
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * This checks whether ->i_verity_info has been set.
  *
@@ -231,19 +231,19 @@ static inline void fsverity_enqueue_verify_work(struct work_struct *work)
  * be verified or not.  Don't use IS_VERITY() for this purpose; it's subject to
  * a race condition where the file is being read concurrently with
  * FS_IOC_ENABLE_VERITY completing.  (S_VERITY is set before ->i_verity_info.)
-<<<<<<< HEAD
-=======
+
+
  *
  * Return: true if reads need to go through fs-verity, otherwise false
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  */
 static inline bool fsverity_active(const struct inode *inode)
 {
 	return fsverity_get_info(inode) != NULL;
 }
 
-<<<<<<< HEAD
-=======
+
+
 #ifdef CONFIG_FS_VERITY_BUILTIN_SIGNATURES
 int __fsverity_verify_signature(const struct inode *inode, const u8 *signature,
 				u32 sig_size, const u8 *file_digest,
@@ -258,5 +258,5 @@ static inline int __fsverity_verify_signature(const struct inode *inode,
 }
 #endif /* !CONFIG_FS_VERITY_BUILTIN_SIGNATURES */
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif	/* _LINUX_FSVERITY_H */

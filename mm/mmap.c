@@ -1184,11 +1184,11 @@ struct vm_area_struct *__vma_merge(struct mm_struct *mm,
 			struct anon_vma *anon_vma, struct file *file,
 			pgoff_t pgoff, struct mempolicy *policy,
 			struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
-<<<<<<< HEAD
+
 			const char __user *anon_name, bool keep_locked)
-=======
+
 			const char __user *anon_name)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
 	struct vm_area_struct *area, *next;
@@ -3334,7 +3334,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
 
 	if (find_vma_links(mm, addr, addr + len, &prev, &rb_link, &rb_parent))
 		return NULL;	/* should never get here */
-<<<<<<< HEAD
+
 
 	/* There is 3 cases to manage here in
 	 *     AAAA            AAAA              AAAA              AAAA
@@ -3350,11 +3350,11 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
 			      vma->anon_vma, vma->vm_file, pgoff,
 			      vma_policy(vma), vma->vm_userfaultfd_ctx,
 				vma_get_anon_name(vma), true);
-=======
+
 	new_vma = vma_merge(mm, prev, addr, addr + len, vma->vm_flags,
 			    vma->anon_vma, vma->vm_file, pgoff, vma_policy(vma),
 			    vma->vm_userfaultfd_ctx, vma_get_anon_name(vma));
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (new_vma) {
 		/*
 		 * Source vma may have been merged into new_vma

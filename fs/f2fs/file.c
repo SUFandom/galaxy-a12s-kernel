@@ -31,13 +31,13 @@
 #include "trace.h"
 #include <trace/events/f2fs.h>
 #include <trace/events/android_fs.h>
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 #include <linux/fscrypto_sdp_ioctl.h>
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
 {
@@ -48,13 +48,13 @@ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
 	ret = filemap_fault(vmf);
 	up_read(&F2FS_I(inode)->i_mmap_sem);
 
-<<<<<<< HEAD
-=======
+
+
 	if (!ret)
 		f2fs_update_iostat(F2FS_I_SB(inode), APP_MAPPED_READ_IO,
 							F2FS_BLKSIZE);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	trace_f2fs_filemap_fault(inode, vmf->pgoff, (unsigned long)ret);
 
 	return ret;
@@ -121,7 +121,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
 		err = f2fs_get_block(&dn, page->index);
 		f2fs_put_dnode(&dn);
 		__do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, false);
-<<<<<<< HEAD
+
 		if (err) {
 			unlock_page(page);
 			goto out_sem;
@@ -129,7 +129,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
 	}
 
 	/* fill the page */
-=======
+
 	}
 
 #ifdef CONFIG_F2FS_FS_COMPRESSION
@@ -144,7 +144,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
 		goto out_sem;
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	f2fs_wait_on_page_writeback(page, DATA, false, true);
 
 	/* wait for GCed page writeback via META_MAPPING */
@@ -616,10 +616,10 @@ void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
 	bool compressed_cluster = false;
 	int cluster_index = 0, valid_blocks = 0;
 	int cluster_size = F2FS_I(dn->inode)->i_cluster_size;
-<<<<<<< HEAD
-=======
+
+
 	bool released = !F2FS_I(dn->inode)->i_compr_blocks;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (IS_INODE(dn->node_page) && f2fs_has_extra_attr(dn->inode))
 		base = get_extra_isize(dn->inode);
@@ -658,13 +658,13 @@ void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
 			clear_inode_flag(dn->inode, FI_FIRST_BLOCK_WRITTEN);
 
 		f2fs_invalidate_blocks(sbi, blkaddr);
-<<<<<<< HEAD
+
 		nr_free++;
-=======
+
 
 		if (!released || blkaddr != COMPRESS_ADDR)
 			nr_free++;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	if (compressed_cluster)
@@ -730,11 +730,11 @@ truncate_out:
 	return 0;
 }
 
-<<<<<<< HEAD
+
 static int do_truncate_blocks(struct inode *inode, u64 from, bool lock)
-=======
+
 int f2fs_do_truncate_blocks(struct inode *inode, u64 from, bool lock)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
 	struct dnode_of_data dn;
@@ -802,18 +802,18 @@ free_partial:
 int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock)
 {
 	u64 free_from = from;
-<<<<<<< HEAD
 
-=======
+
+
 	int err;
 
 #ifdef CONFIG_F2FS_FS_COMPRESSION
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/*
 	 * for compressed file, only support cluster size
 	 * aligned truncation.
 	 */
-<<<<<<< HEAD
+
 	if (f2fs_compressed_file(inode)) {
 		size_t cluster_shift = PAGE_SHIFT +
 					F2FS_I(inode)->i_log_cluster_size;
@@ -826,7 +826,7 @@ int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock)
 	}
 
 	return do_truncate_blocks(inode, free_from, lock);
-=======
+
 	if (f2fs_compressed_file(inode))
 		free_from = round_up(from,
 				F2FS_I(inode)->i_cluster_size << PAGE_SHIFT);
@@ -842,7 +842,7 @@ int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock)
 #endif
 
 	return err;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 int f2fs_truncate(struct inode *inode)
@@ -896,11 +896,11 @@ int f2fs_getattr(const struct path *path, struct kstat *stat,
 	}
 
 	flags = fi->i_flags;
-<<<<<<< HEAD
-=======
+
+
 	if (flags & F2FS_COMPR_FL)
 		stat->attributes |= STATX_ATTR_COMPRESSED;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (flags & F2FS_APPEND_FL)
 		stat->attributes |= STATX_ATTR_APPEND;
 	if (IS_ENCRYPTED(inode))
@@ -912,12 +912,12 @@ int f2fs_getattr(const struct path *path, struct kstat *stat,
 	if (IS_VERITY(inode))
 		stat->attributes |= STATX_ATTR_VERITY;
 
-<<<<<<< HEAD
+
 	stat->attributes_mask |= (STATX_ATTR_APPEND |
-=======
+
 	stat->attributes_mask |= (STATX_ATTR_COMPRESSED |
 				  STATX_ATTR_APPEND |
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				  STATX_ATTR_ENCRYPTED |
 				  STATX_ATTR_IMMUTABLE |
 				  STATX_ATTR_NODUMP |
@@ -1045,11 +1045,11 @@ int f2fs_setattr(struct dentry *dentry, struct iattr *attr)
 		if (err)
 			return err;
 
-<<<<<<< HEAD
+
 		down_write(&F2FS_I(inode)->i_sem);
-=======
+
 		spin_lock(&F2FS_I(inode)->i_size_lock);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		inode->i_mtime = inode->i_ctime = current_time(inode);
 		F2FS_I(inode)->last_disk_size = i_size_read(inode);
 		spin_unlock(&F2FS_I(inode)->i_size_lock);
@@ -1227,12 +1227,12 @@ next_dnode:
 	done = min((pgoff_t)ADDRS_PER_PAGE(dn.node_page, inode) -
 							dn.ofs_in_node, len);
 	for (i = 0; i < done; i++, blkaddr++, do_replace++, dn.ofs_in_node++) {
-<<<<<<< HEAD
+
 		*blkaddr = datablock_addr(dn.inode,
 					dn.node_page, dn.ofs_in_node);
-=======
+
 		*blkaddr = f2fs_data_blkaddr(&dn);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 		if (__is_valid_data_blkaddr(*blkaddr) &&
 			!f2fs_is_valid_blkaddr(sbi, *blkaddr,
@@ -1933,7 +1933,7 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
 	}
 
 	if ((iflags ^ masked_flags) & F2FS_COMPR_FL) {
-<<<<<<< HEAD
+
 		if (S_ISREG(inode->i_mode) &&
 			(masked_flags & F2FS_COMPR_FL || i_size_read(inode) ||
 						F2FS_HAS_BLOCKS(inode)))
@@ -1951,7 +1951,7 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
 			if (S_ISREG(inode->i_mode) && inode->i_size)
 				return -EINVAL;
 
-=======
+
 		if (masked_flags & F2FS_COMPR_FL) {
 			if (f2fs_disable_compressed_file(inode))
 				return -EINVAL;
@@ -1962,7 +1962,7 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
 			if (!f2fs_may_compress(inode))
 				return -EINVAL;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			set_compress_context(inode);
 		}
 	}
@@ -3449,10 +3449,10 @@ static int f2fs_ioc_resize_fs(struct file *filp, unsigned long arg)
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(file_inode(filp));
 	__u64 block_count;
-<<<<<<< HEAD
+
 	int ret;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
@@ -3464,13 +3464,13 @@ static int f2fs_ioc_resize_fs(struct file *filp, unsigned long arg)
 			   sizeof(block_count)))
 		return -EFAULT;
 
-<<<<<<< HEAD
+
 	ret = f2fs_resize_fs(sbi, block_count);
 
 	return ret;
-=======
+
 	return f2fs_resize_fs(sbi, block_count);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static int f2fs_ioc_enable_verity(struct file *filp, unsigned long arg)
@@ -3559,7 +3559,7 @@ out:
 	return err;
 }
 
-<<<<<<< HEAD
+
 static int f2fs_ioc_get_valid_node_count(struct file *filp, unsigned long arg)
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(file_inode(filp));
@@ -3574,17 +3574,17 @@ static int f2fs_ioc_stat_compress_file(struct file *filp, unsigned long arg)
 	struct inode *inode = file_inode(filp);
 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
 	struct f2fs_sec_stat_compfile compStat;
-=======
+
 static int f2fs_get_compress_blocks(struct file *filp, unsigned long arg)
 {
 	struct inode *inode = file_inode(filp);
 	__u64 blocks;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (!f2fs_sb_has_compression(F2FS_I_SB(inode)))
 		return -EOPNOTSUPP;
 
-<<<<<<< HEAD
+
 	if (copy_from_user(&compStat, (struct f2fs_sec_stat_compfile __user *)arg,
 				sizeof(compStat)))
 		return -EFAULT;
@@ -3619,7 +3619,7 @@ static int f2fs_get_compress_blocks(struct file *filp, unsigned long arg)
 		return -EFAULT;
 
 	return 0;
-=======
+
 	if (!f2fs_compressed_file(inode))
 		return -EINVAL;
 
@@ -3945,7 +3945,7 @@ out:
 	}
 
 	return ret;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 long f2fs_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
@@ -4028,7 +4028,7 @@ long f2fs_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		return f2fs_get_volume_name(filp, arg);
 	case F2FS_IOC_SET_VOLUME_NAME:
 		return f2fs_set_volume_name(filp, arg);
-<<<<<<< HEAD
+
 	case F2FS_IOC_GET_VALID_NODE_COUNT:
 		return f2fs_ioc_get_valid_node_count(filp, arg);
 	case F2FS_IOC_STAT_COMPRESS_FILE:
@@ -4043,14 +4043,14 @@ long f2fs_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	case FS_IOC_DUMP_FILE_KEY:
 		return fscrypt_sdp_ioctl(filp, cmd, arg);
 #endif
-=======
+
 	case F2FS_IOC_GET_COMPRESS_BLOCKS:
 		return f2fs_get_compress_blocks(filp, arg);
 	case F2FS_IOC_RELEASE_COMPRESS_BLOCKS:
 		return f2fs_release_compress_blocks(filp, arg);
 	case F2FS_IOC_RESERVE_COMPRESS_BLOCKS:
 		return f2fs_reserve_compress_blocks(filp, arg);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	default:
 		return -ENOTTY;
 	}
@@ -4060,24 +4060,24 @@ static ssize_t f2fs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 {
 	struct file *file = iocb->ki_filp;
 	struct inode *inode = file_inode(file);
-<<<<<<< HEAD
-=======
+
+
 	int ret;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (!f2fs_is_compress_backend_ready(inode))
 		return -EOPNOTSUPP;
 
-<<<<<<< HEAD
+
 	return generic_file_read_iter(iocb, iter);
-=======
+
 	ret = generic_file_read_iter(iocb, iter);
 
 	if (ret > 0)
 		f2fs_update_iostat(F2FS_I_SB(inode), APP_READ_IO, ret);
 
 	return ret;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
@@ -4091,15 +4091,15 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
 		goto out;
 	}
 
-<<<<<<< HEAD
+
 	if (!f2fs_is_compress_backend_ready(inode))
 		return -EOPNOTSUPP;
-=======
+
 	if (!f2fs_is_compress_backend_ready(inode)) {
 		ret = -EOPNOTSUPP;
 		goto out;
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (iocb->ki_flags & IOCB_NOWAIT) {
 		if (!inode_trylock(inode)) {
@@ -4228,7 +4228,7 @@ long f2fs_compat_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	case FS_IOC_MEASURE_VERITY:
 	case F2FS_IOC_GET_VOLUME_NAME:
 	case F2FS_IOC_SET_VOLUME_NAME:
-<<<<<<< HEAD
+
 	case F2FS_IOC_GET_VALID_NODE_COUNT:
 	case F2FS_IOC_STAT_COMPRESS_FILE:
 #ifdef CONFIG_FSCRYPT_SDP
@@ -4240,11 +4240,11 @@ long f2fs_compat_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	case FS_IOC_REMOVE_CHAMBER:
 	case FS_IOC_DUMP_FILE_KEY:
 #endif
-=======
+
 	case F2FS_IOC_GET_COMPRESS_BLOCKS:
 	case F2FS_IOC_RELEASE_COMPRESS_BLOCKS:
 	case F2FS_IOC_RESERVE_COMPRESS_BLOCKS:
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		break;
 	default:
 		return -ENOIOCTLCMD;

@@ -338,7 +338,7 @@ static void evdev_events(struct input_handle *handle,
 {
 	struct evdev *evdev = handle->private;
 	struct evdev_client *client;
-<<<<<<< HEAD
+
 #if IS_ENABLED(CONFIG_SEC_INPUT_BOOSTER)
 	int cur_ib_idx;
 #endif
@@ -353,7 +353,7 @@ static void evdev_events(struct input_handle *handle,
 	}
 =======
 	ktime_t *ev_time = input_get_timestamp(handle->dev);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (ib_evt_work != NULL) {
 		ib_evt_work[cur_ib_idx].evt_cnt = count;

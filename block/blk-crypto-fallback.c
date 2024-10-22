@@ -487,7 +487,7 @@ out:
 	return false;
 }
 
-<<<<<<< HEAD
+
 /**
  * blk_crypto_start_using_mode() - Start using a crypto algorithm on a device
  * @mode_num: the blk_crypto_mode we want to allocate ciphers for.
@@ -511,7 +511,7 @@ int blk_crypto_start_using_mode(enum blk_crypto_mode_num mode_num,
 int blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
 {
 	const char *cipher_str = blk_crypto_modes[mode_num].cipher_str;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	struct blk_crypto_keyslot *slotp;
 	unsigned int i;
 	int err = 0;
@@ -524,7 +524,7 @@ int blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
 	if (likely(smp_load_acquire(&tfms_inited[mode_num])))
 		return 0;
 
-<<<<<<< HEAD
+
 	/*
 	 * If the keyslot manager of the request queue supports this
 	 * crypto mode, then we don't need to allocate this mode.
@@ -534,14 +534,14 @@ int blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
 		return 0;
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	mutex_lock(&tfms_init_lock);
 	if (likely(tfms_inited[mode_num]))
 		goto out;
 
 	for (i = 0; i < blk_crypto_num_keyslots; i++) {
 		slotp = &blk_crypto_keyslots[i];
-<<<<<<< HEAD
+
 		slotp->tfms[mode_num] = crypto_alloc_skcipher(
 					blk_crypto_modes[mode_num].cipher_str,
 					0, 0);
@@ -556,7 +556,7 @@ int blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
 					     cipher_str);
 				err = -ENOPKG;
 			}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			slotp->tfms[mode_num] = NULL;
 			goto out_free_tfms;
 		}
@@ -582,10 +582,10 @@ out:
 	mutex_unlock(&tfms_init_lock);
 	return err;
 }
-<<<<<<< HEAD
+
 EXPORT_SYMBOL_GPL(blk_crypto_start_using_mode);
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
 {
@@ -641,7 +641,7 @@ int __init blk_crypto_fallback_init(void)
 		crypto_mode_supported[i] = 0xFFFFFFFF;
 	crypto_mode_supported[BLK_ENCRYPTION_MODE_INVALID] = 0;
 
-<<<<<<< HEAD
+
 	blk_crypto_ksm = keyslot_manager_create(NULL, blk_crypto_num_keyslots,
 						&blk_crypto_ksm_ll_ops,
 						crypto_mode_supported, NULL);
@@ -651,7 +651,7 @@ int __init blk_crypto_fallback_init(void)
 				&blk_crypto_ksm_ll_ops,
 				BLK_CRYPTO_FEATURE_STANDARD_KEYS,
 				crypto_mode_supported, NULL);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (!blk_crypto_ksm)
 		return -ENOMEM;
 

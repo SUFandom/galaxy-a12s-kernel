@@ -12,10 +12,10 @@
 #include <net/cfg80211.h>
 #include <net/rtnetlink.h>
 #include <linux/etherdevice.h>
-<<<<<<< HEAD
-=======
+
+
 #include <linux/math64.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <linux/module.h>
 
 #include <net/cfg80211.h>
@@ -182,19 +182,19 @@ static void virt_wifi_scan_result(struct work_struct *work)
 			     scan_result.work);
 	struct wiphy *wiphy = priv_to_wiphy(priv);
 	struct cfg80211_scan_info scan_info = { .aborted = false };
-<<<<<<< HEAD
+
 
 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
 					   CFG80211_BSS_FTYPE_PRESP,
 					   fake_router_bssid,
 					   ktime_get_boot_ns(),
-=======
+
 	u64 tsf = div_u64(ktime_get_boot_ns(), 1000);
 
 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
 					   CFG80211_BSS_FTYPE_PRESP,
 					   fake_router_bssid, tsf,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 					   WLAN_CAPABILITY_ESS, 0,
 					   (void *)&ssid, sizeof(ssid),
 					   DBM_TO_MBM(-50), GFP_KERNEL);
@@ -490,10 +490,10 @@ static void virt_wifi_net_device_destructor(struct net_device *dev)
 	 */
 	kfree(dev->ieee80211_ptr);
 	dev->ieee80211_ptr = NULL;
-<<<<<<< HEAD
+
 	free_netdev(dev);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 }
 
 /* No lock interaction. */
@@ -501,11 +501,11 @@ static void virt_wifi_setup(struct net_device *dev)
 {
 	ether_setup(dev);
 	dev->netdev_ops = &virt_wifi_ops;
-<<<<<<< HEAD
+
 	dev->priv_destructor = virt_wifi_net_device_destructor;
-=======
+
 	dev->needs_free_netdev  = true;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 /* Called in a RCU read critical section from netif_receive_skb */
@@ -591,18 +591,18 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
 		goto unregister_netdev;
 	}
 
-<<<<<<< HEAD
-=======
+
+
 	dev->priv_destructor = virt_wifi_net_device_destructor;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	priv->being_deleted = false;
 	priv->is_connected = false;
 	priv->is_up = false;
 	INIT_DELAYED_WORK(&priv->connect, virt_wifi_connect_complete);
-<<<<<<< HEAD
-=======
+
+
 	__module_get(THIS_MODULE);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return 0;
 unregister_netdev:
@@ -633,10 +633,10 @@ static void virt_wifi_dellink(struct net_device *dev,
 	netdev_upper_dev_unlink(priv->lowerdev, dev);
 
 	unregister_netdevice_queue(dev, head);
-<<<<<<< HEAD
-=======
+
+
 	module_put(THIS_MODULE);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/* Deleting the wiphy is handled in the module destructor. */
 }
@@ -649,8 +649,8 @@ static struct rtnl_link_ops virt_wifi_link_ops = {
 	.priv_size	= sizeof(struct virt_wifi_netdev_priv),
 };
 
-<<<<<<< HEAD
-=======
+
+
 static bool netif_is_virt_wifi_dev(const struct net_device *dev)
 {
 	return rcu_access_pointer(dev->rx_handler) == virt_wifi_rx_handler;
@@ -687,7 +687,7 @@ static struct notifier_block virt_wifi_notifier = {
 	.notifier_call = virt_wifi_event,
 };
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /* Acquires and releases the rtnl lock. */
 static int __init virt_wifi_init_module(void)
 {
@@ -696,7 +696,7 @@ static int __init virt_wifi_init_module(void)
 	/* Guaranteed to be locallly-administered and not multicast. */
 	eth_random_addr(fake_router_bssid);
 
-<<<<<<< HEAD
+
 	common_wiphy = virt_wifi_make_wiphy();
 	if (!common_wiphy)
 		return -ENOMEM;
@@ -705,7 +705,7 @@ static int __init virt_wifi_init_module(void)
 	if (err)
 		virt_wifi_destroy_wiphy(common_wiphy);
 
-=======
+
 	err = register_netdevice_notifier(&virt_wifi_notifier);
 	if (err)
 		return err;
@@ -725,7 +725,7 @@ destroy_wiphy:
 	virt_wifi_destroy_wiphy(common_wiphy);
 notifier:
 	unregister_netdevice_notifier(&virt_wifi_notifier);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return err;
 }
 
@@ -735,10 +735,10 @@ static void __exit virt_wifi_cleanup_module(void)
 	/* Will delete any devices that depend on the wiphy. */
 	rtnl_link_unregister(&virt_wifi_link_ops);
 	virt_wifi_destroy_wiphy(common_wiphy);
-<<<<<<< HEAD
-=======
+
+
 	unregister_netdevice_notifier(&virt_wifi_notifier);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 int virt_wifi_register_network_simulation
@@ -750,11 +750,11 @@ int virt_wifi_register_network_simulation
 	priv->network_simulation = ops;
 	return 0;
 }
-<<<<<<< HEAD
+
 EXPORT_SYMBOL(virt_wifi_register_network_simulation);
-=======
+
 EXPORT_SYMBOL_GPL(virt_wifi_register_network_simulation);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 int virt_wifi_unregister_network_simulation(void)
 {
@@ -764,11 +764,11 @@ int virt_wifi_unregister_network_simulation(void)
 	priv->network_simulation = NULL;
 	return 0;
 }
-<<<<<<< HEAD
+
 EXPORT_SYMBOL(virt_wifi_unregister_network_simulation);
-=======
+
 EXPORT_SYMBOL_GPL(virt_wifi_unregister_network_simulation);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 module_init(virt_wifi_init_module);
 module_exit(virt_wifi_cleanup_module);

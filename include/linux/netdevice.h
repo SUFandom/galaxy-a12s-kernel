@@ -275,12 +275,12 @@ struct header_ops {
 				const struct net_device *dev,
 				const unsigned char *haddr);
 	bool	(*validate)(const char *ll_header, unsigned int len);
-<<<<<<< HEAD
-=======
+
+
 
 	ANDROID_KABI_RESERVE(1);
 	ANDROID_KABI_RESERVE(2);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /* These flag bits are private to the generic network queueing

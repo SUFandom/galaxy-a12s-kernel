@@ -50,11 +50,11 @@ static LIST_HEAD(wait_for_suppliers);
 static DEFINE_MUTEX(wfs_lock);
 static LIST_HEAD(deferred_sync);
 static unsigned int defer_sync_state_count = 1;
-<<<<<<< HEAD
+
 =======
 static unsigned int defer_fw_devlink_count;
 static DEFINE_MUTEX(defer_fw_devlink_lock);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_SRCU
 static DEFINE_MUTEX(device_links_lock);
@@ -125,11 +125,11 @@ static int device_is_dependent(struct device *dev, void *target)
 		return ret;
 
 	list_for_each_entry(link, &dev->links.consumers, s_node) {
-<<<<<<< HEAD
+
 		if (link->flags == DL_FLAG_SYNC_STATE_ONLY)
 =======
 		if (link->flags == (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			continue;
 
 		if (link->consumer == target)
@@ -158,11 +158,11 @@ static int device_reorder_to_tail(struct device *dev, void *not_used)
 
 	device_for_each_child(dev, NULL, device_reorder_to_tail);
 	list_for_each_entry(link, &dev->links.consumers, s_node) {
-<<<<<<< HEAD
+
 		if (link->flags == DL_FLAG_SYNC_STATE_ONLY)
 =======
 		if (link->flags == (DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			continue;
 		device_reorder_to_tail(link->consumer, NULL);
 	}
@@ -190,7 +190,7 @@ void device_pm_move_to_tail(struct device *dev)
 	device_links_read_unlock(idx);
 }
 
-<<<<<<< HEAD
+
 =======
 #define DL_MANAGED_LINK_FLAGS (DL_FLAG_AUTOREMOVE_CONSUMER | \
 			       DL_FLAG_AUTOREMOVE_SUPPLIER | \
@@ -200,7 +200,7 @@ void device_pm_move_to_tail(struct device *dev)
 #define DL_ADD_VALID_FLAGS (DL_MANAGED_LINK_FLAGS | DL_FLAG_STATELESS | \
 			    DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /**
  * device_link_add - Create a link between two devices.
  * @consumer: Consumer end of the link.
@@ -238,7 +238,7 @@ struct device_link *device_link_add(struct device *consumer,
 {
 	struct device_link *link;
 
-<<<<<<< HEAD
+
 	if (!consumer || !supplier ||
 	    (flags & DL_FLAG_SYNC_STATE_ONLY &&
 	     flags != DL_FLAG_SYNC_STATE_ONLY) ||
@@ -252,7 +252,7 @@ struct device_link *device_link_add(struct device *consumer,
 	    (flags & DL_FLAG_AUTOPROBE_CONSUMER &&
 	     flags & (DL_FLAG_AUTOREMOVE_CONSUMER |
 		      DL_FLAG_AUTOREMOVE_SUPPLIER)))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return NULL;
 
 	if (flags & DL_FLAG_PM_RUNTIME && flags & DL_FLAG_RPM_ACTIVE) {
@@ -307,7 +307,7 @@ struct device_link *device_link_add(struct device *consumer,
 				refcount_inc(&link->rpm_active);
 		}
 
-<<<<<<< HEAD
+
 		kref_get(&link->kref);
 =======
 		if (flags & DL_FLAG_STATELESS) {
@@ -321,7 +321,7 @@ struct device_link *device_link_add(struct device *consumer,
 				goto out;
 			}
 		}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 		if (link->flags & DL_FLAG_SYNC_STATE_ONLY &&
 		    !(flags & DL_FLAG_SYNC_STATE_ONLY)) {
@@ -394,7 +394,7 @@ struct device_link *device_link_add(struct device *consumer,
 		}
 	}
 
-<<<<<<< HEAD
+
 	if (flags & DL_FLAG_SYNC_STATE_ONLY)
 		goto out;
 =======
@@ -408,7 +408,7 @@ struct device_link *device_link_add(struct device *consumer,
 		goto out;
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 reorder:
 	/*
 	 * Move the consumer and all of the devices depending on it to the end
@@ -694,11 +694,11 @@ static void __device_links_queue_sync_state(struct device *dev,
 		return;
 
 	list_for_each_entry(link, &dev->links.consumers, s_node) {
-<<<<<<< HEAD
+
 		if (link->flags & DL_FLAG_STATELESS)
 =======
 		if (!(link->flags & DL_FLAG_MANAGED))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			continue;
 		if (link->status != DL_STATE_ACTIVE)
 			return;
@@ -799,7 +799,7 @@ static void __device_links_supplier_defer_sync(struct device *sup)
 		list_add_tail(&sup->links.defer_sync, &deferred_sync);
 }
 
-<<<<<<< HEAD
+
 =======
 static void device_link_drop_managed(struct device_link *link)
 {
@@ -808,7 +808,7 @@ static void device_link_drop_managed(struct device_link *link)
 	kref_put(&link->kref, __device_link_del);
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /**
  * device_links_driver_bound - Update device links after probing its driver.
  * @dev: Device to update the links for.
@@ -822,11 +822,11 @@ static void device_link_drop_managed(struct device_link *link)
  */
 void device_links_driver_bound(struct device *dev)
 {
-<<<<<<< HEAD
+
 	struct device_link *link;
 =======
 	struct device_link *link, *ln;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	LIST_HEAD(sync_list);
 
 	/*
@@ -853,7 +853,7 @@ void device_links_driver_bound(struct device *dev)
 	else
 		__device_links_queue_sync_state(dev, &sync_list);
 
-<<<<<<< HEAD
+
 	list_for_each_entry(link, &dev->links.suppliers, c_node) {
 		if (link->flags & DL_FLAG_STATELESS)
 			continue;
@@ -896,7 +896,7 @@ void device_links_driver_bound(struct device *dev)
 			__device_links_supplier_defer_sync(supplier);
 		else
 			__device_links_queue_sync_state(supplier, &sync_list);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	dev->links.status = DL_DEV_DRIVER_BOUND;
@@ -926,7 +926,7 @@ static void __device_links_no_driver(struct device *dev)
 		if (link->flags & DL_FLAG_STATELESS)
 			continue;
 
-<<<<<<< HEAD
+
 		if (link->flags & DL_FLAG_AUTOREMOVE_CONSUMER)
 			kref_put(&link->kref, __device_link_del);
 		else if (link->status != DL_STATE_SUPPLIER_UNBIND)
@@ -941,7 +941,7 @@ static void __device_links_no_driver(struct device *dev)
 			continue;
 
 		if (link->supplier->links.status == DL_DEV_DRIVER_BOUND) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
 		} else {
 			WARN_ON(!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
@@ -1064,11 +1064,11 @@ void device_links_unbind_consumers(struct device *dev)
 	list_for_each_entry(link, &dev->links.consumers, s_node) {
 		enum device_link_state status;
 
-<<<<<<< HEAD
+
 		if (link->flags & DL_FLAG_STATELESS ||
 =======
 		if (!(link->flags & DL_FLAG_MANAGED) ||
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		    link->flags & DL_FLAG_SYNC_STATE_ONLY)
 			continue;
 
@@ -2535,12 +2535,12 @@ int device_add(struct device *dev)
 
 	kobject_uevent(&dev->kobj, KOBJ_ADD);
 
-<<<<<<< HEAD
+
 	if (dev->fwnode && !dev->fwnode->dev)
 		dev->fwnode->dev = dev;
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/*
 	 * Check if any of the other devices (consumers) have been waiting for
 	 * this device (supplier) to be added so that they can create a device
@@ -2549,7 +2549,7 @@ int device_add(struct device *dev)
 	 * This needs to happen after device_pm_add() because device_link_add()
 	 * requires the supplier be registered before it's called.
 	 *
-<<<<<<< HEAD
+
 	 * But this also needs to happe before bus_probe_device() to make sure
 	 * waiting consumers can link to it before the driver is bound to the
 	 * device and the driver sync_state callback is called for this device.
@@ -2570,7 +2570,7 @@ int device_add(struct device *dev)
 	if (dev->fwnode && !dev->fwnode->dev) {
 		dev->fwnode->dev = dev;
 		fw_devlink_link_device(dev);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	bus_probe_device(dev);

@@ -120,11 +120,11 @@ static int try_to_freeze_tasks(bool user_only)
 		       elapsed_msecs / 1000, elapsed_msecs % 1000);
 	} else if (todo) {
 		pr_cont("\n");
-<<<<<<< HEAD
+
 		pr_auto(ASL1, "Freezing of tasks failed after %d.%03d seconds"
-=======
+
 		pr_err("Freezing of tasks failed after %d.%03d seconds"
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		       " (%d tasks refusing to freeze, wq_busy=%d):\n",
 		       elapsed_msecs / 1000, elapsed_msecs % 1000,
 		       todo - wq_busy, wq_busy);
@@ -135,7 +135,7 @@ static int try_to_freeze_tasks(bool user_only)
 		read_lock(&tasklist_lock);
 		for_each_process_thread(g, p) {
 			if (p != current && !freezer_should_skip(p)
-<<<<<<< HEAD
+
 			    && freezing(p) && !frozen(p)) {
 #ifdef CONFIG_SEC_DEBUG_AUTO_COMMENT
 				sched_show_task_auto_comment(p);
@@ -151,12 +151,12 @@ static int try_to_freeze_tasks(bool user_only)
 		secdbg_exin_set_unfz(sys_state[system_state], -1);
 		if (IS_ENABLED(CONFIG_SEC_DEBUG_FAIL_TO_FREEZE_PANIC))
 			panic("fail to freeze tasks: %s", secdbg_exin_get_unfz());
-=======
+
 			    && freezing(p) && !frozen(p))
 				sched_show_task(p);
 		}
 		read_unlock(&tasklist_lock);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	} else {
 		pr_cont("(elapsed %d.%03d seconds) ", elapsed_msecs / 1000,
 			elapsed_msecs % 1000);

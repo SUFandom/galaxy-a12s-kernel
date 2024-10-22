@@ -108,7 +108,7 @@ int blk_crypto_submit_bio(struct bio **bio_ptr)
 
 	/* Get device keyslot if supported */
 	if (keyslot_manager_crypto_mode_supported(q->ksm,
-<<<<<<< HEAD
+
 						  bc->bc_key->crypto_mode,
 						  bc->bc_key->data_unit_size)) {
 =======
@@ -116,7 +116,7 @@ int blk_crypto_submit_bio(struct bio **bio_ptr)
 				blk_crypto_key_dun_bytes(bc->bc_key),
 				bc->bc_key->data_unit_size,
 				bc->bc_key->is_hw_wrapped)) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		err = bio_crypt_ctx_acquire_keyslot(bc, q->ksm);
 		if (!err)
 			return 0;
@@ -186,11 +186,11 @@ bool blk_crypto_endio(struct bio *bio)
  *                @is_hw_wrapped has to be set for such keys)
  * @is_hw_wrapped: Denotes @raw_key is wrapped.
  * @crypto_mode: identifier for the encryption algorithm to use
-<<<<<<< HEAD
+
 =======
  * @dun_bytes: number of bytes that will be used to specify the DUN when this
  *	       key is used
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * @data_unit_size: the data unit size to use for en/decryption
  *
  * Return: The blk_crypto_key that was prepared, or an ERR_PTR() on error.  When
@@ -200,18 +200,18 @@ int blk_crypto_init_key(struct blk_crypto_key *blk_key,
 			const u8 *raw_key, unsigned int raw_key_size,
 			bool is_hw_wrapped,
 			enum blk_crypto_mode_num crypto_mode,
-<<<<<<< HEAD
+
 =======
 			unsigned int dun_bytes,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			unsigned int data_unit_size)
 {
 	const struct blk_crypto_mode *mode;
 	static siphash_key_t hash_key;
-<<<<<<< HEAD
+
 =======
 	u32 hash;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	memset(blk_key, 0, sizeof(*blk_key));
 
@@ -230,12 +230,12 @@ int blk_crypto_init_key(struct blk_crypto_key *blk_key,
 			return -EINVAL;
 	}
 
-<<<<<<< HEAD
+
 =======
 	if (dun_bytes <= 0 || dun_bytes > BLK_CRYPTO_MAX_IV_SIZE)
 		return -EINVAL;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (!is_power_of_2(data_unit_size))
 		return -EINVAL;
 
@@ -252,19 +252,19 @@ int blk_crypto_init_key(struct blk_crypto_key *blk_key,
 	 * precomputed here so that it only needs to be computed once per key.
 	 */
 	get_random_once(&hash_key, sizeof(hash_key));
-<<<<<<< HEAD
+
 	blk_key->hash = siphash(raw_key, raw_key_size, &hash_key);
 =======
 	hash = (u32)siphash(raw_key, raw_key_size, &hash_key);
 	blk_crypto_key_set_hash_and_dun_bytes(blk_key, hash, dun_bytes);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return 0;
 }
 EXPORT_SYMBOL_GPL(blk_crypto_init_key);
 
 /**
-<<<<<<< HEAD
+
 =======
  * blk_crypto_start_using_mode() - Start using blk-crypto on a device
  * @crypto_mode: the crypto mode that will be used
@@ -300,7 +300,7 @@ int blk_crypto_start_using_mode(enum blk_crypto_mode_num crypto_mode,
 EXPORT_SYMBOL_GPL(blk_crypto_start_using_mode);
 
 /**
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * blk_crypto_evict_key() - Evict a key from any inline encryption hardware
  *			    it may have been programmed into
  * @q: The request queue who's keyslot manager this key might have been
@@ -320,13 +320,13 @@ int blk_crypto_evict_key(struct request_queue *q,
 {
 	if (q->ksm &&
 	    keyslot_manager_crypto_mode_supported(q->ksm, key->crypto_mode,
-<<<<<<< HEAD
+
 						  key->data_unit_size))
 =======
 						  blk_crypto_key_dun_bytes(key),
 						  key->data_unit_size,
 						  key->is_hw_wrapped))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return keyslot_manager_evict_key(q->ksm, key);
 
 	return blk_crypto_fallback_evict_key(key);

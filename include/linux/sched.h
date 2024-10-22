@@ -29,11 +29,11 @@
 #include <linux/mm_event.h>
 #include <linux/task_io_accounting.h>
 #include <linux/rseq.h>
-<<<<<<< HEAD
+
 #include <linux/sec_debug_types.h>
-=======
+
 #include <linux/android_kabi.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /* task_struct member predeclarations (sorted alphabetically): */
 struct audit_context;
@@ -547,15 +547,15 @@ struct sched_entity {
 	struct sched_avg		avg;
 	struct multi_load		ml;
 #endif
-<<<<<<< HEAD
+
 	struct ontime_entity		ontime;
-=======
+
 
 	ANDROID_KABI_RESERVE(1);
 	ANDROID_KABI_RESERVE(2);
 	ANDROID_KABI_RESERVE(3);
 	ANDROID_KABI_RESERVE(4);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 struct sched_rt_entity {
@@ -575,7 +575,7 @@ struct sched_rt_entity {
 	struct rt_rq			*my_q;
 #endif
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_SMP
 #ifdef CONFIG_SCHED_USE_FLUID_RT
 	int sync_flag;
@@ -590,12 +590,12 @@ struct sched_rt_entity {
 	unsigned long			runnable_weight;
 #endif
 #endif
-=======
+
 	ANDROID_KABI_RESERVE(1);
 	ANDROID_KABI_RESERVE(2);
 	ANDROID_KABI_RESERVE(3);
 	ANDROID_KABI_RESERVE(4);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 } __randomize_layout;
 
 struct sched_dl_entity {
@@ -783,13 +783,13 @@ struct task_struct {
 	const struct sched_class	*sched_class;
 	struct sched_entity		se;
 	struct sched_rt_entity		rt;
-<<<<<<< HEAD
+
 	struct sched_avg		sa_box;
 
 #ifdef CONFIG_SCHED_USE_FLUID_RT
 	int victim_flag;
 #endif
-=======
+
 
 	/* task boost vendor fields */
 	u64				last_sleep_ts;
@@ -797,7 +797,7 @@ struct task_struct {
 	u64				boost_period;
 	u64				boost_expires;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_CGROUP_SCHED
 	struct task_group		*sched_task_group;
 #endif
@@ -822,11 +822,11 @@ struct task_struct {
 	unsigned int			policy;
 	int				nr_cpus_allowed;
 	cpumask_t			cpus_allowed;
-<<<<<<< HEAD
+
 	cpumask_t			aug_cpus_allowed;
-=======
+
 	cpumask_t			cpus_requested;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_PREEMPT_RCU
 	int				rcu_read_lock_nesting;
@@ -1394,14 +1394,14 @@ struct task_struct {
 	/* Used by LSM modules for access restriction: */
 	void				*security;
 #endif
-<<<<<<< HEAD
+
 #ifdef CONFIG_SEC_DEBUG_COMPLETE_HINT
 	struct completion		*x;
 #endif
 #ifdef CONFIG_SEC_DEBUG_DTASK
 	struct sec_debug_wait		ssdbg_wait;
 #endif
-=======
+
 	/* task is frozen/stopped (used by the cgroup freezer) */
 	ANDROID_KABI_USE(1, unsigned frozen:1);
 
@@ -1426,7 +1426,7 @@ struct task_struct {
 	ANDROID_KABI_RESERVE(7);
 	ANDROID_KABI_RESERVE(8);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/*
 	 * New fields for task_struct should be added above here, so that
 	 * they are included in the randomized portion of task_struct.

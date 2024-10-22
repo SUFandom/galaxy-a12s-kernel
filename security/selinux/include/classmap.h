@@ -116,11 +116,11 @@ struct security_class_mapping secclass_map[] = {
 	{ "netlink_route_socket",
 	  { COMMON_SOCK_PERMS,
 	    "nlmsg_read", "nlmsg_write", "nlmsg_readpriv", "nlmsg_getneigh",
-<<<<<<< HEAD
+
 		 NULL } },
-=======
+
 	    NULL } },
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	{ "netlink_tcpdiag_socket",
 	  { COMMON_SOCK_PERMS,
 	    "nlmsg_read", "nlmsg_write", NULL } },

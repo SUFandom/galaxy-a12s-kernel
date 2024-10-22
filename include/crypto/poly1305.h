@@ -13,7 +13,7 @@
 #define POLY1305_KEY_SIZE	32
 #define POLY1305_DIGEST_SIZE	16
 
-<<<<<<< HEAD
+
 struct poly1305_key {
 	u32 r[5];	/* key, base 2^26 */
 };
@@ -29,7 +29,7 @@ struct poly1305_desc_ctx {
 	u32 s[4];
 	/* accumulator */
 	struct poly1305_state h;
-=======
+
 /* The poly1305_key and poly1305_state types are mostly opaque and
  * implementation-defined. Limbs might be in base 2^64 or base 2^26, or
  * different yet. The union type provided keeps these 64-bit aligned for the
@@ -56,7 +56,7 @@ struct poly1305_state {
 };
 
 struct poly1305_desc_ctx {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/* partial buffer */
 	u8 buf[POLY1305_BLOCK_SIZE];
 	/* bytes used in partial buffer */
@@ -76,7 +76,7 @@ struct poly1305_desc_ctx {
 	};
 };
 
-<<<<<<< HEAD
+
 /*
  * Poly1305 core functions.  These implement the ε-almost-∆-universal hash
  * function underlying the Poly1305 MAC, i.e. they don't add an encrypted nonce
@@ -99,7 +99,7 @@ unsigned int crypto_poly1305_setdesckey(struct poly1305_desc_ctx *dctx,
 int crypto_poly1305_update(struct shash_desc *desc,
 			   const u8 *src, unsigned int srclen);
 int crypto_poly1305_final(struct shash_desc *desc, u8 *dst);
-=======
+
 void poly1305_init_arch(struct poly1305_desc_ctx *desc, const u8 *key);
 void poly1305_init_generic(struct poly1305_desc_ctx *desc, const u8 *key);
 
@@ -135,6 +135,6 @@ static inline void poly1305_final(struct poly1305_desc_ctx *desc, u8 *digest)
 	else
 		poly1305_final_generic(desc, digest);
 }
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #endif

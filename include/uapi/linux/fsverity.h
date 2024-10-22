@@ -34,7 +34,7 @@ struct fsverity_digest {
 	__u8 digest[];
 };
 
-<<<<<<< HEAD
+
 =======
 /*
  * Struct containing a file's Merkle tree properties.  The fs-verity file digest
@@ -85,7 +85,7 @@ struct fsverity_formatted_digest {
 	__u8 digest[];
 };
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #define FS_IOC_ENABLE_VERITY	_IOW('f', 133, struct fsverity_enable_arg)
 #define FS_IOC_MEASURE_VERITY	_IOWR('f', 134, struct fsverity_digest)
 

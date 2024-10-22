@@ -557,12 +557,12 @@ arch_initcall_sync(of_platform_default_populate_init);
 
 static int __init of_platform_sync_state_init(void)
 {
-<<<<<<< HEAD
+
 	if (of_have_populated_dt())
 		device_links_supplier_sync_state_resume();
-=======
+
 	device_links_supplier_sync_state_resume();
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return 0;
 }
 late_initcall_sync(of_platform_sync_state_init);

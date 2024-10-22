@@ -11,10 +11,10 @@
 #include <linux/suspend.h>
 #include <trace/events/power.h>
 #include <linux/wakeup_reason.h>
-<<<<<<< HEAD
+
 #include <linux/debug-snapshot.h>
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static LIST_HEAD(syscore_ops_list);
 static DEFINE_MUTEX(syscore_ops_lock);

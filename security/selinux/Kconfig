@@ -124,8 +124,7 @@ config SECURITY_SELINUX_SIDTAB_HASH_BITS
 	  to 2^SECURITY_SELINUX_SIDTAB_HASH_BITS buckets. The number of hash
 	  collisions may be viewed at /sys/fs/selinux/ss/sidtab_hash_stats. If
 	  chain lengths are high (e.g. > 20) then selecting a higher value here
-<<<<<<< HEAD
+
 	  will ensure that lookups times are short and stable.
-=======
-	  will ensure that lookups times are short and stable.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+

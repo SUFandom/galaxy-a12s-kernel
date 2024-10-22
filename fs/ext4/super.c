@@ -1137,10 +1137,10 @@ static void ext4_put_super(struct super_block *sb)
 		crypto_free_shash(sbi->s_chksum_driver);
 	kfree(sbi->s_blockgroup_lock);
 	fs_put_dax(sbi->s_daxdev);
-<<<<<<< HEAD
-=======
+
+
 	fscrypt_free_dummy_context(&sbi->s_dummy_enc_ctx);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_UNICODE
 	utf8_unload(sb->s_encoding);
 #endif
@@ -1438,7 +1438,7 @@ retry:
 	return res;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 static inline int ext4_get_knox_context(struct inode *inode,
 		const char *name, void *buffer, size_t buffer_size) {
@@ -1452,10 +1452,10 @@ static inline int ext4_set_knox_context(struct inode *inode,
 #endif
 
 static bool ext4_dummy_context(struct inode *inode)
-=======
+
 static const union fscrypt_context *
 ext4_get_dummy_context(struct super_block *sb)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	return EXT4_SB(sb)->s_dummy_enc_ctx.ctx;
 }
@@ -1498,15 +1498,15 @@ static const struct fscrypt_operations ext4_cryptops = {
 	.key_prefix		= "ext4:",
 	.get_context		= ext4_get_context,
 	.set_context		= ext4_set_context,
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	.get_knox_context	= ext4_get_knox_context,
 	.set_knox_context	= ext4_set_knox_context,
 #endif
 	.dummy_context		= ext4_dummy_context,
-=======
+
 	.get_dummy_context	= ext4_get_dummy_context,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	.empty_dir		= ext4_empty_dir,
 	.max_namelen		= EXT4_NAME_LEN,
 	.has_stable_inodes	= ext4_has_stable_inodes,
@@ -1915,11 +1915,11 @@ static const struct mount_opts {
 	{Opt_jqfmt_vfsv0, QFMT_VFS_V0, MOPT_QFMT},
 	{Opt_jqfmt_vfsv1, QFMT_VFS_V1, MOPT_QFMT},
 	{Opt_max_dir_size_kb, 0, MOPT_GTE0},
-<<<<<<< HEAD
+
 	{Opt_test_dummy_encryption, 0, MOPT_GTE0},
-=======
+
 	{Opt_test_dummy_encryption, 0, MOPT_STRING},
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_FS_ENCRYPTION_INLINE_CRYPT
 	{Opt_inlinecrypt, EXT4_MOUNT_INLINECRYPT, MOPT_SET},
 #else
@@ -1959,8 +1959,8 @@ static int ext4_sb_read_encoding(const struct ext4_super_block *es,
 }
 #endif
 
-<<<<<<< HEAD
-=======
+
+
 static int ext4_set_test_dummy_encryption(struct super_block *sb,
 					  const char *opt,
 					  const substring_t *arg,
@@ -2003,7 +2003,7 @@ static int ext4_set_test_dummy_encryption(struct super_block *sb,
 	return 1;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int handle_mount_opt(struct super_block *sb, char *opt, int token,
 			    substring_t *args, unsigned long *journal_devnum,
 			    unsigned int *journal_ioprio, int is_remount)
@@ -2193,7 +2193,7 @@ static int handle_mount_opt(struct super_block *sb, char *opt, int token,
 		*journal_ioprio =
 			IOPRIO_PRIO_VALUE(IOPRIO_CLASS_BE, arg);
 	} else if (token == Opt_test_dummy_encryption) {
-<<<<<<< HEAD
+
 #ifdef CONFIG_FS_ENCRYPTION
 		sbi->s_mount_flags |= EXT4_MF_TEST_DUMMY_ENCRYPTION;
 		ext4_msg(sb, KERN_WARNING,
@@ -2202,10 +2202,10 @@ static int handle_mount_opt(struct super_block *sb, char *opt, int token,
 		ext4_msg(sb, KERN_WARNING,
 			 "Test dummy encryption mount option ignored");
 #endif
-=======
+
 		return ext4_set_test_dummy_encryption(sb, opt, &args[0],
 						      is_remount);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	} else if (m->flags & MOPT_DATAJ) {
 		if (is_remount) {
 			if (!sbi->s_journal)
@@ -4106,15 +4106,15 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 		struct unicode_map *encoding;
 		__u16 encoding_flags;
 
-<<<<<<< HEAD
+
 		if (ext4_has_feature_encrypt(sb)) {
 			ext4_msg(sb, KERN_ERR,
 				 "Can't mount with encoding and encryption");
 			goto failed_mount;
 		}
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 		if (ext4_sb_read_encoding(es, &encoding_info,
 					  &encoding_flags)) {
 			ext4_msg(sb, KERN_ERR,

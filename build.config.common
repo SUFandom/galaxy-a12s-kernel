@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 BRANCH=android-4.19
 KERNEL_DIR=common
 
@@ -15,7 +15,7 @@ LLVM=1
 DEPMOD=depmod
 CLANG_PREBUILT_BIN=prebuilts-master/clang/host/linux-x86/clang-r416183b/bin
 BUILDTOOLS_PREBUILT_BIN=build/build-tools/path/linux-x86
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 EXTRA_CMDS=''
 STOP_SHIP_TRACEPRINTK=1

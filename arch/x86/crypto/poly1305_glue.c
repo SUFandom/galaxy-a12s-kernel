@@ -145,7 +145,7 @@ static unsigned int crypto_poly1305_setdctxkey(struct poly1305_desc_ctx *dctx,
 {
 	unsigned int acc = 0;
 	if (unlikely(!dctx->sset)) {
-<<<<<<< HEAD
+
 		datalen = crypto_poly1305_setdesckey(dctx, src, srclen);
 		src += srclen - datalen;
 		srclen = datalen;
@@ -209,7 +209,7 @@ static unsigned int crypto_poly1305_setdctxkey(struct poly1305_desc_ctx *dctx,
 		}
 	}
 	return acc;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 void poly1305_update_arch(struct poly1305_desc_ctx *dctx, const u8 *src,

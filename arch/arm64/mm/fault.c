@@ -145,7 +145,7 @@ static inline bool is_ttbr1_addr(unsigned long addr)
 	return arch_kasan_reset_tag(addr) >= VA_START;
 }
 
-<<<<<<< HEAD
+
 static inline phys_addr_t show_virt_to_phys(unsigned long addr)
 {
 	if (!is_vmalloc_addr((void *)addr) ||
@@ -158,7 +158,7 @@ static inline phys_addr_t show_virt_to_phys(unsigned long addr)
 }
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /*
  * Dump out the page tables associated with 'addr' in the currently active mm.
  */
@@ -700,13 +700,13 @@ static int __kprobes do_translation_fault(unsigned long addr,
 					  unsigned int esr,
 					  struct pt_regs *regs)
 {
-<<<<<<< HEAD
+
 	/* We may have invalid '*current' due to a stack overflow. */
 	if (!virt_addr_valid(current_thread_info()))
 		__do_kernel_fault_safe(NULL, addr, esr, regs);
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (is_ttbr0_addr(addr))
 		return do_page_fault(addr, esr, regs);
 

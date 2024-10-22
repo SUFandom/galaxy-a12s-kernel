@@ -56,10 +56,10 @@ struct page *fscrypt_alloc_bounce_page(gfp_t gfp_flags)
 
 /**
  * fscrypt_free_bounce_page() - free a ciphertext bounce page
-<<<<<<< HEAD
+
 =======
  * @bounce_page: the bounce page to free, or NULL
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Free a bounce page that was allocated by fscrypt_encrypt_pagecache_blocks(),
  * or by fscrypt_alloc_bounce_page() directly.
@@ -147,7 +147,7 @@ int fscrypt_crypt_block(const struct inode *inode, fscrypt_direction_t rw,
 	if (res) {
 		fscrypt_err(inode, "%scryption failed for block %llu: %d",
 			    (rw == FS_DECRYPT ? "De" : "En"), lblk_num, res);
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 		if (ci->ci_sdp_info) {
 			if (ci->ci_sdp_info->sdp_flags & SDP_DEK_IS_SENSITIVE) {
@@ -169,19 +169,19 @@ int fscrypt_crypt_block(const struct inode *inode, fscrypt_direction_t rw,
 		}
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return res;
 	}
 	return 0;
 }
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_encrypt_pagecache_blocks() - Encrypt filesystem blocks from a pagecache page
 =======
  * fscrypt_encrypt_pagecache_blocks() - Encrypt filesystem blocks from a
  *					pagecache page
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * @page:      The locked pagecache page containing the block(s) to encrypt
  * @len:       Total size of the block(s) to encrypt.  Must be a nonzero
  *		multiple of the filesystem's block size.
@@ -271,12 +271,12 @@ int fscrypt_encrypt_block_inplace(const struct inode *inode, struct page *page,
 EXPORT_SYMBOL(fscrypt_encrypt_block_inplace);
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_decrypt_pagecache_blocks() - Decrypt filesystem blocks in a pagecache page
 =======
  * fscrypt_decrypt_pagecache_blocks() - Decrypt filesystem blocks in a
  *					pagecache page
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * @page:      The locked pagecache page containing the block(s) to decrypt
  * @len:       Total size of the block(s) to decrypt.  Must be a nonzero
  *		multiple of the filesystem's block size.
@@ -424,13 +424,13 @@ static int __init fscrypt_init(void)
 	fscrypt_info_cachep = KMEM_CACHE(fscrypt_info, SLAB_RECLAIM_ACCOUNT);
 	if (!fscrypt_info_cachep)
 		goto fail_free_queue;
-<<<<<<< HEAD
+
 =======
 
 	err = fscrypt_init_keyring();
 	if (err)
 		goto fail_free_info;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	err = fscrypt_init_keyring();
 	if (err)

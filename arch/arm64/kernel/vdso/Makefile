@@ -17,7 +17,7 @@ obj-vdso := vgettimeofday.o note.o sigreturn.o
 targets := $(obj-vdso) vdso.so vdso.so.dbg
 obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
 
-<<<<<<< HEAD
+
 ccflags-y := -shared -fno-common -fno-builtin
 ccflags-y += -nostdlib -Wl,-soname=linux-vdso.so.1 \
 		-Wl$(comma)--hash-style=sysv
@@ -52,7 +52,7 @@ ifeq ($(CONFIG_CC_IS_CLANG), y)
     CFLAGS_REMOVE_vgettimeofday.o += -mcmodel=tiny
   endif
 endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 # Disable gcov profiling for VDSO code
 GCOV_PROFILE := n

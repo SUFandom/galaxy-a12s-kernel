@@ -126,7 +126,7 @@ static void free_sink_buffer(struct etm_event_data *event_data)
 	cpumask_t *mask = &event_data->mask;
 	struct coresight_device *sink;
 
-<<<<<<< HEAD
+
 	if (WARN_ON(cpumask_empty(mask)))
 		return;
 
@@ -136,7 +136,7 @@ static void free_sink_buffer(struct etm_event_data *event_data)
 		return;
 
 	if (WARN_ON(cpumask_empty(mask)))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return;
 
 	cpu = cpumask_first(mask);

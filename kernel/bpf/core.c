@@ -630,11 +630,11 @@ bool __weak arch_bpf_jit_check_func(const struct bpf_prog *prog)
 {
 	return true;
 }
-<<<<<<< HEAD
+
 EXPORT_SYMBOL(arch_bpf_jit_check_func);
-=======
+
 EXPORT_SYMBOL_GPL(arch_bpf_jit_check_func);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif
 
 struct bpf_binary_header *

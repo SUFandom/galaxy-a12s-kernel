@@ -622,7 +622,7 @@ config DM_BOW
 
 	  If unsure, say N.
 
-<<<<<<< HEAD
+
 config DM_DEFAULT_KEY
 	tristate "Default-key crypt target support"
 	depends on BLK_DEV_DM
@@ -649,7 +649,7 @@ config DM_USER
 
 	  To compile this code as a module, choose M here: the module will be
 	  called dm-user.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	  If unsure, say N.
 

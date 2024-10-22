@@ -23,16 +23,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-<<<<<<< HEAD
+
 =======
 #include <linux/moduleparam.h>
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <drm/ttm/ttm_execbuf_util.h>
 
 #include "virtgpu_drv.h"
 
-<<<<<<< HEAD
+
 static int virtio_gpu_resource_id_get(struct virtio_gpu_device *vgdev,
 				       uint32_t *resid)
 {
@@ -78,13 +78,13 @@ static int virtio_gpu_resource_id_get(struct virtio_gpu_device *vgdev,
 			return handle;
 		*resid = handle + 1;
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return 0;
 }
 
 static void virtio_gpu_resource_id_put(struct virtio_gpu_device *vgdev, uint32_t id)
 {
-<<<<<<< HEAD
+
 #if 0
 	ida_free(&vgdev->resource_ida, id - 1);
 #endif
@@ -92,7 +92,7 @@ static void virtio_gpu_resource_id_put(struct virtio_gpu_device *vgdev, uint32_t
 	if (!virtio_gpu_virglrenderer_workaround) {
 		ida_free(&vgdev->resource_ida, id - 1);
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void virtio_gpu_ttm_bo_destroy(struct ttm_buffer_object *tbo)

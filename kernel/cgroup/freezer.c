@@ -315,7 +315,7 @@ void cgroup_freeze(struct cgroup *cgrp, bool freeze)
 	if (!applied)
 		cgroup_file_notify(&cgrp->events_file);
 }
-<<<<<<< HEAD
+
 
 static u64 freezer_parent_freezing_read(struct cgroup_subsys_state *css,
 					struct cftype *cft)
@@ -392,5 +392,5 @@ struct cgroup_subsys freezer_cgrp_subsys = {
 	.cancel_attach  = freezer_cancel_attach,
 #endif
 };
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+

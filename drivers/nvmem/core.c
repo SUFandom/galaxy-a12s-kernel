@@ -103,11 +103,11 @@ static void nvmem_cell_drop(struct nvmem_cell *cell)
 {
 	mutex_lock(&nvmem_mutex);
 	list_del(&cell->node);
-<<<<<<< HEAD
+
 	mutex_unlock(&nvmem_cells_mutex);
-=======
+
 	mutex_unlock(&nvmem_mutex);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	of_node_put(cell->np);
 	kfree(cell);
 }
@@ -423,11 +423,11 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
 			goto err_teardown_compat;
 	}
 
-<<<<<<< HEAD
+
 	rval = nvmem_add_cells_from_of(nvmem);
 	if (rval)
 		goto err_teardown_compat;
-=======
+
 	rval = nvmem_add_cells_from_table(nvmem);
 	if (rval)
 		goto err_remove_cells;
@@ -435,7 +435,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
 	rval = nvmem_add_cells_from_of(nvmem);
 	if (rval)
 		goto err_remove_cells;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return nvmem;
 
@@ -734,11 +734,11 @@ nvmem_find_cell_by_node(struct nvmem_device *nvmem, struct device_node *np)
 	struct nvmem_cell *cell = NULL;
 
 	mutex_lock(&nvmem_mutex);
-<<<<<<< HEAD
+
 	list_for_each_entry(cell, &nvmem_cells, node) {
-=======
+
 	list_for_each_entry(cell, &nvmem->cells, node) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		if (np == cell->np)
 			break;
 	}

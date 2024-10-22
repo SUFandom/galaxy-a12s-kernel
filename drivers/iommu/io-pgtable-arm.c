@@ -21,10 +21,10 @@
 #define pr_fmt(fmt)	"arm-lpae io-pgtable: " fmt
 
 #include <linux/atomic.h>
-<<<<<<< HEAD
+
 #include <linux/bitops.h>
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <linux/io-pgtable.h>
 #include <linux/iommu.h>
 #include <linux/kernel.h>
@@ -36,11 +36,11 @@
 
 #include <asm/barrier.h>
 
-<<<<<<< HEAD
+
 #define ARM_LPAE_MAX_ADDR_BITS		52
 =======
 #define ARM_LPAE_MAX_ADDR_BITS		48
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #define ARM_LPAE_S2_MAX_CONCAT_PAGES	16
 #define ARM_LPAE_MAX_LEVELS		4
 

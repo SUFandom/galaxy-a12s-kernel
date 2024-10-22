@@ -10,13 +10,13 @@
 #include <linux/proc_fs.h>
 #include <linux/f2fs_fs.h>
 #include <linux/seq_file.h>
-<<<<<<< HEAD
+
 #include <linux/statfs.h>
 #include <linux/unicode.h>
 #include <linux/nls.h>
-=======
+
 #include <linux/unicode.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #include "f2fs.h"
 #include "segment.h"
@@ -167,7 +167,7 @@ static ssize_t features_show(struct f2fs_attr *a,
 		return sprintf(buf, "0\n");
 
 	if (f2fs_sb_has_encrypt(sbi))
-<<<<<<< HEAD
+
 		len += snprintf(buf, PAGE_SIZE - len, "%s",
 						"encryption");
 	if (f2fs_sb_has_blkzoned(sbi))
@@ -209,7 +209,7 @@ static ssize_t features_show(struct f2fs_attr *a,
 	len += snprintf(buf + len, PAGE_SIZE - len, "%s%s",
 				len ? ", " : "", "pin_file");
 	len += snprintf(buf + len, PAGE_SIZE - len, "\n");
-=======
+
 		len += scnprintf(buf, PAGE_SIZE - len, "%s",
 						"encryption");
 	if (f2fs_sb_has_blkzoned(sbi))
@@ -251,7 +251,7 @@ static ssize_t features_show(struct f2fs_attr *a,
 	len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
 				len ? ", " : "", "pin_file");
 	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return len;
 }
 
@@ -259,7 +259,7 @@ static ssize_t current_reserved_blocks_show(struct f2fs_attr *a,
 					struct f2fs_sb_info *sbi, char *buf)
 {
 	return sprintf(buf, "%u\n", sbi->current_reserved_blocks);
-<<<<<<< HEAD
+
 }
 
 #if defined(CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG) && defined(CONFIG_F2FS_SEC_DEBUG_NODE)
@@ -610,8 +610,8 @@ static void __sec_bigdata_init_value(struct f2fs_sb_info *sbi,
 		sbi->s_sec_num_apps = 0;
 		sbi->s_sec_capacity_apps_kb = 0;
 	}
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 }
 
 static ssize_t unusable_show(struct f2fs_attr *a,
@@ -1058,10 +1058,10 @@ enum feat_id {
 	FEAT_SB_CHECKSUM,
 	FEAT_CASEFOLD,
 	FEAT_COMPRESSION,
-<<<<<<< HEAD
-=======
+
+
 	FEAT_TEST_DUMMY_ENCRYPTION_V2,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 static ssize_t f2fs_feature_show(struct f2fs_attr *a,
@@ -1082,10 +1082,10 @@ static ssize_t f2fs_feature_show(struct f2fs_attr *a,
 	case FEAT_SB_CHECKSUM:
 	case FEAT_CASEFOLD:
 	case FEAT_COMPRESSION:
-<<<<<<< HEAD
-=======
+
+
 	case FEAT_TEST_DUMMY_ENCRYPTION_V2:
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return sprintf(buf, "supported\n");
 	}
 	return 0;
@@ -1169,7 +1169,7 @@ F2FS_RW_ATTR(F2FS_SBI, f2fs_super_block, extension_list, extension_list);
 F2FS_RW_ATTR(FAULT_INFO_RATE, f2fs_fault_info, inject_rate, inject_rate);
 F2FS_RW_ATTR(FAULT_INFO_TYPE, f2fs_fault_info, inject_type, inject_type);
 #endif
-<<<<<<< HEAD
+
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_gc_stat, sec_stat);
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_io_stat, sec_stat);
 #ifdef CONFIG_F2FS_SEC_DEBUG_NODE
@@ -1186,10 +1186,10 @@ F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_capacity_apps_kb, s_sec_capacity_apps_k
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_defrag_stat, s_sec_part_best_extents);
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_fua_mode, s_sec_cond_fua_mode);
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_hqm_preserve, sec_hqm_preserve);
-=======
+
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, data_io_flag, data_io_flag);
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, node_io_flag, node_io_flag);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 F2FS_GENERAL_RO_ATTR(dirty_segments);
 F2FS_GENERAL_RO_ATTR(free_segments);
 F2FS_GENERAL_RO_ATTR(lifetime_write_kbytes);
@@ -1198,10 +1198,10 @@ F2FS_GENERAL_RO_ATTR(features);
 F2FS_GENERAL_RO_ATTR(current_reserved_blocks);
 F2FS_GENERAL_RO_ATTR(unusable);
 F2FS_GENERAL_RO_ATTR(encoding);
-<<<<<<< HEAD
-=======
+
+
 F2FS_GENERAL_RO_ATTR(mounted_time_sec);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_F2FS_STAT_FS
 F2FS_STAT_ATTR(STAT_INFO, f2fs_stat_info, cp_foreground_calls, cp_count);
 F2FS_STAT_ATTR(STAT_INFO, f2fs_stat_info, cp_background_calls, bg_cp_count);
@@ -1232,13 +1232,13 @@ F2FS_FEATURE_RO_ATTR(verity, FEAT_VERITY);
 #endif
 F2FS_FEATURE_RO_ATTR(sb_checksum, FEAT_SB_CHECKSUM);
 F2FS_FEATURE_RO_ATTR(casefold, FEAT_CASEFOLD);
-<<<<<<< HEAD
+
 F2FS_FEATURE_RO_ATTR(compression, FEAT_COMPRESSION);
-=======
+
 #ifdef CONFIG_F2FS_FS_COMPRESSION
 F2FS_FEATURE_RO_ATTR(compression, FEAT_COMPRESSION);
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define ATTR_LIST(name) (&f2fs_attr_##name.attr)
 static struct attribute *f2fs_attrs[] = {
@@ -1306,10 +1306,10 @@ static struct attribute *f2fs_attrs[] = {
 	ATTR_LIST(reserved_blocks),
 	ATTR_LIST(current_reserved_blocks),
 	ATTR_LIST(encoding),
-<<<<<<< HEAD
-=======
+
+
 	ATTR_LIST(mounted_time_sec),
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_F2FS_STAT_FS
 	ATTR_LIST(cp_foreground_calls),
 	ATTR_LIST(cp_background_calls),
@@ -1343,13 +1343,13 @@ static struct attribute *f2fs_feat_attrs[] = {
 #endif
 	ATTR_LIST(sb_checksum),
 	ATTR_LIST(casefold),
-<<<<<<< HEAD
+
 	ATTR_LIST(compression),
-=======
+
 #ifdef CONFIG_F2FS_FS_COMPRESSION
 	ATTR_LIST(compression),
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	NULL,
 };
 

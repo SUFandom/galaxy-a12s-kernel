@@ -26,11 +26,11 @@
 #include <linux/uidgid.h>
 #include <linux/gfp.h>
 #include <linux/overflow.h>
-<<<<<<< HEAD
+
 #include <linux/slab.h>
-=======
+
 #include <linux/android_kabi.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <asm/device.h>
 
 struct device;
@@ -866,11 +866,11 @@ enum device_link_state {
  * PM_RUNTIME: If set, the runtime PM framework will use this link.
  * RPM_ACTIVE: Run pm_runtime_get_sync() on the supplier during link creation.
  * AUTOREMOVE_SUPPLIER: Remove the link automatically on supplier driver unbind.
-<<<<<<< HEAD
-=======
+
+
  * AUTOPROBE_CONSUMER: Probe consumer driver automatically after supplier binds.
  * MANAGED: The core tracks presence of supplier/consumer drivers (internal).
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * SYNC_STATE_ONLY: Link only affects sync_state() behavior.
  */
 #define DL_FLAG_STATELESS		BIT(0)
@@ -878,11 +878,11 @@ enum device_link_state {
 #define DL_FLAG_PM_RUNTIME		BIT(2)
 #define DL_FLAG_RPM_ACTIVE		BIT(3)
 #define DL_FLAG_AUTOREMOVE_SUPPLIER	BIT(4)
-<<<<<<< HEAD
-=======
+
+
 #define DL_FLAG_AUTOPROBE_CONSUMER	BIT(5)
 #define DL_FLAG_MANAGED			BIT(6)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #define DL_FLAG_SYNC_STATE_ONLY		BIT(7)
 
 /**
@@ -1121,8 +1121,8 @@ struct device {
 	bool			offline:1;
 	bool			of_node_reused:1;
 	bool			state_synced:1;
-<<<<<<< HEAD
-=======
+
+
 
 	ANDROID_KABI_RESERVE(1);
 	ANDROID_KABI_RESERVE(2);
@@ -1132,7 +1132,7 @@ struct device {
 	ANDROID_KABI_RESERVE(6);
 	ANDROID_KABI_RESERVE(7);
 	ANDROID_KABI_RESERVE(8);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 static inline struct device *kobj_to_dev(struct kobject *kobj)

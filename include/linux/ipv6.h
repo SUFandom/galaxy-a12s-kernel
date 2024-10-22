@@ -3,11 +3,11 @@
 #define _IPV6_H
 
 #include <uapi/linux/ipv6.h>
-<<<<<<< HEAD
-=======
+
+
 #include <uapi/linux/icmpv6.h>
 #include <linux/android_kabi.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define ipv6_optlen(p)  (((p)->hdrlen+1) << 3)
 #define ipv6_authlen(p) (((p)->hdrlen+2) << 2)

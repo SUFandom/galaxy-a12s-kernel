@@ -27,7 +27,7 @@ automatically verified against the file's Merkle tree.  Reads of any
 corrupted data, including mmap reads, will fail.
 
 Userspace can use another ioctl to retrieve the root hash (actually
-<<<<<<< HEAD
+
 the "file measurement", which is a hash that includes the root hash)
 that fs-verity is enforcing for the file.  This ioctl executes in
 constant time, regardless of the file size.
@@ -35,7 +35,7 @@ constant time, regardless of the file size.
 the "fs-verity file digest", which is a hash that includes the Merkle
 tree root hash) that fs-verity is enforcing for the file.  This ioctl
 executes in constant time, regardless of the file size.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 fs-verity is essentially a way to hash a file in constant time,
 subject to the caveat that reads which would violate the hash will
@@ -183,7 +183,7 @@ FS_IOC_ENABLE_VERITY can fail with the following errors:
 FS_IOC_MEASURE_VERITY
 ---------------------
 
-<<<<<<< HEAD
+
 The FS_IOC_MEASURE_VERITY ioctl retrieves the measurement of a verity
 file.  The file measurement is a digest that cryptographically
 identifies the file contents that are being enforced on reads.
@@ -192,7 +192,7 @@ The FS_IOC_MEASURE_VERITY ioctl retrieves the digest of a verity file.
 The fs-verity file digest is a cryptographic digest that identifies
 the file contents that are being enforced on reads; it is computed via
 a Merkle tree and is different from a traditional full-file digest.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 This ioctl takes in a pointer to a variable-length structure::
 
@@ -210,11 +210,11 @@ On success, 0 is returned and the kernel fills in the structure as
 follows:
 
 - ``digest_algorithm`` will be the hash algorithm used for the file
-<<<<<<< HEAD
+
   measurement.  It will match ``fsverity_enable_arg::hash_algorithm``.
 =======
   digest.  It will match ``fsverity_enable_arg::hash_algorithm``.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 - ``digest_size`` will be the size of the digest in bytes, e.g. 32
   for SHA-256.  (This can be redundant with ``digest_algorithm``.)
 - ``digest`` will be the actual bytes of the digest.
@@ -274,21 +274,21 @@ non-verity one, with the following exceptions:
   with EIO (for read()) or SIGBUS (for mmap() reads).
 
 - If the sysctl "fs.verity.require_signatures" is set to 1 and the
-<<<<<<< HEAD
+
   file's verity measurement is not signed by a key in the fs-verity
   keyring, then opening the file will fail.  See `Built-in signature
   verification`_.
 =======
   file is not signed by a key in the fs-verity keyring, then opening
   the file will fail.  See `Built-in signature verification`_.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 Direct access to the Merkle tree is not supported.  Therefore, if a
 verity file is copied, or is backed up and restored, then it will lose
 its "verity"-ness.  fs-verity is primarily meant for files like
 executables that are managed by a package manager.
 
-<<<<<<< HEAD
+
 File measurement computation
 ============================
 
@@ -310,7 +310,7 @@ that support fs-verity.
 
 Userspace only needs to be aware of this algorithm if it needs to
 compute fs-verity file digests itself, e.g. in order to sign files.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 .. _fsverity_merkle_tree:
 
@@ -360,7 +360,7 @@ can't a distinguish a large file from a small second file whose data
 is exactly the top-level hash block of the first file.  Ambiguities
 also arise from the convention of padding to the next block boundary.
 
-<<<<<<< HEAD
+
 To solve this problem, the verity file measurement is actually
 computed as a hash of the following structure, which contains the
 Merkle tree root hash as well as other fields such as the file size::
@@ -368,31 +368,31 @@ Merkle tree root hash as well as other fields such as the file size::
 To solve this problem, the fs-verity file digest is actually computed
 as a hash of the following structure, which contains the Merkle tree
 root hash as well as other fields such as the file size::
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
     struct fsverity_descriptor {
             __u8 version;           /* must be 1 */
             __u8 hash_algorithm;    /* Merkle tree hash algorithm */
             __u8 log_blocksize;     /* log2 of size of data and tree blocks */
             __u8 salt_size;         /* size of salt in bytes; 0 if none */
-<<<<<<< HEAD
+
             __le32 sig_size;        /* must be 0 */
 =======
             __le32 __reserved_0x04; /* must be 0 */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
             __le64 data_size;       /* size of file the Merkle tree is built over */
             __u8 root_hash[64];     /* Merkle tree root hash */
             __u8 salt[32];          /* salt prepended to each hashed block */
             __u8 __reserved[144];   /* must be 0's */
     };
 
-<<<<<<< HEAD
+
 Note that the ``sig_size`` field must be set to 0 for the purpose of
 computing the file measurement, even if a signature was provided (or
 will be provided) to `FS_IOC_ENABLE_VERITY`_.
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 Built-in signature verification
 ===============================
 
@@ -407,7 +407,7 @@ kernel.  Specifically, it adds support for:
    certificates from being added.
 
 2. `FS_IOC_ENABLE_VERITY`_ accepts a pointer to a PKCS#7 formatted
-<<<<<<< HEAD
+
    detached signature in DER format of the file measurement.  On
    success, this signature is persisted alongside the Merkle tree.
    Then, any time the file is opened, the kernel will verify the
@@ -437,7 +437,7 @@ fs-verity file digests must be signed in the following format, which
 is similar to the structure used by `FS_IOC_MEASURE_VERITY`_::
 
     struct fsverity_formatted_digest {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
             char magic[8];                  /* must be "FSVerity" */
             __le16 digest_algorithm;
             __le16 digest_size;
@@ -486,13 +486,13 @@ can only be set by `FS_IOC_ENABLE_VERITY`_, and it cannot be cleared.
 
 ext4 also supports encryption, which can be used simultaneously with
 fs-verity.  In this case, the plaintext data is verified rather than
-<<<<<<< HEAD
+
 the ciphertext.  This is necessary in order to make the file
 measurement meaningful, since every file is encrypted differently.
 =======
 the ciphertext.  This is necessary in order to make the fs-verity file
 digest meaningful, since every file is encrypted differently.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 ext4 stores the verity metadata (Merkle tree and fsverity_descriptor)
 past the end of the file, starting at the first 64K boundary beyond
@@ -662,13 +662,13 @@ weren't already directly answered in other parts of this document.
 :Q: Isn't fs-verity useless because the attacker can just modify the
     hashes in the Merkle tree, which is stored on-disk?
 :A: To verify the authenticity of an fs-verity file you must verify
-<<<<<<< HEAD
+
     the authenticity of the "file measurement", which is basically the
     root hash of the Merkle tree.  See `Use cases`_.
 =======
     the authenticity of the "fs-verity file digest", which
     incorporates the root hash of the Merkle tree.  See `Use cases`_.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 :Q: Isn't fs-verity useless because the attacker can just replace a
     verity file with a non-verity one?

@@ -10,10 +10,10 @@
 #include <linux/f2fs_fs.h>
 #include <linux/sched/signal.h>
 #include <linux/unicode.h>
-<<<<<<< HEAD
+
 #include <linux/iversion.h>
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #include "f2fs.h"
 #include "node.h"
 #include "acl.h"
@@ -194,12 +194,12 @@ static unsigned long dir_block_index(unsigned int level,
 
 static struct f2fs_dir_entry *find_in_block(struct inode *dir,
 				struct page *dentry_page,
-<<<<<<< HEAD
+
 				struct fscrypt_name *fname,
 				f2fs_hash_t namehash,
-=======
+
 				const struct f2fs_filename *fname,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				int *max_slots,
 				struct page **res_page)
 {
@@ -210,11 +210,11 @@ static struct f2fs_dir_entry *find_in_block(struct inode *dir,
 	dentry_blk = (struct f2fs_dentry_block *)page_address(dentry_page);
 
 	make_dentry_ptr_block(dir, &d, dentry_blk);
-<<<<<<< HEAD
+
 	de = f2fs_find_target_dentry(fname, namehash, max_slots, &d);
-=======
+
 	de = f2fs_find_target_dentry(&d, fname, max_slots);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (de)
 		*res_page = dentry_page;
 
@@ -225,7 +225,7 @@ static struct f2fs_dir_entry *find_in_block(struct inode *dir,
 /*
  * Test whether a case-insensitive directory entry matches the filename
  * being searched for.
-<<<<<<< HEAD
+
  *
  * Only called for encrypted names if the key is available.
  *
@@ -251,7 +251,7 @@ static int f2fs_ci_compare(const struct inode *parent, const struct qstr *name,
 		ret = fscrypt_fname_disk_to_usr(parent, 0, 0, &encrypted_name,
 						&decrypted_name);
 		if (ret < 0)
-=======
+
  */
 static bool f2fs_match_ci_name(const struct inode *dir, const struct qstr *name,
 			       const u8 *de_name, u32 de_name_len)
@@ -275,13 +275,13 @@ static bool f2fs_match_ci_name(const struct inode *dir, const struct qstr *name,
 		res = fscrypt_fname_disk_to_usr(dir, 0, 0, &encrypted_name,
 						&decrypted_name);
 		if (res < 0)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			goto out;
 		entry.name = decrypted_name.name;
 		entry.len = decrypted_name.len;
 	}
 
-<<<<<<< HEAD
+
 	if (quick)
 		ret = utf8_strncasecmp_folded(um, name, &entry);
 	else
@@ -366,7 +366,7 @@ static inline bool f2fs_match_name(struct f2fs_dentry_ptr *d,
 struct f2fs_dir_entry *f2fs_find_target_dentry(struct fscrypt_name *fname,
 			f2fs_hash_t namehash, int *max_slots,
 			struct f2fs_dentry_ptr *d)
-=======
+
 	res = utf8_strncasecmp_folded(um, name, &entry);
 	if (res < 0) {
 		/*
@@ -407,7 +407,7 @@ static inline bool f2fs_match_name(const struct inode *dir,
 
 struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
 			const struct f2fs_filename *fname, int *max_slots)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct f2fs_dir_entry *de;
 	struct fscrypt_str cf_str = { .name = NULL, .len = 0 };
@@ -434,13 +434,13 @@ struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
 			continue;
 		}
 
-<<<<<<< HEAD
+
 		if (f2fs_match_name(d, de, fname, &cf_str, bit_pos, namehash))
-=======
+
 		if (de->hash_code == fname->hash &&
 		    f2fs_match_name(d->inode, fname, d->filename[bit_pos],
 				    le16_to_cpu(de->name_len)))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			goto found;
 
 		if (max_slots && max_len > *max_slots)
@@ -473,10 +473,10 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
 	struct f2fs_dir_entry *de = NULL;
 	bool room = false;
 	int max_slots;
-<<<<<<< HEAD
+
 	f2fs_hash_t namehash = f2fs_dentry_hash(dir, &name, fname);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	nbucket = dir_buckets(level, F2FS_I(dir)->i_dir_level);
 	nblock = bucket_blocks(level);
@@ -498,13 +498,13 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
 			}
 		}
 
-<<<<<<< HEAD
+
 		de = find_in_block(dir, dentry_page, fname, namehash,
 							&max_slots, res_page);
-=======
+
 		de = find_in_block(dir, dentry_page, fname, &max_slots,
 				   res_page);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		if (de)
 			break;
 
@@ -575,7 +575,7 @@ struct f2fs_dir_entry *f2fs_find_entry(struct inode *dir,
 	struct f2fs_filename fname;
 	int err;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_UNICODE
 	if (sb_has_enc_strict_mode(dir->i_sb) && IS_CASEFOLDED(dir) &&
 			utf8_validate(dir->i_sb->s_encoding, child)) {
@@ -585,9 +585,9 @@ struct f2fs_dir_entry *f2fs_find_entry(struct inode *dir,
 #endif
 
 	err = fscrypt_setup_filename(dir, child, 1, &fname);
-=======
+
 	err = f2fs_setup_filename(dir, child, 1, &fname);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (err) {
 		if (err == -ENOENT)
 			*res_page = NULL;
@@ -645,12 +645,12 @@ static void init_dent_inode(struct inode *dir, struct inode *inode,
 {
 	struct f2fs_inode *ri;
 
-<<<<<<< HEAD
-=======
+
+
 	if (!fname) /* tmpfile case? */
 		return;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	f2fs_wait_on_page_writeback(ipage, NODE, true, true);
 
 	/* copy name info. to this inode page */
@@ -746,12 +746,12 @@ struct page *f2fs_init_inode_metadata(struct inode *inode, struct inode *dir,
 		if (err)
 			goto put_error;
 
-<<<<<<< HEAD
+
 		if ((IS_ENCRYPTED(dir) || dummy_encrypt) &&
 					f2fs_may_encrypt(inode)) {
-=======
+
 		if (IS_ENCRYPTED(inode)) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			err = fscrypt_inherit_context(dir, inode, page, false);
 			if (err)
 				goto put_error;
@@ -762,15 +762,15 @@ struct page *f2fs_init_inode_metadata(struct inode *inode, struct inode *dir,
 			return page;
 	}
 
-<<<<<<< HEAD
+
 	if (new_name) {
 		init_dent_inode(new_name, page);
 		if (IS_ENCRYPTED(dir))
 			file_set_enc_name(inode);
 	}
-=======
+
 	init_dent_inode(dir, inode, fname, page);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/*
 	 * This file should be checkpointed during fsync.
@@ -835,19 +835,19 @@ next:
 }
 
 bool f2fs_has_enough_room(struct inode *dir, struct page *ipage,
-<<<<<<< HEAD
+
 					struct fscrypt_name *fname)
 {
 	struct f2fs_dentry_ptr d;
 	unsigned int bit_pos;
 	int slots = GET_DENTRY_SLOTS(fname_len(fname));
-=======
+
 			  const struct f2fs_filename *fname)
 {
 	struct f2fs_dentry_ptr d;
 	unsigned int bit_pos;
 	int slots = GET_DENTRY_SLOTS(fname->disk_name.len);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	make_dentry_ptr_inline(dir, &d, inline_data_addr(dir, ipage));
 
@@ -878,15 +878,15 @@ void f2fs_update_dentry(nid_t ino, umode_t mode, struct f2fs_dentry_ptr *d,
 	}
 }
 
-<<<<<<< HEAD
+
 int f2fs_add_regular_entry(struct inode *dir, const struct qstr *new_name,
 				const struct qstr *orig_name,
 				f2fs_hash_t dentry_hash,
 				struct inode *inode, nid_t ino, umode_t mode)
-=======
+
 int f2fs_add_regular_entry(struct inode *dir, const struct f2fs_filename *fname,
 			   struct inode *inode, nid_t ino, umode_t mode)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	unsigned int bit_pos;
 	unsigned int level;
@@ -900,11 +900,11 @@ int f2fs_add_regular_entry(struct inode *dir, const struct f2fs_filename *fname,
 	int slots, err = 0;
 
 	level = 0;
-<<<<<<< HEAD
+
 	slots = GET_DENTRY_SLOTS(new_name->len);
-=======
+
 	slots = GET_DENTRY_SLOTS(fname->disk_name.len);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	current_depth = F2FS_I(dir)->i_current_depth;
 	if (F2FS_I(dir)->chash == fname->hash) {
@@ -989,26 +989,26 @@ fail:
 int f2fs_add_dentry(struct inode *dir, const struct f2fs_filename *fname,
 		    struct inode *inode, nid_t ino, umode_t mode)
 {
-<<<<<<< HEAD
+
 	struct qstr new_name;
 	f2fs_hash_t dentry_hash;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	int err = -EAGAIN;
 
 	if (f2fs_has_inline_dentry(dir))
-<<<<<<< HEAD
+
 		err = f2fs_add_inline_entry(dir, &new_name, fname,
 							inode, ino, mode);
 	dentry_hash = f2fs_dentry_hash(dir, &new_name, fname);
 	if (err == -EAGAIN)
 		err = f2fs_add_regular_entry(dir, &new_name, fname->usr_fname,
 						dentry_hash, inode, ino, mode);
-=======
+
 		err = f2fs_add_inline_entry(dir, fname, inode, ino, mode);
 	if (err == -EAGAIN)
 		err = f2fs_add_regular_entry(dir, fname, inode, ino, mode);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	f2fs_update_time(F2FS_I_SB(dir), REQ_TIME);
 	return err;
@@ -1329,7 +1329,7 @@ static int f2fs_readdir(struct file *file, struct dir_context *ctx)
 		err = f2fs_fill_dentries(ctx, &d,
 				n * NR_DENTRY_IN_BLOCK, &fstr);
 		if (err) {
-<<<<<<< HEAD
+
 			struct f2fs_sb_info *sbi = F2FS_P_SB(dentry_page);
 
 			if (err == -EINVAL) {
@@ -1338,8 +1338,8 @@ static int f2fs_readdir(struct file *file, struct dir_context *ctx)
 				f2fs_bug_on(sbi, 1);
 			}
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 			f2fs_put_page(dentry_page, 0);
 			break;
 		}

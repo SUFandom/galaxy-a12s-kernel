@@ -515,16 +515,16 @@ int f2fs_try_to_free_nats(struct f2fs_sb_info *sbi, int nr_shrink)
 	return nr - nr_shrink;
 }
 
-<<<<<<< HEAD
+
 /*
  * This function always returns success
  */
 int __f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
 					struct node_info *ni, int op_flags)
-=======
+
 int f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
 						struct node_info *ni)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct f2fs_nm_info *nm_i = NM_I(sbi);
 	struct curseg_info *curseg = CURSEG_I(sbi, CURSEG_HOT_DATA);
@@ -1201,14 +1201,14 @@ int f2fs_remove_inode_page(struct inode *inode)
 	}
 
 	if (unlikely(inode->i_blocks != 0 && inode->i_blocks != 8)) {
-<<<<<<< HEAD
+
 		f2fs_warn(F2FS_I_SB(inode), "Inconsistent i_blocks, ino:%lu, iblocks:%llu",
 			  inode->i_ino, (unsigned long long)inode->i_blocks);
-=======
+
 		f2fs_warn(F2FS_I_SB(inode),
 			"f2fs_remove_inode_page: inconsistent i_blocks, ino:%lu, iblocks:%llu",
 			inode->i_ino, (unsigned long long)inode->i_blocks);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
 	}
 
@@ -1323,13 +1323,13 @@ static int read_node_page(struct page *page, int op_flags)
 	}
 
 	fio.new_blkaddr = fio.old_blkaddr = ni.blk_addr;
-<<<<<<< HEAD
+
 	if (op_flags & F2FS_REQ_DEFKEY_BYPASS)
 		f2fs_warn(sbi, "inconsistent node lower block, nid: %lu, ino: %lu, blk_addr: %lu",
 				(unsigned long) ni.nid, (unsigned long) ni.ino,
 				(unsigned long) ni.blk_addr);
 	return f2fs_submit_page_bio(&fio);
-=======
+
 
 	err = f2fs_submit_page_bio(&fio);
 
@@ -1337,7 +1337,7 @@ static int read_node_page(struct page *page, int op_flags)
 		f2fs_update_iostat(sbi, FS_NODE_READ_IO, F2FS_BLKSIZE);
 
 	return err;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 /*
@@ -1992,17 +1992,17 @@ continue_unlock:
 				goto continue_unlock;
 			}
 
-<<<<<<< HEAD
+
 			/* flush inline_data/inode, if it's async context. */
 			if (!do_balance)
 				goto write_node;
 
 			/* flush inline_data */
 			if (is_inline_node(page)) {
-=======
+
 			/* flush inline_data, if it's async context. */
 			if (do_balance && is_inline_node(page)) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				clear_inline_node(page);
 				unlock_page(page);
 				flush_inline_data(sbi, ino_of_node(page));
@@ -2015,11 +2015,11 @@ continue_unlock:
 				if (flush_dirty_inode(page))
 					goto lock_node;
 			}
-<<<<<<< HEAD
-write_node:
-=======
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+write_node:
+
+
+
 			f2fs_wait_on_page_writeback(page, NODE, true, true);
 
 			if (!clear_page_dirty_for_io(page))
@@ -3062,11 +3062,11 @@ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
 		up_write(&nm_i->nat_tree_lock);
 	}
 
-<<<<<<< HEAD
+
 	if (!nm_i->nat_cnt[DIRTY_NAT])
-=======
+
 	if (!nm_i->dirty_nat_cnt)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return 0;
 
 	down_write(&nm_i->nat_tree_lock);

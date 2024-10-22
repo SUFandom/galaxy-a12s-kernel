@@ -1336,7 +1336,7 @@ static ssize_t polling_interval_store(struct device *dev,
 static DEVICE_ATTR_RW(polling_interval);
 
 
-<<<<<<< HEAD
+
 #define show_one(name)						\
 static ssize_t name##_show					\
 (struct device *dev, struct device_attribute *attr, char *buf)	\
@@ -1372,12 +1372,12 @@ unlock:
 	mutex_unlock(&df->lock);
 	mutex_unlock(&df->event_lock);
 	return ret;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 show_one(min_freq);
 show_one(max_freq);
 
-<<<<<<< HEAD
+
 static DEVICE_ATTR_RO(min_freq);
 static DEVICE_ATTR_RO(max_freq);
 =======
@@ -1436,7 +1436,7 @@ static ssize_t max_freq_show(struct device *dev, struct device_attribute *attr,
 	return sprintf(buf, "%lu\n", MIN(df->scaling_max_freq, df->max_freq));
 }
 static DEVICE_ATTR_RW(max_freq);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static ssize_t available_frequencies_show(struct device *d,
 					  struct device_attribute *attr,

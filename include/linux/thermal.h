@@ -128,13 +128,13 @@ struct thermal_zone_device_ops {
 			  enum thermal_trend *);
 	int (*notify) (struct thermal_zone_device *, int,
 		       enum thermal_trip_type);
-<<<<<<< HEAD
+
 	int (*throttle_hotplug) (struct thermal_zone_device *);
-=======
+
 	bool (*is_wakeable)(struct thermal_zone_device *);
 	int (*set_polling_delay)(struct thermal_zone_device *, int);
 	int (*set_passive_delay)(struct thermal_zone_device *, int);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 struct thermal_cooling_device_ops {
@@ -399,11 +399,11 @@ struct thermal_zone_of_device_ops {
 	int (*set_trips)(void *, int, int);
 	int (*set_emul_temp)(void *, int);
 	int (*set_trip_temp)(void *, int, int);
-<<<<<<< HEAD
+
 	int (*throttle_cpu_hotplug)(void *, int temp);
-=======
+
 	int (*get_trip_temp)(void *, int, int *);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /**
@@ -421,7 +421,7 @@ struct thermal_trip {
 	enum thermal_trip_type type;
 };
 
-<<<<<<< HEAD
+
 /***   Private data structures to represent thermal device tree data ***/
 
 /**
@@ -481,8 +481,8 @@ struct __thermal_zone {
 	struct __sensor_param *senps;
 };
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 /* Different aggregation logic supported for virtual sensors */
 enum aggregation_logic {
 	VIRT_WEIGHTED_AVG,
@@ -606,11 +606,11 @@ thermal_of_cooling_device_register(struct device_node *np, const char *, void *,
 				   const struct thermal_cooling_device_ops *);
 void thermal_cooling_device_unregister(struct thermal_cooling_device *);
 struct thermal_zone_device *thermal_zone_get_zone_by_name(const char *name);
-<<<<<<< HEAD
+
 struct thermal_zone_device *thermal_zone_get_zone_by_cool_np(struct device_node *cool_np);
-=======
+
 struct thermal_cooling_device *thermal_zone_get_cdev_by_name(const char *name);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 int thermal_zone_get_temp(struct thermal_zone_device *tz, int *temp);
 int thermal_zone_get_slope(struct thermal_zone_device *tz);
 int thermal_zone_get_offset(struct thermal_zone_device *tz);
@@ -675,13 +675,13 @@ static inline void thermal_cooling_device_unregister(
 static inline struct thermal_zone_device *thermal_zone_get_zone_by_name(
 		const char *name)
 { return ERR_PTR(-ENODEV); }
-<<<<<<< HEAD
+
 static inline struct thermal_zone_device *thermal_zone_get_zone_by_cool_np(
 		struct device_node *cool_np)
-=======
+
 static inline struct thermal_cooling_device *thermal_zone_get_cdev_by_name(
 		const char *name)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 { return ERR_PTR(-ENODEV); }
 static inline int thermal_zone_get_temp(
 		struct thermal_zone_device *tz, int *temp)

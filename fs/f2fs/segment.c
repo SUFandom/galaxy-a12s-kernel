@@ -210,11 +210,11 @@ void f2fs_register_inmem_page(struct inode *inode, struct page *page)
 	mutex_lock(&F2FS_I(inode)->inmem_lock);
 	list_add_tail(&new->list, &F2FS_I(inode)->inmem_pages);
 	inc_page_count(F2FS_I_SB(inode), F2FS_INMEM_PAGES);
-<<<<<<< HEAD
+
 	if (F2FS_I_SB(inode)->sec_stat.max_inmem_pages < get_pages(F2FS_I_SB(inode), F2FS_INMEM_PAGES))
 		F2FS_I_SB(inode)->sec_stat.max_inmem_pages = get_pages(F2FS_I_SB(inode), F2FS_INMEM_PAGES);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	mutex_unlock(&F2FS_I(inode)->inmem_lock);
 
 	trace_f2fs_register_inmem_page(page, INMEM);
@@ -304,11 +304,11 @@ void f2fs_drop_inmem_pages_all(struct f2fs_sb_info *sbi, bool gc_failure)
 	struct f2fs_inode_info *fi;
 	unsigned int count = sbi->atomic_files;
 	unsigned int looped = 0;
-<<<<<<< HEAD
+
 
 	sbi->sec_stat.drop_inmem_all++;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 next:
 	spin_lock(&sbi->inode_lock[ATOMIC_FILE]);
 	if (list_empty(head)) {
@@ -319,10 +319,10 @@ next:
 	inode = igrab(&fi->vfs_inode);
 	if (inode)
 		list_move_tail(&fi->inmem_ilist, head);
-<<<<<<< HEAD
+
 	sbi->sec_stat.drop_inmem_files++;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	spin_unlock(&sbi->inode_lock[ATOMIC_FILE]);
 
 	if (inode) {
@@ -335,11 +335,11 @@ next:
 skip:
 		iput(inode);
 	}
-<<<<<<< HEAD
+
 	congestion_wait(BLK_RW_ASYNC, HZ/50);
-=======
+
 	congestion_wait(BLK_RW_ASYNC, DEFAULT_IO_TIMEOUT);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	cond_resched();
 	if (gc_failure) {
 		if (++looped >= count)
@@ -1111,13 +1111,13 @@ static void __init_discard_policy(struct f2fs_sb_info *sbi,
 	dpolicy->granularity = granularity;
 
 	dpolicy->max_requests = DEF_MAX_DISCARD_REQUEST;
-<<<<<<< HEAD
+
 	dpolicy->io_aware_gran = MAX_PLIST_NUM - 1;
 	dpolicy->timeout = 0;
-=======
+
 	dpolicy->io_aware_gran = MAX_PLIST_NUM;
 	dpolicy->timeout = false;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (discard_type == DPOLICY_BG) {
 		dpolicy->min_interval = DEF_MIN_DISCARD_ISSUE_TIME;
@@ -1141,10 +1141,10 @@ static void __init_discard_policy(struct f2fs_sb_info *sbi,
 		dpolicy->io_aware = false;
 		/* we need to issue all to keep CP_TRIMMED_FLAG */
 		dpolicy->granularity = 1;
-<<<<<<< HEAD
-=======
+
+
 		dpolicy->timeout = true;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 }
 
@@ -1270,10 +1270,10 @@ static void __insert_discard_tree(struct f2fs_sb_info *sbi,
 	struct discard_cmd_control *dcc = SM_I(sbi)->dcc_info;
 	struct rb_node **p;
 	struct rb_node *parent = NULL;
-<<<<<<< HEAD
+
 	struct discard_cmd *dc = NULL;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	bool leftmost = true;
 
 	if (insert_p && insert_parent) {
@@ -1285,17 +1285,17 @@ static void __insert_discard_tree(struct f2fs_sb_info *sbi,
 	p = f2fs_lookup_rb_tree_for_insert(sbi, &dcc->root, &parent,
 							lstart, &leftmost);
 do_insert:
-<<<<<<< HEAD
+
 	dc = __attach_discard_cmd(sbi, bdev, lstart, start, len, parent,
 								p, leftmost);
 	if (!dc)
 		return NULL;
 
 	return dc;
-=======
+
 	__attach_discard_cmd(sbi, bdev, lstart, start, len, parent,
 								p, leftmost);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void __relocate_discard_cmd(struct discard_cmd_control *dcc,
@@ -1529,14 +1529,14 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
 	int i, issued;
 	bool io_interrupted = false;
 
-<<<<<<< HEAD
+
 	if (dpolicy->timeout != 0)
 		f2fs_update_time(sbi, dpolicy->timeout);
 
 	for (i = MAX_PLIST_NUM - 1; i >= 0; i--) {
 		if (dpolicy->timeout != 0 &&
 				f2fs_time_over(sbi, dpolicy->timeout))
-=======
+
 	if (dpolicy->timeout)
 		f2fs_update_time(sbi, UMOUNT_DISCARD_TIMEOUT);
 
@@ -1545,7 +1545,7 @@ retry:
 	for (i = MAX_PLIST_NUM - 1; i >= 0; i--) {
 		if (dpolicy->timeout &&
 				f2fs_time_over(sbi, UMOUNT_DISCARD_TIMEOUT))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			break;
 
 		if (i + 1 < dpolicy->granularity)
@@ -1566,18 +1566,18 @@ retry:
 		list_for_each_entry_safe(dc, tmp, pend_list, list) {
 			f2fs_bug_on(sbi, dc->state != D_PREP);
 
-<<<<<<< HEAD
+
 			if (dpolicy->timeout != 0 &&
 				f2fs_time_over(sbi, dpolicy->timeout))
 				break;
 
 #if 0
-=======
+
 			if (dpolicy->timeout &&
 				f2fs_time_over(sbi, UMOUNT_DISCARD_TIMEOUT))
 				break;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			if (dpolicy->io_aware && i < dpolicy->io_aware_gran &&
 						!is_idle(sbi, DISCARD_TIME)) {
 				io_interrupted = true;
@@ -2025,11 +2025,11 @@ void f2fs_clear_prefree_segments(struct f2fs_sb_info *sbi,
 	unsigned int start = 0, end = -1;
 	unsigned int secno, start_segno;
 	bool force = (cpc->reason & CP_DISCARD);
-<<<<<<< HEAD
+
 	bool need_align = test_opt(sbi, LFS) && __is_large_section(sbi);
-=======
+
 	bool need_align = f2fs_lfs_mode(sbi) && __is_large_section(sbi);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	mutex_lock(&dirty_i->seglist_lock);
 
@@ -2061,11 +2061,11 @@ void f2fs_clear_prefree_segments(struct f2fs_sb_info *sbi,
 					(end - 1) <= cpc->trim_end)
 				continue;
 
-<<<<<<< HEAD
+
 		if (!test_opt(sbi, LFS) || !__is_large_section(sbi)) {
-=======
+
 		if (!f2fs_lfs_mode(sbi) || !__is_large_section(sbi)) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			f2fs_issue_discard(sbi, START_BLOCK(sbi, start),
 				(end - start) << sbi->log_blocks_per_seg);
 			continue;
@@ -2677,7 +2677,7 @@ static void change_curseg(struct f2fs_sb_info *sbi, int type)
 
 	sum_page = f2fs_get_sum_page(sbi, new_segno);
 	f2fs_bug_on(sbi, IS_ERR(sum_page));
-<<<<<<< HEAD
+
 
 	/* W/A - prevent panic while shutdown */
 	if (unlikely(ignore_fs_panic && IS_ERR(sum_page))) {
@@ -2685,8 +2685,8 @@ static void change_curseg(struct f2fs_sb_info *sbi, int type)
 		return;
 	}
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	sum_node = (struct f2fs_summary_block *)page_address(sum_page);
 	memcpy(curseg->sum_blk, sum_node, SUM_ENTRY_SIZE);
 	f2fs_put_page(sum_page, 1);
@@ -2934,11 +2934,11 @@ int f2fs_trim_fs(struct f2fs_sb_info *sbi, struct fstrim_range *range)
 	struct discard_policy dpolicy;
 	unsigned long long trimmed = 0;
 	int err = 0;
-<<<<<<< HEAD
+
 	bool need_align = test_opt(sbi, LFS) && __is_large_section(sbi);
-=======
+
 	bool need_align = f2fs_lfs_mode(sbi) && __is_large_section(sbi);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (start >= MAX_BLKADDR(sbi) || range->len < sbi->blocksize)
 		return -EINVAL;
@@ -3207,8 +3207,8 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
 	} else if (type == CURSEG_COLD_DATA_PINNED) {
 		type = CURSEG_COLD_DATA;
 	}
-<<<<<<< HEAD
-=======
+
+
 
 	/*
 	 * We need to wait for node_write to avoid block allocation during
@@ -3217,7 +3217,7 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
 	 */
 	if (IS_DATASEG(type))
 		down_write(&sbi->node_write);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	down_read(&SM_I(sbi)->curseg_lock);
 
@@ -3284,12 +3284,12 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
 
 	up_read(&SM_I(sbi)->curseg_lock);
 
-<<<<<<< HEAD
-=======
+
+
 	if (IS_DATASEG(type))
 		up_write(&sbi->node_write);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (put_pin_sem)
 		up_read(&sbi->pin_sem);
 }

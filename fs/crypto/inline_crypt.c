@@ -26,7 +26,7 @@ struct fscrypt_blk_crypto_key {
 	struct request_queue *devs[];
 };
 
-<<<<<<< HEAD
+
 /* Enable inline encryption for this file if supported. */
 void fscrypt_select_encryption_impl(struct fscrypt_info *ci)
 {
@@ -97,12 +97,12 @@ int fscrypt_select_encryption_impl(struct fscrypt_info *ci,
 	/* blk-crypto must implement the needed encryption algorithm */
 	if (crypto_mode == BLK_ENCRYPTION_MODE_INVALID)
 		return 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/* The filesystem must be mounted with -o inlinecrypt */
 	if (!sb->s_cop->inline_crypt_enabled ||
 	    !sb->s_cop->inline_crypt_enabled(sb))
-<<<<<<< HEAD
+
 		return;
 
 	ci->ci_inlinecrypt = true;
@@ -155,7 +155,7 @@ int fscrypt_select_encryption_impl(struct fscrypt_info *ci,
 out_free_devs:
 	kfree(devs);
 	return 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
@@ -167,23 +167,23 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 	const struct inode *inode = ci->ci_inode;
 	struct super_block *sb = inode->i_sb;
 	enum blk_crypto_mode_num crypto_mode = ci->ci_mode->blk_crypto_mode;
-<<<<<<< HEAD
+
 	int num_devs = 1;
 =======
 	unsigned int dun_bytes;
 	int num_devs;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int queue_refs = 0;
 	struct fscrypt_blk_crypto_key *blk_key;
 	int err;
 	int i;
 
-<<<<<<< HEAD
+
 	if (sb->s_cop->get_num_devices)
 		num_devs = sb->s_cop->get_num_devices(sb);
 =======
 	num_devs = fscrypt_get_num_devices(sb);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (WARN_ON(num_devs < 1))
 		return -EINVAL;
 
@@ -192,7 +192,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 		return -ENOMEM;
 
 	blk_key->num_devs = num_devs;
-<<<<<<< HEAD
+
 	if (num_devs == 1)
 		blk_key->devs[0] = bdev_get_queue(sb->s_bdev);
 	else
@@ -201,18 +201,18 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 	fscrypt_get_devices(sb, num_devs, blk_key->devs);
 
 	dun_bytes = fscrypt_get_dun_bytes(ci);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	BUILD_BUG_ON(FSCRYPT_MAX_HW_WRAPPED_KEY_SIZE >
 		     BLK_CRYPTO_MAX_WRAPPED_KEY_SIZE);
 
 	err = blk_crypto_init_key(&blk_key->base, raw_key, raw_key_size,
-<<<<<<< HEAD
+
 				  is_hw_wrapped, crypto_mode, sb->s_blocksize);
 =======
 				  is_hw_wrapped, crypto_mode, dun_bytes,
 				  sb->s_blocksize);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (err) {
 		fscrypt_err(inode, "error %d initializing blk-crypto key", err);
 		goto fail;
@@ -233,13 +233,13 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 		}
 		queue_refs++;
 
-<<<<<<< HEAD
+
 		err = blk_crypto_start_using_mode(crypto_mode, sb->s_blocksize,
 =======
 		err = blk_crypto_start_using_mode(crypto_mode, dun_bytes,
 						  sb->s_blocksize,
 						  is_hw_wrapped,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 						  blk_key->devs[i]);
 		if (err) {
 			fscrypt_err(inode,
@@ -248,7 +248,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 		}
 	}
 	/*
-<<<<<<< HEAD
+
 	 * Pairs with READ_ONCE() in fscrypt_is_key_prepared().  (Only matters
 	 * for the per-mode keys, which are shared by multiple inodes.)
 =======
@@ -256,7 +256,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 	 * I.e., here we publish ->blk_key with a RELEASE barrier so that
 	 * concurrent tasks can ACQUIRE it.  Note that this concurrency is only
 	 * possible for per-mode keys, not for per-file keys.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	 */
 	smp_store_release(&prep_key->blk_key, blk_key);
 	return 0;
@@ -507,10 +507,10 @@ EXPORT_SYMBOL_GPL(fscrypt_mergeable_bio_bh);
 bool fscrypt_dio_supported(struct kiocb *iocb, struct iov_iter *iter)
 {
 	const struct inode *inode = file_inode(iocb->ki_filp);
-<<<<<<< HEAD
+
 	const struct fscrypt_info *ci = inode->i_crypt_info;
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	const unsigned int blocksize = i_blocksize(inode);
 
 	/* If the file is unencrypted, no veto from us. */
@@ -528,7 +528,7 @@ bool fscrypt_dio_supported(struct kiocb *iocb, struct iov_iter *iter)
 	if (!IS_ALIGNED(iocb->ki_pos | iov_iter_alignment(iter), blocksize))
 		return false;
 
-<<<<<<< HEAD
+
 	/*
 	 * With IV_INO_LBLK_32 and sub-page blocks, the DUN can wrap around in
 	 * the middle of a page.  This isn't handled by the direct I/O code yet.
@@ -539,7 +539,7 @@ bool fscrypt_dio_supported(struct kiocb *iocb, struct iov_iter *iter)
 		return false;
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return true;
 }
 EXPORT_SYMBOL_GPL(fscrypt_dio_supported);
@@ -554,11 +554,11 @@ EXPORT_SYMBOL_GPL(fscrypt_dio_supported);
  * targeting @pos, in order to avoid crossing a data unit number (DUN)
  * discontinuity.  This is only needed for certain IV generation methods.
  *
-<<<<<<< HEAD
+
  * This assumes block_size == PAGE_SIZE; see fscrypt_dio_supported().
  *
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * Return: the actual number of pages that can be submitted
  */
 int fscrypt_limit_dio_pages(const struct inode *inode, loff_t pos, int nr_pages)
@@ -576,13 +576,13 @@ int fscrypt_limit_dio_pages(const struct inode *inode, loff_t pos, int nr_pages)
 	      FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32))
 		return nr_pages;
 
-<<<<<<< HEAD
+
 =======
 	/*
 	 * fscrypt_select_encryption_impl() ensures that block_size == PAGE_SIZE
 	 * when using FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32.
 	 */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (WARN_ON_ONCE(i_blocksize(inode) != PAGE_SIZE))
 		return 1;
 

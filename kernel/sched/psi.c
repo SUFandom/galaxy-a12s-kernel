@@ -140,19 +140,19 @@
 #include <linux/file.h>
 #include <linux/poll.h>
 #include <linux/psi.h>
-<<<<<<< HEAD
+
 #include <linux/ologk.h>
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #include "sched.h"
 
 static int psi_bug __read_mostly;
 
 DEFINE_STATIC_KEY_FALSE(psi_disabled);
-<<<<<<< HEAD
-=======
+
+
 DEFINE_STATIC_KEY_TRUE(psi_cgroups_enabled);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_PSI_DEFAULT_DISABLED
 static bool psi_enable;
@@ -176,7 +176,7 @@ __setup("psi=", setup_psi);
 #define WINDOW_MAX_US 10000000	/* Max window size is 10s */
 #define UPDATES_PER_WINDOW 10	/* 10 updates per window */
 
-<<<<<<< HEAD
+
 #define MONITOR_WINDOW_MIN_NS 1000000000 /* 1s */
 #define MONITOR_THRESHOLD_MIN_NS 100000000 /* 100ms */
 
@@ -185,8 +185,8 @@ __setup("psi=", setup_psi);
 #define AVG60			1
 #define AVG300			2
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 /* Sampling frequency in nanoseconds */
 static u64 psi_period __read_mostly;
 
@@ -228,12 +228,12 @@ void __init psi_init(void)
 		return;
 	}
 
-<<<<<<< HEAD
-=======
+
+
 	if (!cgroup_psi_enabled())
 		static_branch_disable(&psi_cgroups_enabled);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	psi_period = jiffies_to_nsecs(PSI_FREQ);
 	group_init(&psi_system);
 }
@@ -427,7 +427,7 @@ static u64 update_averages(struct psi_group *group, u64 now)
 			sample = period;
 		group->avg_total[s] += sample;
 		calc_avgs(group->avg[s], missed_periods, sample, period);
-<<<<<<< HEAD
+
 		if (s % 2 && (LOAD_INT(group->avg[s][AVG10]) * 100 + LOAD_FRAC(group->avg[s][AVG10])) >= PERFLOG_PSI_THRESHOLD) {
 			u64 total_full = 0, total_some = 0;
 			int some, full;
@@ -451,8 +451,8 @@ static u64 update_averages(struct psi_group *group, u64 now)
 				   LOAD_INT(group->avg[full][AVG300]), LOAD_FRAC(group->avg[full][AVG300]),
 				   total_some, total_full);
 		}
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	}
 
 	return avg_next_update;
@@ -773,7 +773,7 @@ static u32 psi_group_change(struct psi_group *group, int cpu,
 
 static struct psi_group *iterate_groups(struct task_struct *task, void **iter)
 {
-<<<<<<< HEAD
+
 #ifdef CONFIG_CGROUPS
 	struct cgroup *cgroup = NULL;
 
@@ -791,7 +791,7 @@ static struct psi_group *iterate_groups(struct task_struct *task, void **iter)
 #else
 	if (*iter)
 		return NULL;
-=======
+
 	if (*iter == &psi_system)
 		return NULL;
 
@@ -809,7 +809,7 @@ static struct psi_group *iterate_groups(struct task_struct *task, void **iter)
 			return cgroup_psi(cgroup);
 		}
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif
 	*iter = &psi_system;
 	return &psi_system;

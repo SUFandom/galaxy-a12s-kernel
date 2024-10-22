@@ -188,13 +188,13 @@ enum node_stat_item {
 	NR_DIRTIED,		/* page dirtyings since bootup */
 	NR_WRITTEN,		/* page writings since bootup */
 	NR_KERNEL_MISC_RECLAIMABLE,	/* reclaimable non-slab kernel pages */
-<<<<<<< HEAD
+
 =======
 	NR_UNRECLAIMABLE_PAGES,
 	NR_ION_HEAP,
 	NR_ION_HEAP_POOL,
 	NR_GPU_HEAP,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	NR_VM_NODE_STAT_ITEMS
 };
 

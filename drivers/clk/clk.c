@@ -44,8 +44,8 @@ static HLIST_HEAD(clk_root_list);
 static HLIST_HEAD(clk_orphan_list);
 static LIST_HEAD(clk_notifier_list);
 
-<<<<<<< HEAD
-=======
+
+
 static struct hlist_head *all_lists[] = {
 	&clk_root_list,
 	&clk_orphan_list,
@@ -67,7 +67,7 @@ static struct hlist_head *orphan_list[] = {
  */
 static LIST_HEAD(clk_rate_change_list);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /***    private data structures    ***/
 
 struct clk_core {
@@ -1257,8 +1257,8 @@ static void clk_unprepare_unused_subtree(struct clk_core *core)
 	    !(core->flags & CLK_DONT_HOLD_STATE))
 		return;
 
-<<<<<<< HEAD
-=======
+
+
 	/*
 	 * setting CLK_ENABLE_HAND_OFF flag triggers this conditional
 	 *
@@ -1272,7 +1272,7 @@ static void clk_unprepare_unused_subtree(struct clk_core *core)
 		clk_core_unprepare(core);
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (core->prepare_count)
 		return;
 
@@ -1308,8 +1308,8 @@ static void clk_disable_unused_subtree(struct clk_core *core)
 	    !(core->flags & CLK_DONT_HOLD_STATE))
 		return;
 
-<<<<<<< HEAD
-=======
+
+
 	/*
 	 * setting CLK_ENABLE_HAND_OFF flag triggers this conditional
 	 *
@@ -1325,7 +1325,7 @@ static void clk_disable_unused_subtree(struct clk_core *core)
 		clk_enable_unlock(flags);
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (core->flags & CLK_OPS_PARENT_ENABLE)
 		clk_core_prepare_enable(core->parent);
 
@@ -3672,8 +3672,8 @@ static int __clk_core_init(struct clk_core *core)
 			__clk_recalc_accuracies(orphan);
 			__clk_recalc_rates(orphan, 0);
 			__clk_core_update_orphan_hold_state(orphan);
-<<<<<<< HEAD
-=======
+
+
 		}
 	}
 
@@ -3726,7 +3726,7 @@ static int __clk_core_init(struct clk_core *core)
 			flags = clk_enable_lock();
 			clk_core_enable(core);
 			clk_enable_unlock(flags);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		}
 	}
 

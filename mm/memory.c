@@ -163,10 +163,10 @@ void mm_trace_rss_stat(struct mm_struct *mm, int member, long count,
 	if ((count & thresh_mask) != ((count - value) & thresh_mask))
 		trace_rss_stat(mm, member, count);
 }
-<<<<<<< HEAD
-=======
+
+
 EXPORT_SYMBOL_GPL(mm_trace_rss_stat);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #if defined(SPLIT_RSS_COUNTING)
 

@@ -4500,7 +4500,7 @@ void regulator_unregister(struct regulator_dev *rdev)
 }
 EXPORT_SYMBOL_GPL(regulator_unregister);
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_SEC_PM_DEBUG
 struct rdev_check_data {
 	struct regulator_dev *parent;
@@ -4517,7 +4517,7 @@ static int regulator_show_enabled_children(struct device *dev, void *data)
 
 	if (rdev->supply && rdev->supply->rdev == check_data->parent)
 		regulator_show_enabled_subtree(rdev, check_data->level + 1);
-=======
+
 static int regulator_sync_supply(struct device *dev, void *data)
 {
 	struct regulator_dev *rdev = dev_to_rdev(dev);
@@ -4531,12 +4531,12 @@ static int regulator_sync_supply(struct device *dev, void *data)
 	dev_dbg(data, "Removing regulator proxy consumer requests\n");
 	regulator_proxy_consumer_unregister(rdev->proxy_consumer);
 	rdev->proxy_consumer = NULL;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return 0;
 }
 
-<<<<<<< HEAD
+
 static void regulator_show_enabled_subtree(struct regulator_dev *rdev,
 					int level)
 {
@@ -4619,14 +4619,14 @@ int regulator_show_enabled(void)
 }
 EXPORT_SYMBOL_GPL(regulator_show_enabled);
 #endif /* CONFIG_SEC_PM_DEBUG */
-=======
+
 void regulator_sync_state(struct device *dev)
 {
 	class_for_each_device(&regulator_class, NULL, dev,
 			      regulator_sync_supply);
 }
 EXPORT_SYMBOL_GPL(regulator_sync_state);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_SUSPEND
 static int _regulator_suspend(struct device *dev, void *data)

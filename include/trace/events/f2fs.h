@@ -50,10 +50,10 @@ TRACE_DEFINE_ENUM(CP_RECOVERY);
 TRACE_DEFINE_ENUM(CP_DISCARD);
 TRACE_DEFINE_ENUM(CP_TRIMMED);
 TRACE_DEFINE_ENUM(CP_PAUSE);
-<<<<<<< HEAD
+
 =======
 TRACE_DEFINE_ENUM(CP_RESIZE);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define show_block_type(type)						\
 	__print_symbolic(type,						\
@@ -140,12 +140,12 @@ TRACE_DEFINE_ENUM(CP_RESIZE);
 		{ CP_RECOVERY,	"Recovery" },				\
 		{ CP_DISCARD,	"Discard" },				\
 		{ CP_PAUSE,	"Pause" },				\
-<<<<<<< HEAD
+
 		{ CP_TRIMMED,	"Trimmed" })
 =======
 		{ CP_TRIMMED,	"Trimmed" },				\
 		{ CP_RESIZE,	"Resize" })
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define show_fsync_cpreason(type)					\
 	__print_symbolic(type,						\
@@ -172,12 +172,12 @@ TRACE_DEFINE_ENUM(CP_RESIZE);
 #define show_compress_algorithm(type)					\
 	__print_symbolic(type,						\
 		{ COMPRESS_LZO,		"LZO" },			\
-<<<<<<< HEAD
+
 		{ COMPRESS_LZ4,		"LZ4" })
 =======
 		{ COMPRESS_LZ4,		"LZ4" },			\
 		{ COMPRESS_ZSTD,	"ZSTD" })
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 struct f2fs_sb_info;
 struct f2fs_io_info;
@@ -1835,7 +1835,7 @@ DEFINE_EVENT(f2fs_zip_end, f2fs_decompress_pages_end,
 	TP_ARGS(inode, cluster_idx, compressed_size, ret)
 );
 
-<<<<<<< HEAD
+
 =======
 TRACE_EVENT(f2fs_iostat,
 
@@ -1913,7 +1913,7 @@ TRACE_EVENT(f2fs_iostat,
 		__entry->fs_cdrio, __entry->fs_nrio, __entry->fs_mrio)
 );
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif /* _TRACE_F2FS_H */
 
  /* This part must be outside protection */

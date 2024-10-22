@@ -214,8 +214,8 @@ bool cfg80211_supported_cipher_suite(struct wiphy *wiphy, u32 cipher)
 	return false;
 }
 
-<<<<<<< HEAD
-=======
+
+
 static bool
 cfg80211_igtk_cipher_supported(struct cfg80211_registered_device *rdev)
 {
@@ -256,7 +256,7 @@ bool cfg80211_valid_key_idx(struct cfg80211_registered_device *rdev,
 	return true;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 int cfg80211_validate_key_settings(struct cfg80211_registered_device *rdev,
 				   struct key_params *params, int key_idx,
 				   bool pairwise, const u8 *mac_addr)

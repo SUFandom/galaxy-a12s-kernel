@@ -724,12 +724,12 @@ static int snd_compr_stop(struct snd_compr_stream *stream)
 
 	retval = stream->ops->trigger(stream, SNDRV_PCM_TRIGGER_STOP);
 	if (!retval) {
-<<<<<<< HEAD
+
 		snd_compr_drain_notify(stream);
-=======
+
 		stream->runtime->state = SNDRV_PCM_STATE_SETUP;
 		wake_up(&stream->runtime->sleep);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		stream->runtime->total_bytes_available = 0;
 		stream->runtime->total_bytes_transferred = 0;
 	}

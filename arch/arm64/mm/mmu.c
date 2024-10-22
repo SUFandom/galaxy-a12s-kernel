@@ -819,7 +819,7 @@ int kern_addr_valid(unsigned long addr)
 
 	return pfn_valid(pte_pfn(pte));
 }
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_MEMORY_HOTPLUG
 static void free_hotplug_page_range(struct page *page, ssize_t size)
@@ -1003,7 +1003,7 @@ remove_pagetable(unsigned long start, unsigned long end, bool sparse_vmap)
 
 =======
 EXPORT_SYMBOL_GPL(kern_addr_valid);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_SPARSEMEM_VMEMMAP
 #if !ARM64_SWAPPER_USES_SECTION_MAPS
 int __meminit vmemmap_populate(unsigned long start, unsigned long end, int node,

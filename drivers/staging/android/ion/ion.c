@@ -135,16 +135,16 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 
 	ion_buffer_add(dev, buffer);
 	mutex_unlock(&dev->buffer_lock);
-<<<<<<< HEAD
+
 	nr_alloc_cur = atomic_long_add_return(len, &heap->total_allocated);
 	nr_alloc_peak = atomic_long_read(&heap->total_allocated_peak);
 	if (nr_alloc_cur > nr_alloc_peak)
 		atomic_long_set(&heap->total_allocated_peak, nr_alloc_cur);
 
 	atomic_long_add(len, &total_heap_bytes);
-=======
+
 	track_buffer_created(buffer);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return buffer;
 
 err1:
@@ -182,11 +182,11 @@ static void _ion_buffer_destroy(struct ion_buffer *buffer)
 	mutex_lock(&dev->buffer_lock);
 	rb_erase(&buffer->node, &dev->buffers);
 	mutex_unlock(&dev->buffer_lock);
-<<<<<<< HEAD
+
 	atomic_long_sub(buffer->size, &total_heap_bytes);
-=======
+
 	track_buffer_destroyed(buffer);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (heap->flags & ION_HEAP_FLAG_DEFER_FREE)
 		ion_heap_freelist_add(heap, buffer);

@@ -658,9 +658,9 @@ static int set_format(struct snd_usb_substream *subs, struct audioformat *fmt)
 	return 0;
 }
 
-<<<<<<< HEAD
+
 #ifndef CONFIG_SND_EXYNOS_USB_AUDIO
-=======
+
 /**
  * snd_usb_enable_audio_stream - Enable/disable the specified usb substream.
  * @subs: pointer to the usb substream.
@@ -745,7 +745,7 @@ int snd_usb_enable_audio_stream(struct snd_usb_substream *subs,
 }
 EXPORT_SYMBOL_GPL(snd_usb_enable_audio_stream);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /*
  * Return the score of matching two audioformats.
  * Veto the audioformat if:

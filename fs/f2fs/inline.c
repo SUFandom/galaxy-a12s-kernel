@@ -338,11 +338,11 @@ struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
 		return NULL;
 	}
 
-<<<<<<< HEAD
+
 	namehash = f2fs_dentry_hash(dir, &name, fname);
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	inline_dentry = inline_data_addr(dir, ipage);
 
 	make_dentry_ptr_inline(dir, &d, inline_dentry);
@@ -491,12 +491,12 @@ static int f2fs_add_inline_entries(struct inode *dir, void *inline_dentry)
 		ino = le32_to_cpu(de->ino);
 		fake_mode = f2fs_get_de_type(de) << S_SHIFT;
 
-<<<<<<< HEAD
+
 		err = f2fs_add_regular_entry(dir, &new_name, NULL,
 					de->hash_code, NULL, ino, fake_mode);
-=======
+
 		err = f2fs_add_regular_entry(dir, &fname, NULL, ino, fake_mode);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		if (err)
 			goto punch_dentry_pages;
 
@@ -573,11 +573,11 @@ int f2fs_try_convert_inline_dir(struct inode *dir, struct dentry *dentry)
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(dir);
 	struct page *ipage;
-<<<<<<< HEAD
+
 	struct fscrypt_name fname;
-=======
+
 	struct f2fs_filename fname;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	void *inline_dentry = NULL;
 	int err = 0;
 
@@ -586,11 +586,11 @@ int f2fs_try_convert_inline_dir(struct inode *dir, struct dentry *dentry)
 
 	f2fs_lock_op(sbi);
 
-<<<<<<< HEAD
+
 	err = fscrypt_setup_filename(dir, &dentry->d_name, 0, &fname);
-=======
+
 	err = f2fs_setup_filename(dir, &dentry->d_name, 0, &fname);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (err)
 		goto out;
 
@@ -611,24 +611,24 @@ int f2fs_try_convert_inline_dir(struct inode *dir, struct dentry *dentry)
 	if (!err)
 		f2fs_put_page(ipage, 1);
 out_fname:
-<<<<<<< HEAD
+
 	fscrypt_free_filename(&fname);
-=======
+
 	f2fs_free_filename(&fname);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 out:
 	f2fs_unlock_op(sbi);
 	return err;
 }
 
-<<<<<<< HEAD
+
 int f2fs_add_inline_entry(struct inode *dir, const struct qstr *new_name,
 				const struct fscrypt_name *fname,
 				struct inode *inode, nid_t ino, umode_t mode)
-=======
+
 int f2fs_add_inline_entry(struct inode *dir, const struct f2fs_filename *fname,
 			  struct inode *inode, nid_t ino, umode_t mode)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(dir);
 	struct page *ipage;
@@ -667,13 +667,13 @@ int f2fs_add_inline_entry(struct inode *dir, const struct f2fs_filename *fname,
 
 	f2fs_wait_on_page_writeback(ipage, NODE, true, true);
 
-<<<<<<< HEAD
+
 	name_hash = f2fs_dentry_hash(dir, new_name, fname);
 	f2fs_update_dentry(ino, mode, &d, new_name, name_hash, bit_pos);
-=======
+
 	f2fs_update_dentry(ino, mode, &d, &fname->disk_name, fname->hash,
 			   bit_pos);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	set_page_dirty(ipage);
 

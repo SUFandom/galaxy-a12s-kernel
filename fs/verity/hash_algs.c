@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
-<<<<<<< HEAD
+
  * fs/verity/hash_algs.c: fs-verity hash algorithms
-=======
+
  * fs-verity hash algorithms
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Copyright 2019 Google LLC
  */

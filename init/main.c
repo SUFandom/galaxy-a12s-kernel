@@ -550,7 +550,7 @@ static void __init report_meminit(void)
 {
 	const char *stack;
 
-<<<<<<< HEAD
+
 	if (IS_ENABLED(CONFIG_INIT_STACK_ALL))
 		stack = "all";
 	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL))
@@ -559,7 +559,7 @@ static void __init report_meminit(void)
 		stack = "byref";
 	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_USER))
 		stack = "__user";
-=======
+
 	if (IS_ENABLED(CONFIG_INIT_STACK_ALL_PATTERN))
 		stack = "all(pattern)";
 	else if (IS_ENABLED(CONFIG_INIT_STACK_ALL_ZERO))
@@ -570,7 +570,7 @@ static void __init report_meminit(void)
 		stack = "byref(zero)";
 	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_USER))
 		stack = "__user(zero)";
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	else
 		stack = "off";
 

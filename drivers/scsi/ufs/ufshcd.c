@@ -2287,14 +2287,14 @@ static int ufshcd_map_sg(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 #else
 			lrbp->utr_descriptor_ptr->prd_table_length =
 				cpu_to_le16((u16)(sg_segments *
-<<<<<<< HEAD
+
 					sizeof(struct ufshcd_sg_entry)));
 #endif
 		} else
-=======
+
 						  hba->sg_entry_size));
 		else
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			lrbp->utr_descriptor_ptr->prd_table_length =
 				cpu_to_le16((u16) (sg_segments));
 
@@ -2309,10 +2309,10 @@ static int ufshcd_map_sg(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 				cpu_to_le32(upper_32_bits(sg->dma_address));
 			prd->reserved = 0;
 			prd = (void *)prd + hba->sg_entry_size;
-<<<<<<< HEAD
+
 			hba->transferred_sector += prd->size;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 		}
 	} else {
 		lrbp->utr_descriptor_ptr->prd_table_length = 0;
@@ -2727,10 +2727,10 @@ static int ufshcd_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd)
 
 	err = ufshcd_prepare_lrbp_crypto(hba, cmd, lrbp);
 	if (err) {
-<<<<<<< HEAD
-=======
+
+
 		ufshcd_release(hba);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		lrbp->cmd = NULL;
 		clear_bit_unlock(tag, &hba->lrb_in_use);
 		goto out;
@@ -5484,11 +5484,11 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba, int reason,
 			}
 			result = ufshcd_transfer_rsp_status(hba, lrbp);
 			cmd->result = result;
-<<<<<<< HEAD
+
 			if (reason)
 				set_host_byte(cmd, reason);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 			ufshcd_complete_lrbp_crypto(hba, cmd, lrbp);
 			/* Mark completed command as NULL in LRB */
 			lrbp->cmd = NULL;
@@ -8736,11 +8736,11 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
 {
 	int ret;
 	enum uic_link_state old_link_state;
-<<<<<<< HEAD
+
 	enum ufs_pm_level pm_lvl;
 	bool gating_allowed = !ufshcd_can_fake_clkgating(hba);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	enum ufs_dev_pwr_mode old_pwr_mode;
 
 	hba->pm_op_in_progress = 1;

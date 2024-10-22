@@ -158,19 +158,19 @@ enum {
 				DEVICE_FATAL_ERROR |\
 				CONTROLLER_FATAL_ERROR |\
 				SYSTEM_BUS_FATAL_ERROR |\
-<<<<<<< HEAD
+
 				UIC_LINK_LOST |\
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 				CRYPTO_ENGINE_FATAL_ERROR)
 
 #define INT_FATAL_ERRORS	(DEVICE_FATAL_ERROR |\
 				CONTROLLER_FATAL_ERROR |\
 				SYSTEM_BUS_FATAL_ERROR |\
-<<<<<<< HEAD
+
 				UIC_LINK_LOST |\
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 				CRYPTO_ENGINE_FATAL_ERROR)
 
 /* HCS - Host Controller Status 30h */
@@ -446,7 +446,7 @@ enum {
  * @size: size of physical segment DW-3
  */
 struct ufshcd_sg_entry {
-<<<<<<< HEAD
+
 	__le32 base_addr;	/* des0 */
 	__le32 upper_addr;	/* des1 */
 	__le32 reserved;	/* des2 */
@@ -481,7 +481,7 @@ struct ufshcd_sg_entry {
 	__le32 reserved2;	/* des30 */
 	__le32 reserved3;	/* des31 */
 #endif /* CONFIG_SCSI_UFS_EXYNOS_FMP */
-=======
+
 	__le32    base_addr;
 	__le32    upper_addr;
 	__le32    reserved;
@@ -490,7 +490,7 @@ struct ufshcd_sg_entry {
 	 * followed by variant-specific fields if
 	 * hba->sg_entry_size != sizeof(struct ufshcd_sg_entry)
 	 */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /**

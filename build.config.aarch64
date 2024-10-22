@@ -1,6 +1,6 @@
 ARCH=arm64
 
-<<<<<<< HEAD
+
 CLANG_TRIPLE=aarch64-linux-gnu-
 CROSS_COMPILE=aarch64-linux-androidkernel-
 LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin
@@ -15,7 +15,7 @@ LINUX_GCC_CROSS_COMPILE_COMPAT_PREBUILTS_BIN=prebuilts/gas/linux-x86
 
 FILES="
 arch/arm64/boot/Image
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 arch/arm64/boot/Image.gz
 vmlinux
 System.map

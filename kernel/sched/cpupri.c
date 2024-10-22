@@ -121,11 +121,11 @@ int cpupri_find(struct cpupri *cp, struct task_struct *p,
  *
  * Return: (int)bool - CPUs were found
  */
-<<<<<<< HEAD
+
 int cpupri_find(struct cpupri *cp, struct task_struct *p,
-=======
+
 int cpupri_find_fitness(struct cpupri *cp, struct task_struct *p,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		struct cpumask *lowest_mask,
 		bool (*fitness_fn)(struct task_struct *p, int cpu))
 {
@@ -142,7 +142,7 @@ int cpupri_find_fitness(struct cpupri *cp, struct task_struct *p,
 		if (!lowest_mask || !fitness_fn)
 			return 1;
 
-<<<<<<< HEAD
+
 		if (lowest_mask) {
 			int cpu;
 
@@ -174,12 +174,12 @@ int cpupri_find_fitness(struct cpupri *cp, struct task_struct *p,
 			 */
 			if (cpumask_empty(lowest_mask))
 				continue;
-=======
+
 		/* Ensure the capacity of the CPUs fit the task */
 		for_each_cpu(cpu, lowest_mask) {
 			if (!fitness_fn(p, cpu))
 				cpumask_clear_cpu(cpu, lowest_mask);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		}
 
 		/*

@@ -489,10 +489,10 @@ int ion_system_contig_heap_create(void)
 }
 
 #ifndef CONFIG_ION_MODULE
-<<<<<<< HEAD
+
 subsys_initcall(ion_system_heap_create);
-=======
+
 device_initcall(ion_system_contig_heap_create);
 device_initcall(ion_system_heap_create);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif

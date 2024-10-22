@@ -715,7 +715,7 @@ EXPORT_SYMBOL(drm_gem_prime_handle_to_fd);
  */
 int drm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
 {
-<<<<<<< HEAD
+
 	/* Used by drm_gem_mmap() to lookup the GEM object */
 	struct drm_file priv = {
 		.minor = obj->dev->primary,
@@ -762,7 +762,7 @@ int drm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
 out:
 	kfree(priv);
 	kfree(fil);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return ret;
 }

@@ -2043,8 +2043,8 @@ struct spi_controller *__spi_alloc_controller(struct device *dev,
 }
 EXPORT_SYMBOL_GPL(__spi_alloc_controller);
 
-<<<<<<< HEAD
-=======
+
+
 static void devm_spi_release_controller(struct device *dev, void *ctlr)
 {
 	spi_controller_put(*(struct spi_controller **)ctlr);
@@ -2088,7 +2088,7 @@ struct spi_controller *__devm_spi_alloc_controller(struct device *dev,
 }
 EXPORT_SYMBOL_GPL(__devm_spi_alloc_controller);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_OF
 static int of_spi_register_master(struct spi_controller *ctlr)
 {
@@ -2380,10 +2380,10 @@ void spi_unregister_controller(struct spi_controller *ctlr)
 	list_del(&ctlr->list);
 	mutex_unlock(&board_lock);
 
-<<<<<<< HEAD
+
 	dummy = device_for_each_child(&ctlr->dev, NULL, __unregister);
 	device_unregister(&ctlr->dev);
-=======
+
 	device_del(&ctlr->dev);
 
 	/* Release the last reference on the controller if its driver
@@ -2393,7 +2393,7 @@ void spi_unregister_controller(struct spi_controller *ctlr)
 			 devm_spi_match_controller, ctlr))
 		put_device(&ctlr->dev);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/* free bus id */
 	mutex_lock(&board_lock);
 	if (found == ctlr)

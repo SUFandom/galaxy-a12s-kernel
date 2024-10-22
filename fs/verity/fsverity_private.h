@@ -61,28 +61,28 @@ struct merkle_tree_params {
 	u64 level_start[FS_VERITY_MAX_LEVELS];
 };
 
-<<<<<<< HEAD
+
 /**
-=======
+
 /*
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * fsverity_info - cached verity metadata for an inode
  *
  * When a verity file is first opened, an instance of this struct is allocated
  * and stored in ->i_verity_info; it remains until the inode is evicted.  It
  * caches information about the Merkle tree that's needed to efficiently verify
-<<<<<<< HEAD
+
  * data read from the file.  It also caches the file measurement.  The Merkle
  * tree pages themselves are not cached here, but the filesystem may cache them.
-=======
+
  * data read from the file.  It also caches the file digest.  The Merkle tree
  * pages themselves are not cached here, but the filesystem may cache them.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  */
 struct fsverity_info {
 	struct merkle_tree_params tree_params;
 	u8 root_hash[FS_VERITY_MAX_DIGEST_SIZE];
-<<<<<<< HEAD
+
 	u8 measurement[FS_VERITY_MAX_DIGEST_SIZE];
 	const struct inode *inode;
 };
@@ -104,19 +104,19 @@ struct fsverity_descriptor {
 	__u8 signature[];	/* optional PKCS#7 signature */
 };
 
-=======
+
 	u8 file_digest[FS_VERITY_MAX_DIGEST_SIZE];
 	const struct inode *inode;
 };
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /* Arbitrary limit to bound the kmalloc() size.  Can be changed. */
 #define FS_VERITY_MAX_DESCRIPTOR_SIZE	16384
 
 #define FS_VERITY_MAX_SIGNATURE_SIZE	(FS_VERITY_MAX_DESCRIPTOR_SIZE - \
 					 sizeof(struct fsverity_descriptor))
 
-<<<<<<< HEAD
+
 /*
  * Format in which verity file measurements are signed.  This is the same as
  * 'struct fsverity_digest', except here some magic bytes are prepended to
@@ -130,8 +130,8 @@ struct fsverity_signed_digest {
 	__u8 digest[];
 };
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 /* hash_algs.c */
 
 extern struct fsverity_hash_alg fsverity_hash_algs[];
@@ -153,11 +153,11 @@ void __init fsverity_check_hash_algs(void);
 
 /* init.c */
 
-<<<<<<< HEAD
+
 extern void __printf(3, 4) __cold
-=======
+
 void __printf(3, 4) __cold
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 fsverity_msg(const struct inode *inode, const char *level,
 	     const char *fmt, ...);
 

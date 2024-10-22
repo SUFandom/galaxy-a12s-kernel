@@ -51,13 +51,13 @@ enum zram_pageflags {
 	ZRAM_UNDER_WB,	/* page is under writeback */
 	ZRAM_HUGE,	/* Incompressible page */
 	ZRAM_IDLE,	/* not accessed page since last idle marking */
-<<<<<<< HEAD
+
 	ZRAM_EXPIRE,
 	ZRAM_READ_BDEV,
 	ZRAM_PPR,
 	ZRAM_UNDER_PPR,
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	__NR_ZRAM_PAGEFLAGS,
 };
@@ -98,7 +98,7 @@ struct zram_stats {
 	atomic64_t bd_reads;		/* no. of reads from backing device */
 	atomic64_t bd_writes;		/* no. of writes from backing device */
 #endif
-<<<<<<< HEAD
+
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK
 	atomic64_t bd_expire;
 	atomic64_t bd_objcnt;
@@ -116,7 +116,7 @@ struct zram_stats {
 	atomic64_t bd_objwrites;
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 #ifdef CONFIG_ZRAM_LRU_WRITEBACK

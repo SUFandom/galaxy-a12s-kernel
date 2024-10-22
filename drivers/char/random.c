@@ -337,10 +337,10 @@
 #include <linux/completion.h>
 #include <linux/uuid.h>
 #include <crypto/chacha.h>
-<<<<<<< HEAD
+
 #include <linux/freezer.h>
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #include <asm/processor.h>
 #include <linux/uaccess.h>

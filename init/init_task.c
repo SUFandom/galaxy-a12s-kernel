@@ -11,10 +11,10 @@
 #include <linux/mm.h>
 #include <linux/audit.h>
 #include <linux/scs.h>
-<<<<<<< HEAD
+
 #include <linux/task_integrity.h>
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 #include <asm/pgtable.h>
 #include <linux/uaccess.h>

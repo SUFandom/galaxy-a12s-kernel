@@ -111,10 +111,10 @@ static int virtio_gpu_pci_quirk(struct drm_device *dev, struct virtio_device *vd
 
 static int virtio_gpu_probe(struct virtio_device *vdev)
 {
-<<<<<<< HEAD
+
 =======
 	struct drm_device *dev;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int ret;
 
 	if (vgacon_text_force() && virtio_gpu_modeset == -1)
@@ -123,7 +123,7 @@ static int virtio_gpu_probe(struct virtio_device *vdev)
 	if (virtio_gpu_modeset == 0)
 		return -EINVAL;
 
-<<<<<<< HEAD
+
 	ret = drm_virtio_init(&driver, vdev);
 	if (ret)
 		return ret;
@@ -156,7 +156,7 @@ static int virtio_gpu_probe(struct virtio_device *vdev)
 err_free:
 	drm_dev_put(dev);
 	return ret;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void virtio_gpu_remove(struct virtio_device *vdev)

@@ -38,10 +38,10 @@ static const struct dm_default_key_cipher {
  * @sector_size: crypto sector size in bytes (usually 4096)
  * @sector_bits: log2(sector_size)
  * @key: the encryption key to use
-<<<<<<< HEAD
+
 =======
  * @max_dun: the maximum DUN that may be used (computed from other params)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  */
 struct default_key_c {
 	struct dm_dev *dev;
@@ -52,10 +52,10 @@ struct default_key_c {
 	unsigned int sector_bits;
 	struct blk_crypto_key key;
 	bool is_hw_wrapped;
-<<<<<<< HEAD
+
 =======
 	u64 max_dun;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 static const struct dm_default_key_cipher *
@@ -155,10 +155,10 @@ static int default_key_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	const struct dm_default_key_cipher *cipher;
 	u8 raw_key[DM_DEFAULT_KEY_MAX_WRAPPED_KEY_SIZE];
 	unsigned int raw_key_size;
-<<<<<<< HEAD
+
 =======
 	unsigned int dun_bytes;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	unsigned long long tmpll;
 	char dummy;
 	int err;
@@ -242,7 +242,7 @@ static int default_key_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 		goto bad;
 	}
 
-<<<<<<< HEAD
+
 	err = blk_crypto_init_key(&dkc->key, raw_key, cipher->key_size,
 				  dkc->is_hw_wrapped, cipher->mode_num,
 				  dkc->sector_size);
@@ -254,18 +254,18 @@ static int default_key_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	err = blk_crypto_init_key(&dkc->key, raw_key, raw_key_size,
 				  dkc->is_hw_wrapped, cipher->mode_num,
 				  dun_bytes, dkc->sector_size);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (err) {
 		ti->error = "Error initializing blk-crypto key";
 		goto bad;
 	}
 
-<<<<<<< HEAD
+
 	err = blk_crypto_start_using_mode(cipher->mode_num, dkc->sector_size,
 =======
 	err = blk_crypto_start_using_mode(cipher->mode_num, dun_bytes,
 					  dkc->sector_size, dkc->is_hw_wrapped,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 					  dkc->dev->bdev->bd_queue);
 	if (err) {
 		ti->error = "Error starting to use blk-crypto";
@@ -326,7 +326,7 @@ static int default_key_map(struct dm_target *ti, struct bio *bio)
 		return DM_MAPIO_KILL;
 	dun[0] >>= dkc->sector_bits - SECTOR_SHIFT; /* crypto sectors */
 
-<<<<<<< HEAD
+
 =======
 	/*
 	 * This check isn't necessary as we should have calculated max_dun
@@ -335,7 +335,7 @@ static int default_key_map(struct dm_target *ti, struct bio *bio)
 	if (WARN_ON_ONCE(dun[0] > dkc->max_dun))
 		return DM_MAPIO_KILL;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	bio_crypt_set_ctx(bio, &dkc->key, dun, GFP_NOIO);
 
 	return DM_MAPIO_REMAPPED;

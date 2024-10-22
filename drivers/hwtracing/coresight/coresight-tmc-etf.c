@@ -90,11 +90,11 @@ static void __tmc_etb_disable_hw(struct tmc_drvdata *drvdata)
 
 static void tmc_etb_disable_hw(struct tmc_drvdata *drvdata)
 {
-<<<<<<< HEAD
+
 	coresight_disclaim_device(drvdata);
 =======
 	coresight_disclaim_device(drvdata->base);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	__tmc_etb_disable_hw(drvdata);
 }
 

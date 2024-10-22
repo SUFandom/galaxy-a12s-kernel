@@ -68,16 +68,16 @@ static void str2hashbuf(const unsigned char *msg, size_t len,
 		*buf++ = pad;
 }
 
-<<<<<<< HEAD
+
 static f2fs_hash_t __f2fs_dentry_hash(const struct inode *dir,
 				const struct qstr *name_info,
 				const struct fscrypt_name *fname)
-=======
+
 static u32 TEA_hash_name(const u8 *p, size_t len)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	__u32 in[8], buf[4];
-<<<<<<< HEAD
+
 	const unsigned char *name = name_info->name;
 	size_t len = name_info->len;
 
@@ -87,8 +87,8 @@ static u32 TEA_hash_name(const u8 *p, size_t len)
 
 	if (is_dot_dotdot(name_info))
 		return 0;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	if (IS_CASEFOLDED(dir) && IS_ENCRYPTED(dir)) {
 		f2fs_hash = cpu_to_le32(fscrypt_fname_siphash(dir, name_info));

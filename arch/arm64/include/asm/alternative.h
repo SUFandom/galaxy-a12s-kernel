@@ -122,10 +122,10 @@ static inline void apply_alternatives_module(void *start, size_t length) { }
 664:	.popsection
 	.org	. - (664b-663b) + (662b-661b)
 	.org	. - (662b-661b) + (664b-663b)
-<<<<<<< HEAD
+
 =======
 	.popsection
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	.endif
 .endm
 
@@ -200,12 +200,12 @@ static inline void apply_alternatives_module(void *start, size_t length) { }
 	.endif
 	.org	. - (664b-663b) + (662b-661b)
 	.org	. - (662b-661b) + (664b-663b)
-<<<<<<< HEAD
+
 =======
 	.if .Lasm_alt_mode==0
 	.popsection
 	.endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 .endm
 
 /*

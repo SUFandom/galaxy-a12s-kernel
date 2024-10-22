@@ -95,10 +95,10 @@
 #include <linux/flex_array.h>
 #include <linux/posix-timers.h>
 #include <linux/cpufreq_times.h>
-<<<<<<< HEAD
+
 #include <linux/task_integrity.h>
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #include <trace/events/oom.h>
 #include "internal.h"
 #include "fd.h"
@@ -3306,13 +3306,13 @@ static const struct pid_entry tgid_base_stuff[] = {
 #ifdef CONFIG_CPU_FREQ_TIMES
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
-<<<<<<< HEAD
+
 #ifdef CONFIG_FIVE
 	DIR("integrity", S_IRUGO|S_IXUGO, proc_integrity_inode_operations,
 			proc_integrity_operations),
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 };
 
 static int proc_tgid_base_readdir(struct file *file, struct dir_context *ctx)

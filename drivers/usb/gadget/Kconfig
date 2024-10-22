@@ -237,20 +237,20 @@ config USB_F_PRINTER
 config USB_F_TCM
 	tristate
 
-<<<<<<< HEAD
+
 config USB_F_MTP
 	tristate
 
 config USB_F_PTP
-=======
+
 config USB_F_ACC
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	tristate
 
 config USB_F_AUDIO_SRC
 	tristate
 
-<<<<<<< HEAD
+
 config USB_F_ACC
 	tristate
 
@@ -263,8 +263,8 @@ config USB_F_CONN_GADGET
 config USB_F_SS_MON_GADGET
 	tristate
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 # this first set of drivers all depend on bulk-capable hardware.
 
 config USB_CONFIGFS
@@ -426,7 +426,7 @@ config USB_CONFIGFS_F_FS
 	  implemented in kernel space (for instance Ethernet, serial or
 	  mass storage) and other are implemented in user space.
 
-<<<<<<< HEAD
+
 config USB_CONFIGFS_F_DM
 	bool "DM gadget"
 	depends on USB_CONFIGFS
@@ -477,8 +477,8 @@ config USB_CONFIGFS_F_SS_MON_GADGET
 	 Driver for control to Samsung Usb device layer
 	 For Samung working scenario and saving debug log, etc
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 config USB_CONFIGFS_F_ACC
 	bool "Accessory gadget"
 	depends on USB_CONFIGFS
@@ -496,7 +496,7 @@ config USB_CONFIGFS_F_AUDIO_SRC
 	help
 	  USB gadget Audio Source support
 
-<<<<<<< HEAD
+
 config USB_RNDIS_MULTIPACKET
 	bool "Samsung Rndis Multi Packet support"
 	depends on USB_CONFIGFS_UEVENT
@@ -510,8 +510,8 @@ config USB_NCM_SUPPORT_MTU_CHANGE
 	help
 	  NCM MTU size change support.
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 config USB_CONFIGFS_F_UAC1
 	bool "Audio Class 1.0"
 	depends on USB_CONFIGFS

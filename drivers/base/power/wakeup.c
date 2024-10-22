@@ -15,13 +15,13 @@
 #include <linux/seq_file.h>
 #include <linux/debugfs.h>
 #include <linux/pm_wakeirq.h>
-<<<<<<< HEAD
+
 #include <linux/types.h>
 =======
 #include <linux/irq.h>
 #include <linux/irqdesc.h>
 #include <linux/wakeup_reason.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <trace/events/power.h>
 #include <linux/memory_hotplug.h>
 #include <linux/wakeup_reason.h>
@@ -82,7 +82,7 @@ static struct wakeup_source deleted_ws = {
 };
 
 static DEFINE_IDA(wakeup_ida);
-<<<<<<< HEAD
+
 
 /**
  * wakeup_source_prepare - Prepare a new wakeup source for initialization.
@@ -101,7 +101,7 @@ void wakeup_source_prepare(struct wakeup_source *ws, const char *name)
 }
 EXPORT_SYMBOL_GPL(wakeup_source_prepare);
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /**
  * wakeup_source_create - Create a struct wakeup_source object.
@@ -110,10 +110,10 @@ EXPORT_SYMBOL_GPL(wakeup_source_prepare);
 struct wakeup_source *wakeup_source_create(const char *name)
 {
 	struct wakeup_source *ws;
-<<<<<<< HEAD
+
 =======
 	const char *ws_name;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int id;
 
 	ws = kzalloc(sizeof(*ws), GFP_KERNEL);
@@ -130,7 +130,7 @@ struct wakeup_source *wakeup_source_create(const char *name)
 		goto err_id;
 	ws->id = id;
 
-<<<<<<< HEAD
+
 	wakeup_source_prepare(ws, name ? kstrdup_const(name, GFP_KERNEL) : NULL);
 
 	id = ida_alloc(&wakeup_ida, GFP_KERNEL);
@@ -139,18 +139,18 @@ struct wakeup_source *wakeup_source_create(const char *name)
 	ws->id = id;
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return ws;
 
 err_id:
 	kfree_const(ws->name);
-<<<<<<< HEAD
+
 	kfree(ws);
 =======
 err_name:
 	kfree(ws);
 err_ws:
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return NULL;
 }
 EXPORT_SYMBOL_GPL(wakeup_source_create);
@@ -946,7 +946,7 @@ bool pm_wakeup_pending(void)
 	raw_spin_unlock_irqrestore(&events_lock, flags);
 
 	if (ret) {
-<<<<<<< HEAD
+
 		pr_info("PM: Wakeup pending, aborting suspend\n");
 		pm_print_active_wakeup_sources();
 =======
@@ -954,7 +954,7 @@ bool pm_wakeup_pending(void)
 					     MAX_SUSPEND_ABORT_LEN);
 		log_suspend_abort_reason(suspend_abort);
 		pr_info("PM: %s\n", suspend_abort);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	return ret || atomic_read(&pm_abort_suspend) > 0;

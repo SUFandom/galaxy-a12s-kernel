@@ -9,12 +9,12 @@
 #include <linux/notifier.h>
 #include <linux/device.h>
 #include <linux/workqueue.h>
-<<<<<<< HEAD
+
 #include <linux/mutex.h>
-=======
+
 #include <linux/cpumask.h>
 #include <linux/interrupt.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 enum {
 	PM_QOS_RESERVED = 0,
@@ -117,11 +117,11 @@ enum pm_qos_flags_status {
 
 #define PM_QOS_FLAG_NO_POWER_OFF	(1 << 0)
 
-<<<<<<< HEAD
+
 #define pm_qos_add_request(arg...)	do {				\
 	pm_qos_add_request_trace((char *)__func__, __LINE__, ##arg);	\
 } while(0)
-=======
+
 enum pm_qos_req_type {
 	PM_QOS_REQ_ALL_CORES = 0,
 	PM_QOS_REQ_AFFINE_CORES,
@@ -129,7 +129,7 @@ enum pm_qos_req_type {
 	PM_QOS_REQ_AFFINE_IRQ,
 #endif
 };
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 struct pm_qos_request {
 	enum pm_qos_req_type type;

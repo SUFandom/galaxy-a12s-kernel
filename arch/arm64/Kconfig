@@ -853,7 +853,7 @@ config ARCH_HAS_CACHE_LINE_SIZE
 config CC_HAVE_SHADOW_CALL_STACK
 	def_bool $(cc-option, -fsanitize=shadow-call-stack -ffixed-x18)
 
-<<<<<<< HEAD
+
 =======
 config ARM64_DMA_USE_IOMMU
 	bool "ARM64 DMA iommu integration"
@@ -886,7 +886,7 @@ config ARM64_DMA_IOMMU_ALIGNMENT
 
 endif
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 config SECCOMP
 	bool "Enable seccomp to safely compute untrusted bytecode"
 	---help---
@@ -1038,7 +1038,7 @@ config ARM64_TAGGED_ADDR_ABI
 	  to system calls as pointer arguments. For details, see
 	  Documentation/arm64/tagged-address-abi.rst.
 
-<<<<<<< HEAD
+
 config MITIGATE_SPECTRE_BRANCH_HISTORY
 	bool "Mitigate Spectre style attacks against branch history" if EXPERT
 	default y
@@ -1060,7 +1060,7 @@ config COMPAT_VDSO
 
 	  You must have a 32-bit build of glibc 2.22 or later for programs
 	  to seamlessly take advantage of this.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 menuconfig ARMV8_DEPRECATED
 	bool "Emulate deprecated/obsolete ARMv8 instructions"

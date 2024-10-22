@@ -497,7 +497,7 @@ void cpufreq_times_create_policy(struct cpufreq_policy *policy)
 	freqs = tmp;
 	freqs->max_state = count;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_SEC_PM
 	index = count;
 	cpufreq_for_each_valid_entry(pos, table) {
@@ -513,7 +513,7 @@ void cpufreq_times_create_policy(struct cpufreq_policy *policy)
 =======
 	cpufreq_for_each_valid_entry(pos, table)
 		freqs->freq_table[index++] = pos->frequency;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	index = cpufreq_times_get_index(freqs, policy->cur);
 	if (index >= 0)

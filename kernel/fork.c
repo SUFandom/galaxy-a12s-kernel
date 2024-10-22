@@ -95,10 +95,10 @@
 #include <linux/thread_info.h>
 #include <linux/cpufreq_times.h>
 #include <linux/scs.h>
-<<<<<<< HEAD
+
 #include <linux/task_integrity.h>
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
@@ -1814,8 +1814,8 @@ static __always_inline void delayed_free_task(struct task_struct *tsk)
 }
 
 static int pidfd_release(struct inode *inode, struct file *file)
-<<<<<<< HEAD
-=======
+
+
 {
 	struct pid *pid = file->private_data;
 
@@ -1894,7 +1894,7 @@ static int pidfd_create(struct pid *pid)
 }
 
 static void copy_oom_score_adj(u64 clone_flags, struct task_struct *tsk)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct pid *pid = file->private_data;
 
@@ -2042,11 +2042,11 @@ static __latent_entropy struct task_struct *copy_process(
 	}
 
 	if (clone_flags & CLONE_PIDFD) {
-<<<<<<< HEAD
+
 		int reserved;
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 		/*
 		 * - CLONE_PARENT_SETTID is useless for pidfds and also
 		 *   parent_tidptr is used to return pidfds.
@@ -2057,7 +2057,7 @@ static __latent_entropy struct task_struct *copy_process(
 		if (clone_flags &
 		    (CLONE_DETACHED | CLONE_PARENT_SETTID | CLONE_THREAD))
 			return ERR_PTR(-EINVAL);
-<<<<<<< HEAD
+
 
 		/*
 		 * Verify that parent_tidptr is sane so we can potentially
@@ -2068,8 +2068,8 @@ static __latent_entropy struct task_struct *copy_process(
 
 		if (reserved != 0)
 			return ERR_PTR(-EINVAL);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	}
 
 	/*
@@ -2607,10 +2607,10 @@ long _do_fork(unsigned long clone_flags,
 	if (IS_ERR(p))
 		return PTR_ERR(p);
 
-<<<<<<< HEAD
+
 	cpumask_setall(&p->aug_cpus_allowed);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	cpufreq_task_times_alloc(p);
 
 	/*

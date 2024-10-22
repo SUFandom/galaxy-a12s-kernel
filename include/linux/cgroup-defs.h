@@ -796,9 +796,9 @@ struct sock_cgroup_data {
 	union {
 #ifdef __LITTLE_ENDIAN
 		struct {
-<<<<<<< HEAD
+
 			u8	is_data;
-=======
+
 #ifdef __GENKSYMS__
 			u8	is_data;
 #else
@@ -806,7 +806,7 @@ struct sock_cgroup_data {
 			u8	no_refcnt : 1;
 			u8	unused : 6;
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			u8	padding;
 			u16	prioidx;
 			u32	classid;

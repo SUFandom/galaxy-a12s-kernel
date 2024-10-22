@@ -4,7 +4,7 @@
 tmp_file=$(mktemp)
 trap "rm -f $tmp_file.o $tmp_file $tmp_file.bin" EXIT
 
-<<<<<<< HEAD
+
 cat << "END" | "$CC" -c -x c - -o $tmp_file.o >/dev/null 2>&1
 void *p = &p;
 END
@@ -15,7 +15,7 @@ END
 test -z "$("$NM" $tmp_file 2>&1 >/dev/null)"
 
 "$OBJCOPY" -O binary $tmp_file $tmp_file.bin
-=======
+
 cat << "END" | $CC -c -x c - -o $tmp_file.o >/dev/null 2>&1
 void *p = &p;
 END
@@ -26,4 +26,4 @@ $LD $tmp_file.o -shared -Bsymbolic --pack-dyn-relocs=relr -o $tmp_file
 test -z "$($NM $tmp_file 2>&1 >/dev/null)"
 
 $OBJCOPY -O binary $tmp_file $tmp_file.bin
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

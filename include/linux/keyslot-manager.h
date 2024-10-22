@@ -8,8 +8,8 @@
 
 #include <linux/bio.h>
 
-<<<<<<< HEAD
-=======
+
+
 /* Inline crypto feature bits.  Must set at least one. */
 enum {
 	/* Support for standard software-specified keys */
@@ -19,7 +19,7 @@ enum {
 	BLK_CRYPTO_FEATURE_WRAPPED_KEYS = BIT(1),
 };
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_BLK_INLINE_ENCRYPTION
 
 struct keyslot_manager;
@@ -57,11 +57,11 @@ struct keyslot_manager *keyslot_manager_create(
 	struct device *dev,
 	unsigned int num_slots,
 	const struct keyslot_mgmt_ll_ops *ksm_ops,
-<<<<<<< HEAD
+
 	const unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX],
 	void *ll_priv_data);
 
-=======
+
 	unsigned int features,
 	const unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX],
 	void *ll_priv_data);
@@ -69,7 +69,7 @@ struct keyslot_manager *keyslot_manager_create(
 void keyslot_manager_set_max_dun_bytes(struct keyslot_manager *ksm,
 				       unsigned int max_dun_bytes);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 int keyslot_manager_get_slot_for_key(struct keyslot_manager *ksm,
 				     const struct blk_crypto_key *key);
 
@@ -79,13 +79,13 @@ void keyslot_manager_put_slot(struct keyslot_manager *ksm, unsigned int slot);
 
 bool keyslot_manager_crypto_mode_supported(struct keyslot_manager *ksm,
 					   enum blk_crypto_mode_num crypto_mode,
-<<<<<<< HEAD
+
 					   unsigned int data_unit_size);
-=======
+
 					   unsigned int dun_bytes,
 					   unsigned int data_unit_size,
 					   bool is_hw_wrapped_key);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 int keyslot_manager_evict_key(struct keyslot_manager *ksm,
 			      const struct blk_crypto_key *key);
@@ -99,10 +99,10 @@ void keyslot_manager_destroy(struct keyslot_manager *ksm);
 struct keyslot_manager *keyslot_manager_create_passthrough(
 	struct device *dev,
 	const struct keyslot_mgmt_ll_ops *ksm_ops,
-<<<<<<< HEAD
-=======
+
+
 	unsigned int features,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	const unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX],
 	void *ll_priv_data);
 

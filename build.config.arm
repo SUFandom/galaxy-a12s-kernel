@@ -1,13 +1,13 @@
 ARCH=arm
 
-<<<<<<< HEAD
+
 CLANG_TRIPLE=arm-linux-gnueabi-
 CROSS_COMPILE=arm-linux-androidkernel-
 LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin
 =======
 CROSS_COMPILE=arm-linux-gnueabi-
 LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=prebuilts/gas/linux-x86
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 FILES="
 arch/arm/boot/Image.gz

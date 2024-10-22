@@ -150,16 +150,16 @@ struct dentry_operations {
 	struct vfsmount *(*d_automount)(struct path *);
 	int (*d_manage)(const struct path *, bool);
 	struct dentry *(*d_real)(struct dentry *, const struct inode *);
-<<<<<<< HEAD
+
 	void (*d_canonical_path)(const struct path *, struct path *);
-=======
+
 
 	ANDROID_KABI_USE(1, void (*d_canonical_path)(const struct path *,
 						     struct path *));
 	ANDROID_KABI_RESERVE(2);
 	ANDROID_KABI_RESERVE(3);
 	ANDROID_KABI_RESERVE(4);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 } ____cacheline_aligned;
 
 /*

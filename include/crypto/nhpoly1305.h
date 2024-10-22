@@ -7,11 +7,11 @@
 #define _NHPOLY1305_H
 
 #include <crypto/hash.h>
-<<<<<<< HEAD
+
 #include <crypto/poly1305.h>
-=======
+
 #include <crypto/internal/poly1305.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /* NH parameterization: */
 
@@ -37,11 +37,11 @@
 #define NHPOLY1305_KEY_SIZE	(POLY1305_BLOCK_SIZE + NH_KEY_BYTES)
 
 struct nhpoly1305_key {
-<<<<<<< HEAD
+
 	struct poly1305_key poly_key;
-=======
+
 	struct poly1305_core_key poly_key;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	u32 nh_key[NH_KEY_WORDS];
 };
 

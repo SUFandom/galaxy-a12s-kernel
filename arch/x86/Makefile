@@ -217,14 +217,14 @@ KBUILD_LDFLAGS += $(call ld-option, -z max-page-size=0x200000)
 endif
 
 ifdef CONFIG_LTO_CLANG
-<<<<<<< HEAD
+
 KBUILD_LDFLAGS	+= -plugin-opt=-code-model=kernel \
 		   -plugin-opt=-stack-alignment=$(if $(CONFIG_X86_32),4,8)
 =======
 ifeq ($(shell test $(CONFIG_LLD_VERSION) -lt 130000; echo $$?),0)
 KBUILD_LDFLAGS	+= -plugin-opt=-stack-alignment=$(if $(CONFIG_X86_32),4,8)
 endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 endif
 
 # Speed up the build

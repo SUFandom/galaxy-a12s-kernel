@@ -1166,10 +1166,10 @@ const char * const vmstat_text[] = {
 	"nr_dirtied",
 	"nr_written",
 	"nr_kernel_misc_reclaimable",
-<<<<<<< HEAD
-=======
+
+
 	"nr_unreclaimable_pages",
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 
 	"nr_ion_heap",

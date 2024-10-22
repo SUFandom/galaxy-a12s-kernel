@@ -1012,13 +1012,13 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 
 void smp_send_reschedule(int cpu)
 {
-<<<<<<< HEAD
+
 	smp_cross_call_common(cpumask_of(cpu), IPI_RESCHEDULE);
 =======
 	if (__smp_update_ipi_history_cb)
 		__smp_update_ipi_history_cb(cpu);
 	smp_cross_call(cpumask_of(cpu), IPI_RESCHEDULE);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 #ifdef CONFIG_GENERIC_CLOCKEVENTS_BROADCAST

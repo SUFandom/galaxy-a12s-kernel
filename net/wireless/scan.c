@@ -2,17 +2,17 @@
 /*
  * cfg80211 scan result handling
  *
-<<<<<<< HEAD
+
  * Copyright 2008 		Johannes Berg <johannes@sipsolutions.net>
  * Copyright 2013-2014  	Intel Mobile Communications GmbH
  * Copyright 2016		Intel Deutschland GmbH
  * Copyright (C) 2018-2019 	Intel Corporation
-=======
+
  * Copyright 2008 Johannes Berg <johannes@sipsolutions.net>
  * Copyright 2013-2014  Intel Mobile Communications GmbH
  * Copyright 2016	Intel Deutschland GmbH
  * Copyright (C) 2018-2019 Intel Corporation
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  */
 #include <linux/kernel.h>
 #include <linux/slab.h>
@@ -176,13 +176,13 @@ static bool __cfg80211_unlink_bss(struct cfg80211_registered_device *rdev,
 	}
 
 	list_del_init(&bss->list);
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 	list_del_init(&bss->nontrans_list);
 #endif
-=======
+
 	list_del_init(&bss->pub.nontrans_list);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	rb_erase(&bss->rbn, &rdev->bss_tree);
 	rdev->bss_entries--;
 	WARN_ONCE((rdev->bss_entries == 0) ^ list_empty(&rdev->bss_list),
@@ -192,7 +192,7 @@ static bool __cfg80211_unlink_bss(struct cfg80211_registered_device *rdev,
 	return true;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 static void cfg80211_gen_new_bssid(const u8 *bssid, u8 max_bssid,
 				   u8 mbssid_index, u8 *new_bssid_addr)
@@ -210,8 +210,8 @@ static void cfg80211_gen_new_bssid(const u8 *bssid, u8 max_bssid,
 	u64_to_ether_addr(new_bssid, new_bssid_addr);
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
 				  const u8 *subelement, size_t subie_len,
 				  u8 *new_ie, gfp_t gfp)
@@ -309,10 +309,10 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
 	kfree(sub_copy);
 	return pos - new_ie;
 }
-<<<<<<< HEAD
+
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 static bool is_bss(struct cfg80211_bss *a, const u8 *bssid,
 		   const u8 *ssid, size_t ssid_len)
@@ -337,7 +337,7 @@ static bool is_bss(struct cfg80211_bss *a, const u8 *bssid,
 	return memcmp(ssidie + 2, ssid, ssid_len) == 0;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 static int
 cfg80211_add_nontrans_list(struct cfg80211_internal_bss *trans_bss,
@@ -349,7 +349,7 @@ cfg80211_add_nontrans_list(struct cfg80211_internal_bss *trans_bss,
 
 	rcu_read_lock();
 	ssid = ieee80211_bss_get_ie(&nontrans_bss->pub, WLAN_EID_SSID);
-=======
+
 static int
 cfg80211_add_nontrans_list(struct cfg80211_bss *trans_bss,
 			   struct cfg80211_bss *nontrans_bss)
@@ -360,7 +360,7 @@ cfg80211_add_nontrans_list(struct cfg80211_bss *trans_bss,
 
 	rcu_read_lock();
 	ssid = ieee80211_bss_get_ie(nontrans_bss, WLAN_EID_SSID);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (!ssid) {
 		rcu_read_unlock();
 		return -EINVAL;
@@ -371,11 +371,11 @@ cfg80211_add_nontrans_list(struct cfg80211_bss *trans_bss,
 
 	/* check if nontrans_bss is in the list */
 	list_for_each_entry(bss, &trans_bss->nontrans_list, nontrans_list) {
-<<<<<<< HEAD
+
 		if (is_bss(&bss->pub, nontrans_bss->pub.bssid, ssid, ssid_len))
-=======
+
 		if (is_bss(bss, nontrans_bss->bssid, ssid, ssid_len))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			return 0;
 	}
 
@@ -383,10 +383,10 @@ cfg80211_add_nontrans_list(struct cfg80211_bss *trans_bss,
 	list_add_tail(&nontrans_bss->nontrans_list, &trans_bss->nontrans_list);
 	return 0;
 }
-<<<<<<< HEAD
+
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 static void __cfg80211_bss_expire(struct cfg80211_registered_device *rdev,
 				  unsigned long expire_time)
@@ -1221,13 +1221,13 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
 		memcpy(new, tmp, sizeof(*new));
 		new->refcount = 1;
 		INIT_LIST_HEAD(&new->hidden_list);
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 		INIT_LIST_HEAD(&new->nontrans_list);
 #endif
-=======
+
 		INIT_LIST_HEAD(&new->pub.nontrans_list);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 		if (rcu_access_pointer(tmp->pub.proberesp_ies)) {
 			hidden = rb_find_bss(rdev, tmp, BSS_CMP_HIDE_ZLEN);
@@ -1881,7 +1881,7 @@ cfg80211_inform_bss_data(struct wiphy *wiphy,
 EXPORT_SYMBOL(cfg80211_inform_bss_data);
 #endif
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 /* cfg80211_inform_bss_width_frame helper */
 static struct cfg80211_bss *
@@ -2018,7 +2018,7 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
 			       struct cfg80211_inform_bss *data,
 			       struct ieee80211_mgmt *mgmt, size_t len,
 			       gfp_t gfp)
-=======
+
 static void
 cfg80211_parse_mbssid_frame_data(struct wiphy *wiphy,
 				 struct cfg80211_inform_bss *data,
@@ -2030,7 +2030,7 @@ cfg80211_parse_mbssid_frame_data(struct wiphy *wiphy,
 	const u8 *ie = mgmt->u.probe_resp.variable;
 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
 				      u.probe_resp.variable);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	ftype = ieee80211_is_beacon(mgmt->frame_control) ?
 		CFG80211_BSS_FTYPE_BEACON : CFG80211_BSS_FTYPE_PRESP;
@@ -2303,16 +2303,16 @@ EXPORT_SYMBOL(cfg80211_put_bss);
 void cfg80211_unlink_bss(struct wiphy *wiphy, struct cfg80211_bss *pub)
 {
 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-<<<<<<< HEAD
+
 #ifdef CONFIG_CFG80211_SLSI_HE
 	struct cfg80211_internal_bss *bss, *nontrans_bss, *tmp;
 #else
 	struct cfg80211_internal_bss *bss;
 #endif
-=======
+
 	struct cfg80211_internal_bss *bss, *tmp1;
 	struct cfg80211_bss *nontrans_bss, *tmp;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	if (WARN_ON(!pub))
 		return;
@@ -2320,7 +2320,7 @@ void cfg80211_unlink_bss(struct wiphy *wiphy, struct cfg80211_bss *pub)
 	bss = container_of(pub, struct cfg80211_internal_bss, pub);
 
 	spin_lock_bh(&rdev->bss_lock);
-<<<<<<< HEAD
+
 	if (!list_empty(&bss->list)) {
 #ifdef CONFIG_CFG80211_SLSI_HE
 		list_for_each_entry_safe(nontrans_bss, tmp,
@@ -2331,7 +2331,7 @@ void cfg80211_unlink_bss(struct wiphy *wiphy, struct cfg80211_bss *pub)
 		}
 #endif
 		if (__cfg80211_unlink_bss(rdev, bss))
-=======
+
 	if (list_empty(&bss->list))
 		goto out;
 
@@ -2341,7 +2341,7 @@ void cfg80211_unlink_bss(struct wiphy *wiphy, struct cfg80211_bss *pub)
 		tmp1 = container_of(nontrans_bss,
 				    struct cfg80211_internal_bss, pub);
 		if (__cfg80211_unlink_bss(rdev, tmp1))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			rdev->bss_generation++;
 	}
 

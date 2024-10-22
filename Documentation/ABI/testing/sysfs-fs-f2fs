@@ -318,7 +318,7 @@ Date:		September 2019
 Contact:	"Hridya Valsaraju" <hridya@google.com>
 Description:	Average number of valid blocks.
 		Available when CONFIG_F2FS_STAT_FS=y.
-<<<<<<< HEAD
+
 =======
 
 What:		/sys/fs/f2fs/<disk>/mounted_time_sec
@@ -349,4 +349,4 @@ Date:		April 2020
 Contact:	"Daeho Jeong" <daehojeong@google.com>
 Description:	Give a way to change iostat_period time. 3secs by default.
 		The new iostat trace gives stats gap given the period.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

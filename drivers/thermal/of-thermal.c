@@ -29,8 +29,8 @@
  * @lock: mutex lock acquired before updating the trip temperatures
  * @first_tz: list head pointing the first thermal zone
  */
-<<<<<<< HEAD
-=======
+
+
 
 struct __thermal_bind_params {
 	struct device_node *cooling_device;
@@ -49,7 +49,7 @@ struct __thermal_bind_params {
  * @lock: mutex lock acquired before updating the trip temperatures
  * @first_tz: list head pointing the first thermal zone
  */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 struct __sensor_param {
 	void *sensor_data;
 	const struct thermal_zone_of_device_ops *ops;
@@ -57,7 +57,7 @@ struct __sensor_param {
 	struct mutex lock;
 	struct list_head first_tz;
 };
-<<<<<<< HEAD
+
 /*
  * struct virtual_sensor - internal representation of a virtual thermal zone
  * @num_sensors - number of sensors this virtual sensor will reference to
@@ -84,7 +84,7 @@ struct virtual_sensor {
 	int                        avg_denominator;
 };
 
-=======
+
 
 /**
  * struct __thermal_zone - internal representation of a thermal zone
@@ -153,7 +153,7 @@ struct virtual_sensor {
 	int                        avg_denominator;
 };
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /***   DT thermal zone device callbacks   ***/
 
@@ -721,11 +721,11 @@ thermal_zone_of_add_sensor(struct device_node *zone,
 	if (sens_param->ops->set_emul_temp)
 		tzd->ops->set_emul_temp = of_thermal_set_emul_temp;
 
-<<<<<<< HEAD
+
 	tzd->ops->throttle_hotplug = of_thermal_throttle_hotplug;
-=======
+
 	list_add_tail(&tz->list, &sens_param->first_tz);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	mutex_unlock(&tzd->lock);
 
 	return tzd;
@@ -771,10 +771,10 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
 {
 	struct device_node *np, *child, *sensor_np;
 	struct thermal_zone_device *tzd = ERR_PTR(-ENODEV);
-<<<<<<< HEAD
-=======
+
+
 	struct thermal_zone_device *first_tzd = NULL;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	struct __sensor_param *sens_param = NULL;
 
 	np = of_find_node_by_name(NULL, "thermal-zones");
@@ -793,13 +793,13 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
 	}
 	sens_param->sensor_data = data;
 	sens_param->ops = ops;
-<<<<<<< HEAD
-=======
+
+
 	INIT_LIST_HEAD(&sens_param->first_tz);
 	sens_param->trip_high = INT_MAX;
 	sens_param->trip_low = INT_MIN;
 	mutex_init(&sens_param->lock);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	sensor_np = of_node_get(dev->of_node);
 
 	for_each_available_child_of_node(np, child) {
@@ -826,12 +826,12 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
 		if (sensor_specs.np == sensor_np && id == sensor_id) {
 			tzd = thermal_zone_of_add_sensor(child, sensor_np,
 							 sens_param);
-<<<<<<< HEAD
+
 
 			of_node_put(sensor_specs.np);
 			of_node_put(child);
 			goto exit;
-=======
+
 			if (!IS_ERR(tzd)) {
 				if (!first_tzd)
 					first_tzd = tzd;
@@ -840,24 +840,24 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
 					tzd->ops->set_mode(tzd,
 						THERMAL_DEVICE_ENABLED);
 			}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		}
 		of_node_put(sensor_specs.np);
 	}
 	of_node_put(sensor_np);
 	of_node_put(np);
 
-<<<<<<< HEAD
+
 	if (tzd == ERR_PTR(-ENODEV))
 		kfree(sens_param);
 	return tzd;
-=======
+
 	if (!first_tzd) {
 		first_tzd = ERR_PTR(-ENODEV);
 		kfree(sens_param);
 	}
 	return first_tzd;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 EXPORT_SYMBOL_GPL(thermal_zone_of_sensor_register);
 
@@ -900,18 +900,18 @@ void thermal_zone_of_sensor_unregister(struct device *dev,
 		pos->ops->get_trend = NULL;
 		pos->ops->set_emul_temp = NULL;
 
-<<<<<<< HEAD
+
 	kfree(tz->senps);
 	tz->senps = NULL;
 	mutex_unlock(&tzd->lock);
-=======
+
 		list_del(&tz->list);
 		if (list_empty(&tz->senps->first_tz))
 			kfree(tz->senps);
 		tz->senps = NULL;
 		mutex_unlock(&pos->lock);
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 EXPORT_SYMBOL_GPL(thermal_zone_of_sensor_unregister);
 
@@ -1508,11 +1508,11 @@ int __init of_parse_thermal_zones(void)
 		tzp->slope = tz->slope;
 		tzp->offset = tz->offset;
 
-<<<<<<< HEAD
+
 		if (!of_property_read_string(child, "governor", &governor_name))
 			strncpy(tzp->governor_name, governor_name, THERMAL_NAME_LENGTH);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 		if (of_property_read_bool(child, "tracks-low"))
 			tzp->tracks_low = true;
 

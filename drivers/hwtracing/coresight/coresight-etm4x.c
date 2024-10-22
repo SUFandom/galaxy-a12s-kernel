@@ -1110,10 +1110,10 @@ static void etm4_init_trace_id(struct etmv4_drvdata *drvdata)
 	drvdata->trcid = drvdata->cpu + 1;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_CPU_PM
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
 {
 	int i, ret = 0;
@@ -1166,11 +1166,11 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
 	state->trcvdsacctlr = readl(drvdata->base + TRCVDSACCTLR);
 	state->trcvdarcctlr = readl(drvdata->base + TRCVDARCCTLR);
 
-<<<<<<< HEAD
+
 	for (i = 0; i < drvdata->nrseqstate; i++)
 =======
 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		state->trcseqevr[i] = readl(drvdata->base + TRCSEQEVRn(i));
 
 	state->trcseqrstevr = readl(drvdata->base + TRCSEQRSTEVR);
@@ -1193,13 +1193,13 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
 	}
 
 	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
-<<<<<<< HEAD
+
 		state->trcacvr[i] = readl(drvdata->base + TRCACVRn(i));
 		state->trcacatr[i] = readl(drvdata->base + TRCACATRn(i));
 =======
 		state->trcacvr[i] = readq(drvdata->base + TRCACVRn(i));
 		state->trcacatr[i] = readq(drvdata->base + TRCACATRn(i));
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	/*
@@ -1210,7 +1210,7 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
 	 */
 
 	for (i = 0; i < drvdata->numcidc; i++)
-<<<<<<< HEAD
+
 		state->trccidcvr[i] = readl(drvdata->base + TRCCIDCVRn(i));
 
 	for (i = 0; i < drvdata->numvmidc; i++)
@@ -1220,17 +1220,17 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
 
 	for (i = 0; i < drvdata->numvmidc; i++)
 		state->trcvmidcvr[i] = readq(drvdata->base + TRCVMIDCVRn(i));
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	state->trccidcctlr0 = readl(drvdata->base + TRCCIDCCTLR0);
 	state->trccidcctlr1 = readl(drvdata->base + TRCCIDCCTLR1);
 
 	state->trcvmidcctlr0 = readl(drvdata->base + TRCVMIDCCTLR0);
-<<<<<<< HEAD
+
 	state->trcvmidcctlr0 = readl(drvdata->base + TRCVMIDCCTLR1);
 =======
 	state->trcvmidcctlr1 = readl(drvdata->base + TRCVMIDCCTLR1);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	state->trcclaimset = readl(drvdata->base + TRCCLAIMCLR);
 
@@ -1291,11 +1291,11 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
 	writel_relaxed(state->trcvdsacctlr, drvdata->base + TRCVDSACCTLR);
 	writel_relaxed(state->trcvdarcctlr, drvdata->base + TRCVDARCCTLR);
 
-<<<<<<< HEAD
+
 	for (i = 0; i < drvdata->nrseqstate; i++)
 =======
 	for (i = 0; i < drvdata->nrseqstate - 1; i++)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		writel_relaxed(state->trcseqevr[i],
 			       drvdata->base + TRCSEQEVRn(i));
 
@@ -1326,7 +1326,7 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
 	}
 
 	for (i = 0; i < drvdata->nr_addr_cmp * 2; i++) {
-<<<<<<< HEAD
+
 		writel_relaxed(state->trcacvr[i],
 			       drvdata->base + TRCACVRn(i));
 		writel_relaxed(state->trcacatr[i],
@@ -1334,12 +1334,12 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
 		writeq_relaxed(state->trcacvr[i],
 			       drvdata->base + TRCACVRn(i));
 		writeq_relaxed(state->trcacatr[i],
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			       drvdata->base + TRCACATRn(i));
 	}
 
 	for (i = 0; i < drvdata->numcidc; i++)
-<<<<<<< HEAD
+
 		writel_relaxed(state->trccidcvr[i],
 			       drvdata->base + TRCCIDCVRn(i));
 
@@ -1351,18 +1351,18 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
 
 	for (i = 0; i < drvdata->numvmidc; i++)
 		writeq_relaxed(state->trcvmidcvr[i],
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			       drvdata->base + TRCVMIDCVRn(i));
 
 	writel_relaxed(state->trccidcctlr0, drvdata->base + TRCCIDCCTLR0);
 	writel_relaxed(state->trccidcctlr1, drvdata->base + TRCCIDCCTLR1);
 
 	writel_relaxed(state->trcvmidcctlr0, drvdata->base + TRCVMIDCCTLR0);
-<<<<<<< HEAD
+
 	writel_relaxed(state->trcvmidcctlr0, drvdata->base + TRCVMIDCCTLR1);
 =======
 	writel_relaxed(state->trcvmidcctlr1, drvdata->base + TRCVMIDCCTLR1);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	writel_relaxed(state->trcclaimset, drvdata->base + TRCCLAIMSET);
 
@@ -1425,19 +1425,19 @@ static struct notifier_block etm4_cpu_pm_nb = {
 
 static int etm4_cpu_pm_register(void)
 {
-<<<<<<< HEAD
+
 	return cpu_pm_register_notifier(&etm4_cpu_pm_nb);
 =======
 	if (IS_ENABLED(CONFIG_CPU_PM))
 		return cpu_pm_register_notifier(&etm4_cpu_pm_nb);
 
 	return 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void etm4_cpu_pm_unregister(void)
 {
-<<<<<<< HEAD
+
 	cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
 }
 #else
@@ -1448,7 +1448,7 @@ static void etm4_cpu_pm_unregister(void) { }
 	if (IS_ENABLED(CONFIG_CPU_PM))
 		cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
 }
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
 {

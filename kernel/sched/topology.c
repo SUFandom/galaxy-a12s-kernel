@@ -2010,11 +2010,11 @@ build_sched_domains(const struct cpumask *cpu_map, struct sched_domain_attr *att
 	rcu_read_unlock();
 
 	if (has_asym)
-<<<<<<< HEAD
+
 		static_branch_enable_cpuslocked(&sched_asym_cpucapacity);
-=======
+
 		static_branch_inc_cpuslocked(&sched_asym_cpucapacity);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	ret = 0;
 error:

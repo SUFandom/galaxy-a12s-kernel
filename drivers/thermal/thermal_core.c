@@ -1451,7 +1451,7 @@ exit:
 }
 EXPORT_SYMBOL_GPL(thermal_zone_get_zone_by_name);
 
-<<<<<<< HEAD
+
 struct thermal_zone_device *
 thermal_zone_get_zone_by_cool_np(struct device_node *cool_np)
 {
@@ -1483,7 +1483,7 @@ exit:
 
 }
 EXPORT_SYMBOL_GPL(thermal_zone_get_zone_by_cool_np);
-=======
+
 /**
  * thermal_zone_get_cdev_by_name() - search for a cooling device and returns
  * its ref.
@@ -1520,7 +1520,7 @@ struct thermal_cooling_device *thermal_zone_get_cdev_by_name(const char *name)
 
 }
 EXPORT_SYMBOL_GPL(thermal_zone_get_cdev_by_name);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_NET
 static const struct genl_multicast_group thermal_event_mcgrps[] = {

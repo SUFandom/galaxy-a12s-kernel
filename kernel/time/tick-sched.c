@@ -1418,7 +1418,7 @@ int tick_check_oneshot_change(int allow_nohz)
 	return 0;
 }
 
-<<<<<<< HEAD
+
 struct tick_sched saved_pcpu_ts[NR_CPUS];
 void save_pcpu_tick(int cpu)
 {
@@ -1439,10 +1439,10 @@ void restore_pcpu_tick(int cpu)
 	ts->idle_calls = saved_pcpu_ts[cpu].idle_calls;
 }
 EXPORT_SYMBOL(restore_pcpu_tick);
-=======
+
 ktime_t *get_next_event_cpu(unsigned int cpu)
 {
 	return &(per_cpu(tick_cpu_device, cpu).evtdev->next_event);
 }
 EXPORT_SYMBOL_GPL(get_next_event_cpu);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

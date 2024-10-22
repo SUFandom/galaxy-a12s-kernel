@@ -2,13 +2,13 @@ config GKI_HIDDEN_DRM_CONFIGS
 	bool "Hidden DRM configs needed for GKI"
 	select DRM_KMS_HELPER if (HAS_IOMEM && DRM)
 	select DRM_GEM_CMA_HELPER
-<<<<<<< HEAD
+
 	select DRM_KMS_CMA_HELPER
 	select DRM_MIPI_DSI
-=======
+
 	select DRM_MIPI_DSI
 	select DRM_TTM if (HAS_IOMEM && DRM)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	select VIDEOMODE_HELPERS
 	help
 	  Dummy config option used to enable hidden DRM configs.
@@ -45,10 +45,10 @@ config GKI_HIDDEN_SND_CONFIGS
 config GKI_HIDDEN_SND_SOC_CONFIGS
 	bool "Hidden SND_SOC configs needed for GKI"
 	select SND_SOC_GENERIC_DMAENGINE_PCM if (SND_SOC && SND)
-<<<<<<< HEAD
-=======
+
+
 	select SND_SOC_COMPRESS if (SND_SOC && SND)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	help
 	  Dummy config option used to enable hidden SND_SOC configs.
 	  These are normally selected implicitly when a module
@@ -97,8 +97,8 @@ config GKI_HIDDEN_SOC_PM_CONFIGS
 	  Dummy config option used to enable all the hidden SOC specific power
 	  management add-in modules.
 
-<<<<<<< HEAD
-=======
+
+
 config GKI_HIDDEN_VIDEOBUF2_CONFIGS
 	bool "Hidden v4l2 configs for GKI"
 	select V4L2_MEM2MEM_DEV if VIDEO_V4L2
@@ -146,7 +146,7 @@ config GKI_HIDDEN_IRQ_CONFIGS
 	  config, required by various SoC platforms. This is usually
 	  selected by ARCH_*.
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 # Atrocities needed for
 # a) building GKI modules in separate tree, or
 # b) building drivers that are not modularizable
@@ -165,14 +165,14 @@ config GKI_HACKS_TO_FIX
 	select GKI_LEGACY_WEXT_ALLCONFIG
 	select GKI_HIDDEN_VIRTUAL_CONFIGS
 	select GKI_HIDDEN_SOC_PM_CONFIGS
-<<<<<<< HEAD
-=======
+
+
 	select GKI_HIDDEN_VIDEOBUF2_CONFIGS
 	select GKI_HIDDEN_USB_CONFIGS
 	select GKI_HIDDEN_SOC_BUS_CONFIGS
 	select GKI_HIDDEN_GPU_CONFIGS
 	select GKI_HIDDEN_IRQ_CONFIGS
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	help
 	  Dummy config option used to enable core functionality used by
 	  modules that may not be selectable in this config.

@@ -15,14 +15,14 @@
 #ifndef _CRYPTO_CHACHA_H
 #define _CRYPTO_CHACHA_H
 
-<<<<<<< HEAD
+
 #include <crypto/skcipher.h>
 #include <linux/types.h>
 #include <linux/crypto.h>
-=======
+
 #include <asm/unaligned.h>
 #include <linux/types.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /* 32-bit stream position, then 96-bit nonce (RFC7539 convention) */
 #define CHACHA_IV_SIZE		16
@@ -30,7 +30,7 @@
 #define CHACHA_KEY_SIZE		32
 #define CHACHA_BLOCK_SIZE	64
 
-<<<<<<< HEAD
+
 /* 192-bit nonce, then 64-bit stream position */
 #define XCHACHA_IV_SIZE		32
 
@@ -55,7 +55,7 @@ int crypto_chacha12_setkey(struct crypto_skcipher *tfm, const u8 *key,
 
 int crypto_chacha_crypt(struct skcipher_request *req);
 int crypto_xchacha_crypt(struct skcipher_request *req);
-=======
+
 #define CHACHA_STATE_WORDS	(CHACHA_BLOCK_SIZE / sizeof(u32))
 
 /* 192-bit nonce, then 64-bit stream position */
@@ -126,6 +126,6 @@ static inline void chacha20_crypt(u32 *state, u8 *dst, const u8 *src,
 {
 	chacha_crypt(state, dst, src, bytes, 20);
 }
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #endif /* _CRYPTO_CHACHA_H */

@@ -15,10 +15,10 @@
 
 #include <linux/fs.h>
 #include <linux/mm.h>
-<<<<<<< HEAD
-=======
+
+
 #include <linux/parser.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <linux/slab.h>
 #include <uapi/linux/fscrypt.h>
 
@@ -48,7 +48,7 @@ struct fscrypt_name {
 #define fname_len(p)		((p)->disk_name.len)
 
 /* Maximum value for the third parameter of fscrypt_operations.set_context(). */
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 #define FSCRYPT_SET_CONTEXT_MAX_SIZE	44
 #else
@@ -638,7 +638,7 @@ fscrypt_inode_should_skip_dm_default_key(const struct inode *inode)
 	return IS_ENCRYPTED(inode) && S_ISREG(inode->i_mode);
 }
 #else
-=======
+
 #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
 
 #ifdef CONFIG_FS_ENCRYPTION
@@ -1239,7 +1239,7 @@ fscrypt_inode_should_skip_dm_default_key(const struct inode *inode)
 	return IS_ENCRYPTED(inode) && S_ISREG(inode->i_mode);
 }
 #else
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline bool
 fscrypt_inode_should_skip_dm_default_key(const struct inode *inode)
 {

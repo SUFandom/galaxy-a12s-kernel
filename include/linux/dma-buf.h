@@ -372,8 +372,8 @@ struct dma_buf_ops {
 	void (*vunmap)(struct dma_buf *, void *vaddr);
 
 	/**
-<<<<<<< HEAD
-=======
+
+
 	 * @get_uuid
 	 *
 	 * This is called by dma_buf_get_uuid to get the UUID which identifies
@@ -389,7 +389,7 @@ struct dma_buf_ops {
 	int (*get_uuid)(struct dma_buf *dmabuf, uuid_t *uuid);
 
 	/**
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	 * @get_flags:
 	 *
 	 * This is called by dma_buf_get_flags and is used to get the buffer's
@@ -474,10 +474,10 @@ struct dma_buf {
 	} cb_excl, cb_shared;
 	dma_buf_destructor dtor;
 	void *dtor_data;
-<<<<<<< HEAD
-=======
+
+
 	atomic_t dent_count;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /**
@@ -593,7 +593,7 @@ int dma_buf_mmap(struct dma_buf *, struct vm_area_struct *,
 		 unsigned long);
 void *dma_buf_vmap(struct dma_buf *);
 void dma_buf_vunmap(struct dma_buf *, void *vaddr);
-<<<<<<< HEAD
+
 
 
 #ifdef CONFIG_DMA_BUF_CONTAINER
@@ -607,10 +607,10 @@ static inline struct dma_buf *dma_buf_get_any(int fd)
 
 
 int dma_buf_get_flags(struct dma_buf *dmabuf, unsigned long *flags);
-=======
+
 int dma_buf_get_flags(struct dma_buf *dmabuf, unsigned long *flags);
 int dma_buf_get_uuid(struct dma_buf *dmabuf, uuid_t *uuid);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /**
  * dma_buf_set_destructor - set the dma-buf's destructor
@@ -625,8 +625,8 @@ static inline void dma_buf_set_destructor(struct dma_buf *dmabuf,
 	dmabuf->dtor = dtor;
 	dmabuf->dtor_data = dtor_data;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
+
 #endif /* __DMA_BUF_H__ */

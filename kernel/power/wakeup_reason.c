@@ -4,11 +4,11 @@
  * Logs the reasons which caused the kernel to resume from
  * the suspend mode.
  *
-<<<<<<< HEAD
+
  * Copyright (C) 2014 Google, Inc.
-=======
+
  * Copyright (C) 2020 Google, Inc.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
  * may be copied, distributed, and modified under those terms.
@@ -30,7 +30,7 @@
 #include <linux/spinlock.h>
 #include <linux/notifier.h>
 #include <linux/suspend.h>
-<<<<<<< HEAD
+
 
 
 #define MAX_WAKEUP_REASON_IRQS 32
@@ -45,7 +45,7 @@ static spinlock_t resume_reason_lock;
 static const char* wakeup_src_list[MAX_WAKEUP_SRCS];
 static int wakeup_src_cnt;
 static bool wakeup_src_by_name;
-=======
+
 #include <linux/slab.h>
 
 /*
@@ -76,14 +76,14 @@ static bool capture_reasons;
 static bool suspend_abort;
 static bool abnormal_wake;
 static char non_irq_wake_reason[MAX_SUSPEND_ABORT_LEN];
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static ktime_t last_monotime; /* monotonic time before last suspend */
 static ktime_t curr_monotime; /* monotonic time after last suspend */
 static ktime_t last_stime; /* monotonic boottime offset before last suspend */
 static ktime_t curr_stime; /* monotonic boottime offset after last suspend */
 
-<<<<<<< HEAD
+
 static ssize_t last_resume_reason_show(struct kobject *kobj, struct kobj_attribute *attr,
 		char *buf)
 {
@@ -115,7 +115,7 @@ static ssize_t last_resume_reason_show(struct kobject *kobj, struct kobj_attribu
 	}
 
 	spin_unlock_irqrestore(&resume_reason_lock, flags);
-=======
+
 static void init_node(struct wakeup_irq_node *p, int irq)
 {
 	struct irq_desc *desc;
@@ -357,38 +357,38 @@ static ssize_t last_resume_reason_show(struct kobject *kobj,
 
 	spin_unlock_irqrestore(&wakeup_reason_lock, flags);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return buf_offset;
 }
 
 static ssize_t last_suspend_time_show(struct kobject *kobj,
 			struct kobj_attribute *attr, char *buf)
 {
-<<<<<<< HEAD
+
 	struct timespec sleep_time;
 	struct timespec total_time;
 	struct timespec suspend_resume_time;
-=======
+
 	struct timespec64 sleep_time;
 	struct timespec64 total_time;
 	struct timespec64 suspend_resume_time;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/*
 	 * total_time is calculated from monotonic bootoffsets because
 	 * unlike CLOCK_MONOTONIC it include the time spent in suspend state.
 	 */
-<<<<<<< HEAD
+
 	total_time = ktime_to_timespec(ktime_sub(curr_stime, last_stime));
-=======
+
 	total_time = ktime_to_timespec64(ktime_sub(curr_stime, last_stime));
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/*
 	 * suspend_resume_time is calculated as monotonic (CLOCK_MONOTONIC)
 	 * time interval before entering suspend and post suspend.
 	 */
-<<<<<<< HEAD
+
 	suspend_resume_time = ktime_to_timespec(ktime_sub(curr_monotime, last_monotime));
 
 	/* sleep_time = total_time - suspend_resume_time */
@@ -398,7 +398,7 @@ static ssize_t last_suspend_time_show(struct kobject *kobj,
 	return sprintf(buf, "%lu.%09lu %lu.%09lu\n",
 				suspend_resume_time.tv_sec, suspend_resume_time.tv_nsec,
 				sleep_time.tv_sec, sleep_time.tv_nsec);
-=======
+
 	suspend_resume_time =
 		ktime_to_timespec64(ktime_sub(curr_monotime, last_monotime));
 
@@ -411,7 +411,7 @@ static ssize_t last_suspend_time_show(struct kobject *kobj,
 		       suspend_resume_time.tv_nsec,
 		       (unsigned long long)sleep_time.tv_sec,
 		       sleep_time.tv_nsec);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static struct kobj_attribute resume_reason = __ATTR_RO(last_resume_reason);
@@ -426,7 +426,7 @@ static struct attribute_group attr_group = {
 	.attrs = attrs,
 };
 
-<<<<<<< HEAD
+
 /*
  * logs all the wake up reasons to the kernel
  * stores the irqs to expose them to the userspace via sysfs
@@ -492,13 +492,13 @@ void log_suspend_abort_reason(const char *fmt, ...)
 	spin_unlock_irqrestore(&resume_reason_lock, flags);
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 /* Detects a suspend and clears all the previous wake up reasons*/
 static int wakeup_reason_pm_event(struct notifier_block *notifier,
 		unsigned long pm_event, void *unused)
 {
-<<<<<<< HEAD
+
 	unsigned long flags;
 	switch (pm_event) {
 	case PM_SUSPEND_PREPARE:
@@ -508,28 +508,28 @@ static int wakeup_reason_pm_event(struct notifier_block *notifier,
 		wakeup_src_cnt = 0;
 		wakeup_src_by_name = false;
 		spin_unlock_irqrestore(&resume_reason_lock, flags);
-=======
+
 	switch (pm_event) {
 	case PM_SUSPEND_PREPARE:
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		/* monotonic time since boot */
 		last_monotime = ktime_get();
 		/* monotonic time since boot including the time spent in suspend */
 		last_stime = ktime_get_boottime();
-<<<<<<< HEAD
-=======
+
+
 		clear_wakeup_reasons();
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		break;
 	case PM_POST_SUSPEND:
 		/* monotonic time since boot */
 		curr_monotime = ktime_get();
 		/* monotonic time since boot including the time spent in suspend */
 		curr_stime = ktime_get_boottime();
-<<<<<<< HEAD
-=======
+
+
 		print_wakeup_sources();
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		break;
 	default:
 		break;
@@ -541,7 +541,7 @@ static struct notifier_block wakeup_reason_pm_notifier_block = {
 	.notifier_call = wakeup_reason_pm_event,
 };
 
-<<<<<<< HEAD
+
 /* Initializes the sysfs parameter
  * registers the pm_event notifier
  */
@@ -567,7 +567,7 @@ int __init wakeup_reason_init(void)
 				__func__, retval);
 	}
 	return 0;
-=======
+
 static int __init wakeup_reason_init(void)
 {
 	if (register_pm_notifier(&wakeup_reason_pm_notifier_block)) {
@@ -602,7 +602,7 @@ fail_unregister_pm_notifier:
 	unregister_pm_notifier(&wakeup_reason_pm_notifier_block);
 fail:
 	return 1;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 late_initcall(wakeup_reason_init);

@@ -2237,7 +2237,7 @@ static int xhci_check_trb_in_td_math(struct xhci_hcd *xhci)
 	return 0;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_SND_EXYNOS_USB_AUDIO
 static void xhci_set_hc_event_deq_audio(struct xhci_hcd *xhci)
 {
@@ -2288,8 +2288,8 @@ static void xhci_set_hc_event_deq(struct xhci_hcd *xhci)
 			&xhci->ir_set->erst_dequeue);
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 static void xhci_add_in_port(struct xhci_hcd *xhci, unsigned int num_ports,
 		__le32 __iomem *addr, int max_caps)
 {
@@ -2708,14 +2708,14 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
 	unsigned int	val, val2;
 	u64		val_64;
 	u32		page_size, temp;
-<<<<<<< HEAD
+
 	int		i, ret;
 #ifdef CONFIG_SND_EXYNOS_USB_AUDIO
 	struct xhci_segment	*seg;
 #endif
-=======
+
 	int		i;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	INIT_LIST_HEAD(&xhci->cmd_list);
 
@@ -2836,15 +2836,15 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
 			"// Doorbell array is located at offset 0x%x"
 			" from cap regs base addr", val);
 	xhci->dba = (void __iomem *) xhci->cap_regs + val;
-<<<<<<< HEAD
+
 	/* Set ir_set to interrupt register set 0 */
 	xhci->ir_set = &xhci->run_regs->ir_set[0];
 #ifdef CONFIG_SND_EXYNOS_USB_AUDIO
 	xhci->ir_set_audio = &xhci->run_regs->ir_set[1];
 #endif
-=======
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	/*
 	 * Event ring setup: Allocate a normal ring, but also setup
 	 * the event ring segment table (ERST).  Section 4.9.3.
@@ -2855,7 +2855,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
 	if (xhci_check_trb_in_td_math(xhci) < 0)
 		goto fail;
 
-<<<<<<< HEAD
+
 	ret = xhci_alloc_erst(xhci, xhci->event_ring, &xhci->erst, flags);
 	if (ret)
 		goto fail;
@@ -2952,8 +2952,8 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
 			"// Wrote ERST address to ir_set 1.");
 	/* xhci_print_ir_set(xhci, 1); */
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	/*
 	 * XXX: Might need to set the Interrupter Moderation Register to
 	 * something other than the default (~1ms minimum between interrupts).

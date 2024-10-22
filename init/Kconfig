@@ -679,7 +679,7 @@ config HAVE_UNSTABLE_SCHED_CLOCK
 config GENERIC_SCHED_CLOCK
 	bool
 
-<<<<<<< HEAD
+
 menu "FAIR Scheuler tunables"
 
 choice
@@ -706,7 +706,7 @@ config PELT_UTIL_HALFLIFE_8
 endchoice
 
 endmenu # FAIR Scheduler tunables"
-=======
+
 menu "Scheduler features"
 
 config UCLAMP_TASK
@@ -759,7 +759,7 @@ config UCLAMP_BUCKETS_COUNT
 	  If in doubt, use the default value.
 
 endmenu
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #
 # For architectures that want to enable the support for NUMA-affine scheduler

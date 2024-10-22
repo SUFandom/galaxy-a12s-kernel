@@ -18,13 +18,13 @@
 #include <linux/buffer_head.h> /* sync_mapping_buffers */
 #include <linux/unicode.h>
 #include <linux/fscrypt.h>
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 #include "crypto/sdp/fscrypto_sdp_private.h"
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 #include <linux/uaccess.h>
 
@@ -1268,7 +1268,7 @@ bool is_empty_dir_inode(struct inode *inode)
 		(inode->i_op == &empty_dir_inode_operations);
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 static int fscrypt_sdp_d_delete(const struct dentry *dentry)
 {
@@ -1280,8 +1280,8 @@ static const struct dentry_operations sdp_dentry_ops = {
 };
 #endif
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #ifdef CONFIG_UNICODE
 bool needs_casefold(const struct inode *dir)
 {
@@ -1298,17 +1298,17 @@ int generic_ci_d_compare(const struct dentry *dentry, unsigned int len,
 	const struct super_block *sb = dentry->d_sb;
 	const struct unicode_map *um = sb->s_encoding;
 	struct qstr entry = QSTR_INIT(str, len);
-<<<<<<< HEAD
-=======
+
+
 	char strbuf[DNAME_INLINE_LEN];
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int ret;
 
 	if (!inode || !needs_casefold(inode))
 		goto fallback;
 
-<<<<<<< HEAD
-=======
+
+
 	/*
 	 * If the dentry name is stored in-line, then it may be concurrently
 	 * modified by a rename.  If this happens, the VFS will eventually retry
@@ -1324,7 +1324,7 @@ int generic_ci_d_compare(const struct dentry *dentry, unsigned int len,
 		barrier();
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	ret = utf8_strncasecmp(um, name, &entry);
 	if (ret >= 0)
 		return ret;
@@ -1365,24 +1365,24 @@ EXPORT_SYMBOL(generic_ci_d_hash);
 static const struct dentry_operations generic_ci_dentry_ops = {
 	.d_hash = generic_ci_d_hash,
 	.d_compare = generic_ci_d_compare,
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	.d_delete	= fscrypt_sdp_d_delete,
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 };
 #endif
 
 #ifdef CONFIG_FS_ENCRYPTION
 static const struct dentry_operations generic_encrypted_dentry_ops = {
 	.d_revalidate = fscrypt_d_revalidate,
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	.d_delete	= fscrypt_sdp_d_delete,
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 };
 #endif
 
@@ -1391,12 +1391,12 @@ static const struct dentry_operations generic_encrypted_ci_dentry_ops = {
 	.d_hash = generic_ci_d_hash,
 	.d_compare = generic_ci_d_compare,
 	.d_revalidate = fscrypt_d_revalidate,
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	.d_delete	= fscrypt_sdp_d_delete,
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 };
 #endif
 
@@ -1428,14 +1428,14 @@ void generic_set_encrypted_ci_d_ops(struct inode *dir, struct dentry *dentry)
 		return;
 	}
 #endif
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	if (dir->i_crypt_info) {
 		d_set_d_op(dentry, &sdp_dentry_ops);
 		return;
 	}
 #endif
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 }
 EXPORT_SYMBOL(generic_set_encrypted_ci_d_ops);

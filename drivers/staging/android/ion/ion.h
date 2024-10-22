@@ -348,7 +348,7 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg);
 
 int ion_query_heaps(struct ion_heap_query *query);
 
-<<<<<<< HEAD
+
 unsigned int get_ion_system_heap_id(void);
 
 void *ion_buffer_kmap_get(struct ion_buffer *buffer);
@@ -367,8 +367,8 @@ void ion_buffer_kmap_put(struct ion_buffer *buffer);
 #define perrfndev(dev, format, arg...) \
 	dev_err(dev, IONPREFIX "%s: " format "\n", __func__, ##arg)
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #ifdef CONFIG_ION_MODULE
 int ion_add_cma_heaps(void);
 int ion_system_heap_create(void);

@@ -667,11 +667,11 @@ static inline struct psi_group *cgroup_psi(struct cgroup *cgrp)
 	return &cgrp->psi;
 }
 
-<<<<<<< HEAD
-=======
+
+
 bool cgroup_psi_enabled(void);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline void cgroup_init_kthreadd(void)
 {
 	/*
@@ -736,14 +736,14 @@ static inline struct psi_group *cgroup_psi(struct cgroup *cgrp)
 	return NULL;
 }
 
-<<<<<<< HEAD
-=======
+
+
 static inline bool cgroup_psi_enabled(void)
 {
 	return false;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline bool task_under_cgroup_hierarchy(struct task_struct *task,
 					       struct cgroup *ancestor)
 {

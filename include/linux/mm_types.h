@@ -336,18 +336,18 @@ struct vm_area_struct {
 	struct mempolicy *vm_policy;	/* NUMA policy for the VMA */
 #endif
 	struct vm_userfaultfd_ctx vm_userfaultfd_ctx;
-<<<<<<< HEAD
+
 #ifdef CONFIG_SPECULATIVE_PAGE_FAULT
 	seqcount_t vm_sequence;
 	atomic_t vm_ref_count;		/* see vma_get(), vma_put() */
 #endif
-=======
+
 
 	ANDROID_KABI_RESERVE(1);
 	ANDROID_KABI_RESERVE(2);
 	ANDROID_KABI_RESERVE(3);
 	ANDROID_KABI_RESERVE(4);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 } __randomize_layout;
 
 struct core_thread {

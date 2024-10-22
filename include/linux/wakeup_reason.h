@@ -20,7 +20,7 @@
 
 #define MAX_SUSPEND_ABORT_LEN 256
 
-<<<<<<< HEAD
+
 void log_wakeup_reason(int irq);
 #ifdef CONFIG_SUSPEND
 void log_suspend_abort_reason(const char *fmt, ...);
@@ -28,7 +28,7 @@ void log_suspend_abort_reason(const char *fmt, ...);
 static inline void log_suspend_abort_reason(const char *fmt, ...) { }
 #endif
 void log_wakeup_reason_name(const char *name);
-=======
+
 #ifdef CONFIG_SUSPEND
 void log_irq_wakeup_reason(int irq);
 void log_threaded_irq_wakeup_reason(int irq, int parent_irq);
@@ -42,6 +42,6 @@ static inline void log_suspend_abort_reason(const char *fmt, ...) { }
 static inline void log_abnormal_wakeup_reason(const char *fmt, ...) { }
 static inline void clear_wakeup_reasons(void) { }
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #endif /* _LINUX_WAKEUP_REASON_H */

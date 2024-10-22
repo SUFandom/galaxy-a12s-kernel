@@ -16,7 +16,7 @@
 #include <crypto/hash.h>
 #include <linux/bio-crypt-ctx.h>
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 #include "fscrypt_knox_private.h"
 #include "sdp/fscrypto_sdp_private.h"
@@ -24,7 +24,7 @@
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #define CONST_STRLEN(str)	(sizeof(str) - 1)
 
 #define FS_KEY_DERIVATION_NONCE_SIZE	16
@@ -42,12 +42,12 @@ struct fscrypt_context_v1 {
 	u8 flags;
 	u8 master_key_descriptor[FSCRYPT_KEY_DESCRIPTOR_SIZE];
 	u8 nonce[FS_KEY_DERIVATION_NONCE_SIZE];
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	u32 knox_flags;
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 struct fscrypt_context_v2 {
@@ -58,7 +58,7 @@ struct fscrypt_context_v2 {
 	u8 __reserved[4];
 	u8 master_key_identifier[FSCRYPT_KEY_IDENTIFIER_SIZE];
 	u8 nonce[FS_KEY_DERIVATION_NONCE_SIZE];
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	u32 knox_flags;
 #endif
@@ -187,7 +187,7 @@ fscrypt_policy_flags(const union fscrypt_policy *policy)
 }
 =======
 };
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /*
  * fscrypt_context - the encryption context of an inode
@@ -393,13 +393,13 @@ struct fscrypt_info {
 
 	/* Hashed inode number.  Only set for IV_INO_LBLK_32 */
 	u32 ci_hashed_ino;
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 	struct sdp_info *ci_sdp_info;
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 typedef enum {
@@ -409,7 +409,7 @@ typedef enum {
 
 /* crypto.c */
 extern struct kmem_cache *fscrypt_info_cachep;
-<<<<<<< HEAD
+
 extern int fscrypt_initialize(unsigned int cop_flags);
 extern int fscrypt_crypt_block(const struct inode *inode,
 			       fscrypt_direction_t rw, u64 lblk_num,
@@ -736,7 +736,7 @@ fscrypt_is_key_prepared(struct fscrypt_prepared_key *prep_key,
 }
 #endif /* !CONFIG_FS_ENCRYPTION_INLINE_CRYPT */
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /* keyring.c */
 
 /*
@@ -883,7 +883,7 @@ static inline int master_key_spec_len(const struct fscrypt_key_specifier *spec)
 	return 0;
 }
 
-<<<<<<< HEAD
+
 extern struct key *
 fscrypt_find_master_key(struct super_block *sb,
 			const struct fscrypt_key_specifier *mk_spec);
@@ -904,7 +904,7 @@ int fscrypt_verify_key_added(struct super_block *sb,
 			     const u8 identifier[FSCRYPT_KEY_IDENTIFIER_SIZE]);
 
 int __init fscrypt_init_keyring(void);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /* keysetup.c */
 
@@ -919,7 +919,7 @@ struct fscrypt_mode {
 
 extern struct fscrypt_mode fscrypt_modes[];
 
-<<<<<<< HEAD
+
 extern int fscrypt_prepare_key(struct fscrypt_prepared_key *prep_key,
 			       const u8 *raw_key, unsigned int raw_key_size,
 			       bool is_hw_wrapped,
@@ -1006,6 +1006,6 @@ bool fscrypt_supported_policy(const union fscrypt_policy *policy_u,
 int fscrypt_policy_from_context(union fscrypt_policy *policy_u,
 				const union fscrypt_context *ctx_u,
 				int ctx_size);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #endif /* _FSCRYPT_PRIVATE_H */

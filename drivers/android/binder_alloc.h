@@ -41,10 +41,10 @@ struct binder_transaction;
  * @offsets_size:       size of array of offsets
  * @extra_buffers_size: size of space for other objects (like sg lists)
  * @user_data:          user pointer to base of buffer space
-<<<<<<< HEAD
-=======
+
+
  * @pid:                pid to attribute the buffer to (caller)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Bookkeeping structure for binder transaction buffers
  */
@@ -64,10 +64,10 @@ struct binder_buffer {
 	size_t offsets_size;
 	size_t extra_buffers_size;
 	void __user *user_data;
-<<<<<<< HEAD
-=======
+
+
 	int    pid;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /**

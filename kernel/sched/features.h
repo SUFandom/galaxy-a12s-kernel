@@ -112,7 +112,7 @@ SCHED_FEAT(EAS_PREFER_IDLE, true)
 SCHED_FEAT(SUGOV_RT_MAX_FREQ, false)
 
 /*
-<<<<<<< HEAD
+
  * Exynos Mobile Scheduler
  */
 SCHED_FEAT(EMS, true)
@@ -124,8 +124,8 @@ SCHED_FEAT(EXYNOS_FRT, false)
 #endif
 
 /*
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
  * Apply schedtune boost hold to tasks of all sched classes.
  * If enabled, schedtune will hold the boost applied to a CPU
  * for 50ms regardless of task activation - if the task is

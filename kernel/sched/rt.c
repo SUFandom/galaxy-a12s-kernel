@@ -1551,11 +1551,11 @@ static void check_preempt_equal_prio(struct rq *rq, struct task_struct *p)
 	 * see if it is pushed or pulled somewhere else.
 	 */
 	if (p->nr_cpus_allowed != 1 &&
-<<<<<<< HEAD
+
 	    cpupri_find(&rq->rd->cpupri, p, NULL, NULL))
-=======
+
 	    cpupri_find(&rq->rd->cpupri, p, NULL))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return;
 
 	/*
@@ -1692,11 +1692,11 @@ pick_next_task_rt(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 	 */
 	if (rq->curr->sched_class != &rt_sched_class)
 		update_rt_rq_load_avg(rq_clock_pelt(rq), rq, 0);
-<<<<<<< HEAD
+
 
 	frt_clear_victim_flag(p);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	return p;
 }
@@ -1779,10 +1779,10 @@ static int find_lowest_rq(struct task_struct *task)
 	if (task->nr_cpus_allowed == 1)
 		return -1; /* No other targets possible */
 
-<<<<<<< HEAD
+
 	if (!cpupri_find(&task_rq(task)->rd->cpupri, task, lowest_mask,
 			 rt_task_fits_capacity))
-=======
+
 	/*
 	 * If we're on asym system ensure we consider the different capacities
 	 * of the CPUs when searching for the lowest_mask.
@@ -1799,7 +1799,7 @@ static int find_lowest_rq(struct task_struct *task)
 	}
 
 	if (!ret)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return -1; /* No targets found */
 
 	/*
@@ -2312,11 +2312,11 @@ static void task_woken_rt(struct rq *rq, struct task_struct *p)
 			    (rq->curr->nr_cpus_allowed < 2 ||
 			     rq->curr->prio <= p->prio);
 
-<<<<<<< HEAD
+
 	if (need_to_push || !rt_task_fits_capacity(p, cpu_of(rq)))
-=======
+
 	if (need_to_push)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		push_rt_tasks(rq);
 }
 
@@ -2490,15 +2490,15 @@ static void task_tick_rt(struct rq *rq, struct task_struct *p, int queued)
 	struct sched_rt_entity *rt_se = &p->rt;
 
 	update_curr_rt(rq);
-<<<<<<< HEAD
+
 
 	for_each_sched_rt_entity(rt_se) {
 		struct rt_rq *rt_rq = rt_rq_of_se(rt_se);
 		frt_update_load_avg(rt_rq, rt_se, 0);
 	}
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	update_rt_rq_load_avg(rq_clock_pelt(rq), rq, 1);
 
 	watchdog(rq, p);

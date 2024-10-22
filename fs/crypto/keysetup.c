@@ -49,7 +49,7 @@ struct fscrypt_mode fscrypt_modes[] = {
 	},
 };
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 static int derive_fek(struct inode *inode,
 		struct fscrypt_info *crypt_info,
@@ -57,7 +57,7 @@ static int derive_fek(struct inode *inode,
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static DEFINE_MUTEX(fscrypt_mode_key_setup_mutex);
 
 static struct fscrypt_mode *
@@ -143,7 +143,7 @@ int fscrypt_prepare_key(struct fscrypt_prepared_key *prep_key,
 	if (IS_ERR(tfm))
 		return PTR_ERR(tfm);
 	/*
-<<<<<<< HEAD
+
 	 * Pairs with READ_ONCE() in fscrypt_is_key_prepared().  (Only matters
 	 * for the per-mode keys, which are shared by multiple inodes.)
 =======
@@ -151,7 +151,7 @@ int fscrypt_prepare_key(struct fscrypt_prepared_key *prep_key,
 	 * I.e., here we publish ->tfm with a RELEASE barrier so that
 	 * concurrent tasks can ACQUIRE it.  Note that this concurrency is only
 	 * possible for per-mode keys, not for per-file keys.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	 */
 	smp_store_release(&prep_key->tfm, tfm);
 	return 0;
@@ -245,10 +245,10 @@ static int setup_per_mode_enc_key(struct fscrypt_info *ci,
 	}
 done_unlock:
 	ci->ci_key = *prep_key;
-<<<<<<< HEAD
+
 =======
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	err = 0;
 out_unlock:
 	mutex_unlock(&fscrypt_mode_key_setup_mutex);
@@ -307,7 +307,7 @@ unlock:
 	return 0;
 }
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 static int fscrypt_setup_v2_file_key(struct fscrypt_info *ci,
 				     struct fscrypt_master_key *mk, bool sdp_classified)
@@ -340,7 +340,7 @@ static int fscrypt_setup_v2_file_key(struct fscrypt_info *ci,
 {
 	int err;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (mk->mk_secret.is_hw_wrapped &&
 	    !(ci->ci_policy.v2.flags & (FSCRYPT_POLICY_FLAG_IV_INO_LBLK_64 |
 					FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32))) {
@@ -418,14 +418,14 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 	struct fscrypt_master_key *mk = NULL;
 	struct fscrypt_key_specifier mk_spec;
 	int err;
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	bool sdp_classified = false;
 #endif
 
 	fscrypt_select_encryption_impl(ci);
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	switch (ci->ci_policy.version) {
 	case FSCRYPT_POLICY_V1:
@@ -439,12 +439,12 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 		memcpy(mk_spec.u.identifier,
 		       ci->ci_policy.v2.master_key_identifier,
 		       FSCRYPT_KEY_IDENTIFIER_SIZE);
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 		sdp_classified = fscrypt_sdp_is_classified(ci);
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		break;
 	default:
 		WARN_ON(1);
@@ -457,13 +457,13 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 		    ci->ci_policy.version != FSCRYPT_POLICY_V1)
 			return PTR_ERR(key);
 
-<<<<<<< HEAD
+
 =======
 		err = fscrypt_select_encryption_impl(ci, false);
 		if (err)
 			return err;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		/*
 		 * As a legacy fallback for v1 policies, search for the key in
 		 * the current task's subscribed keyrings too.  Don't move this
@@ -498,19 +498,19 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 		goto out_release_key;
 	}
 
-<<<<<<< HEAD
+
 =======
 	err = fscrypt_select_encryption_impl(ci, mk->mk_secret.is_hw_wrapped);
 	if (err)
 		goto out_release_key;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	switch (ci->ci_policy.version) {
 	case FSCRYPT_POLICY_V1:
 		err = fscrypt_setup_v1_file_key(ci, mk->mk_secret.raw);
 		break;
 	case FSCRYPT_POLICY_V2:
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 		err = fscrypt_setup_v2_file_key(ci, mk, sdp_classified);
 #else
@@ -518,14 +518,14 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 #endif
 =======
 		err = fscrypt_setup_v2_file_key(ci, mk);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		break;
 	default:
 		WARN_ON(1);
 		err = -EINVAL;
 		break;
 	}
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	if (err) {
 		// There hasn't been any access to master key through the sensitive-file context
@@ -541,7 +541,7 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
 =======
 	if (err)
 		goto out_release_key;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	*master_key_ret = key;
 	return 0;
@@ -559,13 +559,13 @@ static void put_crypt_info(struct fscrypt_info *ci)
 	if (!ci)
 		return;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	fscrypt_sdp_put_sdp_info(ci->ci_sdp_info);
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (ci->ci_direct_key)
 		fscrypt_put_direct_key(ci->ci_direct_key);
 	else if (ci->ci_owns_key)
@@ -611,7 +611,7 @@ int fscrypt_get_encryption_info(struct inode *inode)
 
 	res = inode->i_sb->s_cop->get_context(inode, &ctx, sizeof(ctx));
 	if (res < 0) {
-<<<<<<< HEAD
+
 		if (!fscrypt_dummy_context_enabled(inode) ||
 		    IS_ENCRYPTED(inode)) {
 =======
@@ -619,14 +619,14 @@ int fscrypt_get_encryption_info(struct inode *inode)
 			fscrypt_get_dummy_context(inode->i_sb);
 
 		if (IS_ENCRYPTED(inode) || !dummy_ctx) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			fscrypt_warn(inode,
 				     "Error %d getting encryption context",
 				     res);
 			return res;
 		}
 		/* Fake up a context for an unencrypted directory */
-<<<<<<< HEAD
+
 		memset(&ctx, 0, sizeof(ctx));
 		ctx.version = FSCRYPT_CONTEXT_V1;
 		ctx.v1.contents_encryption_mode = FSCRYPT_MODE_AES_256_XTS;
@@ -657,7 +657,7 @@ int fscrypt_get_encryption_info(struct inode *inode)
 		res = fscrypt_context_size(dummy_ctx);
 		memcpy(&ctx, dummy_ctx, res);
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	crypt_info = kmem_cache_zalloc(fscrypt_info_cachep, GFP_NOFS);
 	if (!crypt_info)
@@ -688,7 +688,7 @@ int fscrypt_get_encryption_info(struct inode *inode)
 	WARN_ON(mode->ivsize > FSCRYPT_MAX_IV_SIZE);
 	crypt_info->ci_mode = mode;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	crypt_info->ci_sdp_info = NULL;
 
@@ -706,7 +706,7 @@ int fscrypt_get_encryption_info(struct inode *inode)
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	res = setup_file_encryption_key(crypt_info, &master_key);
 	if (res)
 		goto out;
@@ -725,13 +725,13 @@ int fscrypt_get_encryption_info(struct inode *inode)
 		}
 		crypt_info = NULL;
 	}
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	if (crypt_info == NULL) //Call only when i_crypt_info is loaded initially
 		fscrypt_sdp_finalize_tasks(inode);
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	res = 0;
 out:
 	if (master_key) {
@@ -748,36 +748,36 @@ out:
 EXPORT_SYMBOL(fscrypt_get_encryption_info);
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_put_encryption_info - free most of an inode's fscrypt data
 =======
  * fscrypt_put_encryption_info() - free most of an inode's fscrypt data
  * @inode: an inode being evicted
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Free the inode's fscrypt_info.  Filesystems must call this when the inode is
  * being evicted.  An RCU grace period need not have elapsed yet.
  */
 void fscrypt_put_encryption_info(struct inode *inode)
 {
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	fscrypt_sdp_cache_remove_inode_num(inode);
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	put_crypt_info(inode->i_crypt_info);
 	inode->i_crypt_info = NULL;
 }
 EXPORT_SYMBOL(fscrypt_put_encryption_info);
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_free_inode - free an inode's fscrypt data requiring RCU delay
 =======
  * fscrypt_free_inode() - free an inode's fscrypt data requiring RCU delay
  * @inode: an inode being freed
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Free the inode's cached decrypted symlink target, if any.  Filesystems must
  * call this after an RCU grace period, just before they free the inode.
@@ -792,12 +792,12 @@ void fscrypt_free_inode(struct inode *inode)
 EXPORT_SYMBOL(fscrypt_free_inode);
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_drop_inode - check whether the inode's master key has been removed
 =======
  * fscrypt_drop_inode() - check whether the inode's master key has been removed
  * @inode: an inode being considered for eviction
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Filesystems supporting fscrypt must call this from their ->drop_inode()
  * method so that encrypted inodes are evicted as soon as they're no longer in
@@ -840,7 +840,7 @@ int fscrypt_drop_inode(struct inode *inode)
 	return !is_master_key_secret_present(&mk->mk_secret);
 }
 EXPORT_SYMBOL_GPL(fscrypt_drop_inode);
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 static inline int __find_and_derive_mode_key(
@@ -1077,4 +1077,4 @@ int fscrypt_get_encryption_kek(
 EXPORT_SYMBOL(fscrypt_get_encryption_kek);
 #endif
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

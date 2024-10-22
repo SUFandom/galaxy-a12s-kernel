@@ -294,7 +294,7 @@ static bool sanity_check_inode(struct inode *inode, struct page *node_page)
 			fi->i_flags & F2FS_COMPR_FL &&
 			F2FS_FITS_IN_INODE(ri, fi->i_extra_isize,
 						i_log_cluster_size)) {
-<<<<<<< HEAD
+
 		if (ri->i_compress_algorithm >= COMPRESS_MAX)
 			return false;
 		if (le64_to_cpu(ri->i_compr_blocks) > inode->i_blocks)
@@ -302,7 +302,7 @@ static bool sanity_check_inode(struct inode *inode, struct page *node_page)
 		if (ri->i_log_cluster_size < MIN_COMPRESS_LOG_SIZE ||
 			ri->i_log_cluster_size > MAX_COMPRESS_LOG_SIZE)
 			return false;
-=======
+
 		if (ri->i_compress_algorithm >= COMPRESS_MAX) {
 			f2fs_warn(sbi, "%s: inode (ino=%lx) has unsupported "
 				"compress algorithm: %u, run fsck to fix",
@@ -327,7 +327,7 @@ static bool sanity_check_inode(struct inode *inode, struct page *node_page)
 				  ri->i_log_cluster_size);
 			return false;
 		}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	return true;
@@ -378,11 +378,11 @@ static int do_read_inode(struct inode *inode)
 	fi->i_flags = le32_to_cpu(ri->i_flags);
 	if (S_ISREG(inode->i_mode))
 		fi->i_flags &= ~F2FS_PROJINHERIT_FL;
-<<<<<<< HEAD
+
 	fi->flags = 0;
-=======
+
 	bitmap_zero(fi->flags, FI_MAX);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	fi->i_advise = ri->i_advise;
 	fi->i_pino = le32_to_cpu(ri->i_pino);
 	fi->i_dir_level = ri->i_dir_level;

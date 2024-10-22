@@ -69,7 +69,7 @@ ENTRY(__guest_enter)
 	// Store the host regs
 	save_callee_saved_regs x1
 
-<<<<<<< HEAD
+
 =======
 	// Now the host state is stored if we have a pending RAS SError it must
 	// affect the host. If any asynchronous exception is pending we defer
@@ -85,7 +85,7 @@ alternative_else_nop_endif
 	ret
 
 1:
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	add	x29, x0, #VCPU_CONTEXT
 
 	// Restore guest regs x0-x17

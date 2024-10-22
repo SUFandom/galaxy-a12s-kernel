@@ -2411,7 +2411,7 @@ static inline int vma_adjust(struct vm_area_struct *vma, unsigned long start,
 
 extern struct vm_area_struct *__vma_merge(struct mm_struct *mm,
 	struct vm_area_struct *prev, unsigned long addr, unsigned long end,
-<<<<<<< HEAD
+
 	unsigned long vm_flags, struct anon_vma *anon, struct file *file,
 	pgoff_t pgoff, struct mempolicy *mpol, struct vm_userfaultfd_ctx uff,
 	const char __user *user, bool keep_locked);
@@ -2426,10 +2426,10 @@ static inline struct vm_area_struct *vma_merge(struct mm_struct *mm,
 			   pol, uff, user, false);
 }
 
-=======
+
 	unsigned long vm_flags, struct anon_vma *, struct file *, pgoff_t,
 	struct mempolicy *, struct vm_userfaultfd_ctx, const char __user *);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 extern struct anon_vma *find_mergeable_anon_vma(struct vm_area_struct *);
 extern int __split_vma(struct mm_struct *, struct vm_area_struct *,
 	unsigned long addr, int new_below);

@@ -12,21 +12,21 @@ struct target_nrg {
 	struct reciprocal_value rdiv;
 };
 
-<<<<<<< HEAD
+
 int schedtune_cpu_boost(int cpu);
 int schedtune_task_boost(struct task_struct *tsk);
 int schedtune_task_group_idx(struct task_struct *p);
-=======
+
 int schedtune_cpu_boost_with(int cpu, struct task_struct *p);
 int schedtune_task_boost(struct task_struct *tsk);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 int schedtune_prefer_idle(struct task_struct *tsk);
 
 void schedtune_enqueue_task(struct task_struct *p, int cpu);
 void schedtune_dequeue_task(struct task_struct *p, int cpu);
 
-<<<<<<< HEAD
+
 unsigned long stune_util(int cpu, unsigned long other_util);
 
 bool schedtune_cpu_boost_group_active(int idx, int cpu, u64 now);
@@ -36,12 +36,12 @@ bool schedtune_cpu_boost_group_active(int idx, int cpu, u64 now);
 #define schedtune_cpu_boost(cpu)  0
 #define schedtune_task_boost(tsk) 0
 #define schedtune_task_group_idx(p) 0
-=======
+
 #else /* CONFIG_SCHED_TUNE */
 
 #define schedtune_cpu_boost_with(cpu, p)  0
 #define schedtune_task_boost(tsk) 0
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define schedtune_prefer_idle(tsk) 0
 

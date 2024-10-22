@@ -20,10 +20,10 @@
 
 #include <crypto/skcipher.h>
 #include <linux/key-type.h>
-<<<<<<< HEAD
+
 =======
 #include <linux/random.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #include <linux/seq_file.h>
 
 #include "fscrypt_private.h"
@@ -429,7 +429,7 @@ static int add_existing_master_key(struct fscrypt_master_key *mk,
 	return 0;
 }
 
-<<<<<<< HEAD
+
 static int add_master_key(struct super_block *sb,
 			  struct fscrypt_master_key_secret *secret,
 			  const struct fscrypt_key_specifier *mk_spec)
@@ -437,7 +437,7 @@ static int add_master_key(struct super_block *sb,
 static int do_add_master_key(struct super_block *sb,
 			     struct fscrypt_master_key_secret *secret,
 			     const struct fscrypt_key_specifier *mk_spec)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	static DEFINE_MUTEX(fscrypt_add_key_mutex);
 	struct key *key;
@@ -476,7 +476,7 @@ out_unlock:
 	return err;
 }
 
-<<<<<<< HEAD
+
 =======
 /* Size of software "secret" derived from hardware-wrapped key */
 #define RAW_SECRET_SIZE 32
@@ -521,7 +521,7 @@ static int add_master_key(struct super_block *sb,
 	return do_add_master_key(sb, secret, key_spec);
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int fscrypt_provisioning_key_preparse(struct key_preparsed_payload *prep)
 {
 	const struct fscrypt_provisioning_key_payload *payload = prep->data;
@@ -627,12 +627,12 @@ out_put:
 	return err;
 }
 
-<<<<<<< HEAD
+
 /* Size of software "secret" derived from hardware-wrapped key */
 #define RAW_SECRET_SIZE 32
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /*
  * Add a master encryption key to the filesystem, causing all files which were
  * encrypted with it to appear "unlocked" (decrypted) when accessed.
@@ -663,12 +663,12 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 	struct fscrypt_add_key_arg __user *uarg = _uarg;
 	struct fscrypt_add_key_arg arg;
 	struct fscrypt_master_key_secret secret;
-<<<<<<< HEAD
+
 	u8 _kdf_key[RAW_SECRET_SIZE];
 	u8 *kdf_key;
 	unsigned int kdf_key_size;
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int err;
 
 	if (copy_from_user(&arg, uarg, sizeof(arg)))
@@ -680,7 +680,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 	if (memchr_inv(arg.__reserved, 0, sizeof(arg.__reserved)))
 		return -EINVAL;
 
-<<<<<<< HEAD
+
 	memset(&secret, 0, sizeof(secret));
 =======
 	/*
@@ -702,7 +702,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 		secret.is_hw_wrapped = true;
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (arg.key_id) {
 		if (arg.raw_size != 0)
 			return -EINVAL;
@@ -710,7 +710,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 		if (err)
 			goto out_wipe_secret;
 		err = -EINVAL;
-<<<<<<< HEAD
+
 		if (!(arg.__flags & __FSCRYPT_ADD_KEY_FLAG_HW_WRAPPED) &&
 		    secret.size > FSCRYPT_MAX_KEY_SIZE)
 			goto out_wipe_secret;
@@ -727,7 +727,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 		    arg.raw_size > (secret.is_hw_wrapped ?
 				    FSCRYPT_MAX_HW_WRAPPED_KEY_SIZE :
 				    FSCRYPT_MAX_KEY_SIZE))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			return -EINVAL;
 		secret.size = arg.raw_size;
 		err = -EFAULT;
@@ -735,7 +735,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 			goto out_wipe_secret;
 	}
 
-<<<<<<< HEAD
+
 	switch (arg.key_spec.type) {
 	case FSCRYPT_KEY_SPEC_TYPE_DESCRIPTOR:
 		/*
@@ -809,7 +809,7 @@ int fscrypt_ioctl_add_key(struct file *filp, void __user *_uarg)
 			 FSCRYPT_KEY_IDENTIFIER_SIZE))
 		goto out_wipe_secret;
 	err = 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 out_wipe_secret:
 	wipe_master_key_secret(&secret);
 	return err;
@@ -817,7 +817,7 @@ out_wipe_secret:
 EXPORT_SYMBOL_GPL(fscrypt_ioctl_add_key);
 
 /*
-<<<<<<< HEAD
+
 =======
  * Add the key for '-o test_dummy_encryption' to the filesystem keyring.
  *
@@ -842,7 +842,7 @@ int fscrypt_add_test_dummy_key(struct super_block *sb,
 }
 
 /*
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * Verify that the current user has added a master key with the given identifier
  * (returns -ENOKEY if not).  This is needed to prevent a user from encrypting
  * their files using some other user's key which they don't actually know.
@@ -973,7 +973,7 @@ static int check_for_busy_inodes(struct super_block *sb,
 	return -EBUSY;
 }
 
-<<<<<<< HEAD
+
 static BLOCKING_NOTIFIER_HEAD(fscrypt_key_removal_notifiers);
 
 /*
@@ -995,18 +995,18 @@ int fscrypt_unregister_key_removal_notifier(struct notifier_block *nb)
 EXPORT_SYMBOL_GPL(fscrypt_unregister_key_removal_notifier);
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int try_to_lock_encrypted_files(struct super_block *sb,
 				       struct fscrypt_master_key *mk)
 {
 	int err1;
 	int err2;
 
-<<<<<<< HEAD
+
 	blocking_notifier_call_chain(&fscrypt_key_removal_notifiers, 0, NULL);
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/*
 	 * An inode can't be evicted while it is dirty or has dirty pages.
 	 * Thus, we first have to clean the inodes in ->mk_decrypted_inodes.

@@ -43,13 +43,13 @@ struct keyslot {
 struct keyslot_manager {
 	unsigned int num_slots;
 	struct keyslot_mgmt_ll_ops ksm_ll_ops;
-<<<<<<< HEAD
+
 	unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX];
 =======
 	unsigned int features;
 	unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX];
 	unsigned int max_dun_bytes_supported;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	void *ll_priv_data;
 
 #ifdef CONFIG_PM
@@ -141,11 +141,11 @@ static inline void keyslot_manager_hw_exit(struct keyslot_manager *ksm)
  * @ksm_ll_ops: The struct keyslot_mgmt_ll_ops for the device that this keyslot
  *		manager will use to perform operations like programming and
  *		evicting keys.
-<<<<<<< HEAD
+
 =======
  * @features: The supported features as a bitmask of BLK_CRYPTO_FEATURE_* flags.
  *	      Most drivers should set BLK_CRYPTO_FEATURE_STANDARD_KEYS here.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * @crypto_mode_supported:	Array of size BLK_ENCRYPTION_MODE_MAX of
  *				bitmasks that represents whether a crypto mode
  *				and data unit size are supported. The i'th bit
@@ -165,10 +165,10 @@ struct keyslot_manager *keyslot_manager_create(
 	struct device *dev,
 	unsigned int num_slots,
 	const struct keyslot_mgmt_ll_ops *ksm_ll_ops,
-<<<<<<< HEAD
+
 =======
 	unsigned int features,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	const unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX],
 	void *ll_priv_data)
 {
@@ -190,7 +190,7 @@ struct keyslot_manager *keyslot_manager_create(
 
 	ksm->num_slots = num_slots;
 	ksm->ksm_ll_ops = *ksm_ll_ops;
-<<<<<<< HEAD
+
 	memcpy(ksm->crypto_mode_supported, crypto_mode_supported,
 	       sizeof(ksm->crypto_mode_supported));
 =======
@@ -198,7 +198,7 @@ struct keyslot_manager *keyslot_manager_create(
 	memcpy(ksm->crypto_mode_supported, crypto_mode_supported,
 	       sizeof(ksm->crypto_mode_supported));
 	ksm->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	ksm->ll_priv_data = ll_priv_data;
 	keyslot_manager_set_dev(ksm, dev);
 
@@ -231,7 +231,7 @@ err_free_ksm:
 }
 EXPORT_SYMBOL_GPL(keyslot_manager_create);
 
-<<<<<<< HEAD
+
 =======
 void keyslot_manager_set_max_dun_bytes(struct keyslot_manager *ksm,
 				       unsigned int max_dun_bytes)
@@ -240,17 +240,17 @@ void keyslot_manager_set_max_dun_bytes(struct keyslot_manager *ksm,
 }
 EXPORT_SYMBOL_GPL(keyslot_manager_set_max_dun_bytes);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline struct hlist_head *
 hash_bucket_for_key(struct keyslot_manager *ksm,
 		    const struct blk_crypto_key *key)
 {
-<<<<<<< HEAD
+
 	return &ksm->slot_hashtable[key->hash & (ksm->slot_hashtable_size - 1)];
 =======
 	return &ksm->slot_hashtable[blk_crypto_key_hash(key) &
 				    (ksm->slot_hashtable_size - 1)];
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void remove_slot_from_lru_list(struct keyslot_manager *ksm, int slot)
@@ -418,7 +418,7 @@ void keyslot_manager_put_slot(struct keyslot_manager *ksm, unsigned int slot)
 }
 
 /**
-<<<<<<< HEAD
+
  * keyslot_manager_crypto_mode_supported() - Find out if a crypto_mode/data
  *					     unit size combination is supported
  *					     by a ksm.
@@ -434,13 +434,13 @@ void keyslot_manager_put_slot(struct keyslot_manager *ksm, unsigned int slot)
  * @dun_bytes: The number of bytes that will be used to specify the DUN
  * @data_unit_size: The data_unit_size for the mode.
  * @is_hw_wrapped_key: Whether a hardware-wrapped key will be used.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Calls and returns the result of the crypto_mode_supported function specified
  * by the ksm.
  *
  * Context: Process context.
-<<<<<<< HEAD
+
  * Return: Whether or not this ksm supports the specified crypto_mode/
  *	   data_unit_size combo.
  */
@@ -455,7 +455,7 @@ bool keyslot_manager_crypto_mode_supported(struct keyslot_manager *ksm,
 					   unsigned int dun_bytes,
 					   unsigned int data_unit_size,
 					   bool is_hw_wrapped_key)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	if (!ksm)
 		return false;
@@ -463,7 +463,7 @@ bool keyslot_manager_crypto_mode_supported(struct keyslot_manager *ksm,
 		return false;
 	if (WARN_ON(!is_power_of_2(data_unit_size)))
 		return false;
-<<<<<<< HEAD
+
 	return ksm->crypto_mode_supported[crypto_mode] & data_unit_size;
 =======
 	if (is_hw_wrapped_key) {
@@ -477,7 +477,7 @@ bool keyslot_manager_crypto_mode_supported(struct keyslot_manager *ksm,
 		return false;
 
 	return ksm->max_dun_bytes_supported >= dun_bytes;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 /**
@@ -592,10 +592,10 @@ EXPORT_SYMBOL_GPL(keyslot_manager_destroy);
  * keyslot_manager_create_passthrough() - Create a passthrough keyslot manager
  * @dev: Device for runtime power management (NULL if none)
  * @ksm_ll_ops: The struct keyslot_mgmt_ll_ops
-<<<<<<< HEAD
+
 =======
  * @features: Bitmask of BLK_CRYPTO_FEATURE_* flags
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * @crypto_mode_supported: Bitmasks for supported encryption modes
  * @ll_priv_data: Private data passed as is to the functions in ksm_ll_ops.
  *
@@ -613,10 +613,10 @@ EXPORT_SYMBOL_GPL(keyslot_manager_destroy);
 struct keyslot_manager *keyslot_manager_create_passthrough(
 	struct device *dev,
 	const struct keyslot_mgmt_ll_ops *ksm_ll_ops,
-<<<<<<< HEAD
+
 =======
 	unsigned int features,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	const unsigned int crypto_mode_supported[BLK_ENCRYPTION_MODE_MAX],
 	void *ll_priv_data)
 {
@@ -627,7 +627,7 @@ struct keyslot_manager *keyslot_manager_create_passthrough(
 		return NULL;
 
 	ksm->ksm_ll_ops = *ksm_ll_ops;
-<<<<<<< HEAD
+
 	memcpy(ksm->crypto_mode_supported, crypto_mode_supported,
 	       sizeof(ksm->crypto_mode_supported));
 =======
@@ -635,7 +635,7 @@ struct keyslot_manager *keyslot_manager_create_passthrough(
 	memcpy(ksm->crypto_mode_supported, crypto_mode_supported,
 	       sizeof(ksm->crypto_mode_supported));
 	ksm->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	ksm->ll_priv_data = ll_priv_data;
 	keyslot_manager_set_dev(ksm, dev);
 
@@ -662,23 +662,23 @@ void keyslot_manager_intersect_modes(struct keyslot_manager *parent,
 	if (child) {
 		unsigned int i;
 
-<<<<<<< HEAD
+
 =======
 		parent->features &= child->features;
 		parent->max_dun_bytes_supported =
 			min(parent->max_dun_bytes_supported,
 			    child->max_dun_bytes_supported);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		for (i = 0; i < ARRAY_SIZE(child->crypto_mode_supported); i++) {
 			parent->crypto_mode_supported[i] &=
 				child->crypto_mode_supported[i];
 		}
 	} else {
-<<<<<<< HEAD
+
 =======
 		parent->features = 0;
 		parent->max_dun_bytes_supported = 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		memset(parent->crypto_mode_supported, 0,
 		       sizeof(parent->crypto_mode_supported));
 	}

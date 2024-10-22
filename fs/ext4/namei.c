@@ -680,14 +680,14 @@ static struct stats dx_show_leaf(struct inode *dir,
 						name = fname_crypto_str.name;
 						len = fname_crypto_str.len;
 					}
-<<<<<<< HEAD
+
 					ext4fs_dirhash(dir, de->name,
-=======
+
 					if (IS_CASEFOLDED(dir))
 						h.hash = EXT4_DIRENT_HASH(de);
 					else
 						ext4fs_dirhash(dir, de->name,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 						       de->name_len, &h);
 					printk("%*.s:(E)%x.%u ", len, name,
 					       h.hash, (unsigned) ((char *) de
@@ -800,13 +800,13 @@ dx_probe(struct ext4_filename *fname, struct inode *dir,
 	if (hinfo->hash_version <= DX_HASH_TEA)
 		hinfo->hash_version += EXT4_SB(dir->i_sb)->s_hash_unsigned;
 	hinfo->seed = EXT4_SB(dir->i_sb)->s_hash_seed;
-<<<<<<< HEAD
+
 	if (fname && fname_name(fname))
-=======
+
 	/* hash is already computed for encrypted casefolded directory */
 	if (fname && fname_name(fname) &&
 				!(IS_ENCRYPTED(dir) && IS_CASEFOLDED(dir)))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		ext4fs_dirhash(dir, fname_name(fname), fname_len(fname), hinfo);
 	hash = hinfo->hash;
 
@@ -1033,12 +1033,12 @@ static int htree_dirblock_to_tree(struct file *dir_file,
 	/* csum entries are not larger in the casefolded encrypted case */
 	top = (struct ext4_dir_entry_2 *) ((char *) de +
 					   dir->i_sb->s_blocksize -
-<<<<<<< HEAD
+
 					   EXT4_DIR_REC_LEN(0));
-=======
+
 					   ext4_dir_rec_len(0,
 							   csum ? NULL : dir));
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #ifdef CONFIG_FS_ENCRYPTION
 	/* Check if the directory is encrypted */
 	if (IS_ENCRYPTED(dir)) {
@@ -1063,9 +1063,9 @@ static int htree_dirblock_to_tree(struct file *dir_file,
 			/* silently ignore the rest of the block */
 			break;
 		}
-<<<<<<< HEAD
+
 		ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
-=======
+
 		if (ext4_hash_in_dirent(dir)) {
 			if (de->name_len && de->inode) {
 				hinfo->hash = EXT4_DIRENT_HASH(de);
@@ -1077,7 +1077,7 @@ static int htree_dirblock_to_tree(struct file *dir_file,
 		} else {
 			ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
 		}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		if ((hinfo->hash < start_hash) ||
 		    ((hinfo->hash == start_hash) &&
 		     (hinfo->minor_hash < start_minor_hash)))
@@ -1271,14 +1271,14 @@ static int dx_make_map(struct inode *dir, struct ext4_dir_entry_2 *de,
 
 	while ((char *) de < base + blocksize) {
 		if (de->name_len && de->inode) {
-<<<<<<< HEAD
+
 			ext4fs_dirhash(dir, de->name, de->name_len, &h);
-=======
+
 			if (ext4_hash_in_dirent(dir))
 				h.hash = EXT4_DIRENT_HASH(de);
 			else
 				ext4fs_dirhash(dir, de->name, de->name_len, &h);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			map_tail--;
 			map_tail->hash = h.hash;
 			map_tail->offs = ((char *) de - base)>>2;
@@ -1342,7 +1342,7 @@ static void dx_insert_block(struct dx_frame *frame, u32 hash, ext4_lblk_t block)
  * Returns: 0 if the directory entry matches, more than 0 if it
  * doesn't match or less than zero on error.
  */
-<<<<<<< HEAD
+
 int ext4_ci_compare(const struct inode *parent, const struct qstr *name,
 		    const struct qstr *entry, bool quick)
 {
@@ -1355,7 +1355,7 @@ int ext4_ci_compare(const struct inode *parent, const struct qstr *name,
 	else
 		ret = utf8_strncasecmp(um, name, entry);
 
-=======
+
 static int ext4_ci_compare(const struct inode *parent, const struct qstr *name,
 			   u8 *de_name, size_t de_name_len, bool quick)
 {
@@ -1384,13 +1384,13 @@ static int ext4_ci_compare(const struct inode *parent, const struct qstr *name,
 		ret = utf8_strncasecmp_folded(um, name, &entry);
 	else
 		ret = utf8_strncasecmp(um, name, &entry);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (ret < 0) {
 		/* Handle invalid character sequence as either an error
 		 * or as an opaque byte sequence.
 		 */
 		if (sb_has_enc_strict_mode(sb))
-<<<<<<< HEAD
+
 			return -EINVAL;
 
 		if (name->len != entry->len)
@@ -1405,7 +1405,7 @@ static int ext4_ci_compare(const struct inode *parent, const struct qstr *name,
 void ext4_fname_setup_ci_filename(struct inode *dir, const struct qstr *iname,
 				  struct fscrypt_str *cf_name)
 {
-=======
+
 			ret = -EINVAL;
 		else if (name->len != entry.len)
 			ret = 1;
@@ -1422,25 +1422,25 @@ int ext4_fname_setup_ci_filename(struct inode *dir, const struct qstr *iname,
 {
 	struct fscrypt_str *cf_name = &name->cf_name;
 	struct dx_hash_info *hinfo = &name->hinfo;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	int len;
 
 	if (!needs_casefold(dir)) {
 		cf_name->name = NULL;
-<<<<<<< HEAD
+
 		return;
-=======
+
 		return 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	cf_name->name = kmalloc(EXT4_NAME_LEN, GFP_NOFS);
 	if (!cf_name->name)
-<<<<<<< HEAD
+
 		return;
-=======
+
 		return -ENOMEM;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	len = utf8_casefold(dir->i_sb->s_encoding,
 			    iname, cf_name->name,
@@ -1448,12 +1448,12 @@ int ext4_fname_setup_ci_filename(struct inode *dir, const struct qstr *iname,
 	if (len <= 0) {
 		kfree(cf_name->name);
 		cf_name->name = NULL;
-<<<<<<< HEAD
+
 		return;
 	}
 	cf_name->len = (unsigned) len;
 
-=======
+
 	}
 	cf_name->len = (unsigned) len;
 	if (!IS_ENCRYPTED(dir))
@@ -1466,7 +1466,7 @@ int ext4_fname_setup_ci_filename(struct inode *dir, const struct qstr *iname,
 	else
 		ext4fs_dirhash(dir, iname->name, iname->len, hinfo);
 	return 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 #endif
 
@@ -1475,15 +1475,15 @@ int ext4_fname_setup_ci_filename(struct inode *dir, const struct qstr *iname,
  *
  * Return: %true if the directory entry matches, otherwise %false.
  */
-<<<<<<< HEAD
+
 static inline bool ext4_match(const struct inode *parent,
 			      const struct ext4_filename *fname,
 			      const struct ext4_dir_entry_2 *de)
-=======
+
 static bool ext4_match(struct inode *parent,
 			      const struct ext4_filename *fname,
 			      struct ext4_dir_entry_2 *de)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct fscrypt_name f;
 #ifdef CONFIG_UNICODE
@@ -1504,12 +1504,12 @@ static bool ext4_match(struct inode *parent,
 		if (fname->cf_name.name) {
 			struct qstr cf = {.name = fname->cf_name.name,
 					  .len = fname->cf_name.len};
-<<<<<<< HEAD
+
 			return !ext4_ci_compare(parent, &cf, &entry, true);
 		}
 		return !ext4_ci_compare(parent, fname->usr_fname, &entry,
 					false);
-=======
+
 			if (IS_ENCRYPTED(parent)) {
 				if (fname->hinfo.hash != EXT4_DIRENT_HASH(de) ||
 					fname->hinfo.minor_hash !=
@@ -1523,7 +1523,7 @@ static bool ext4_match(struct inode *parent,
 		}
 		return !ext4_ci_compare(parent, fname->usr_fname, de->name,
 						de->name_len, false);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 #endif
 
@@ -1551,13 +1551,13 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
 		    ext4_match(dir, fname, de)) {
 			/* found a match - just to be sure, do
 			 * a full check */
-<<<<<<< HEAD
+
 			if (ext4_check_dir_entry(dir, NULL, de, bh, bh->b_data,
 						 bh->b_size, offset))
-=======
+
 			if (ext4_check_dir_entry(dir, NULL, de, bh, search_buf,
 						 buf_size, lblk, offset))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				return -1;
 			*res_dir = de;
 			return 1;
@@ -2314,15 +2314,15 @@ static int make_indexed_dir(handle_t *handle, struct ext4_filename *fname,
 	if (fname->hinfo.hash_version <= DX_HASH_TEA)
 		fname->hinfo.hash_version += EXT4_SB(dir->i_sb)->s_hash_unsigned;
 	fname->hinfo.seed = EXT4_SB(dir->i_sb)->s_hash_seed;
-<<<<<<< HEAD
+
 	ext4fs_dirhash(dir, fname_name(fname), fname_len(fname), &fname->hinfo);
-=======
+
 
 	/* casefolded encrypted hashes are computed on fname setup */
 	if (!ext4_hash_in_dirent(dir))
 		ext4fs_dirhash(dir, fname_name(fname),
 				fname_len(fname), &fname->hinfo);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	memset(frames, 0, sizeof(frames));
 	frame = frames;
@@ -2395,12 +2395,12 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 	    sb->s_encoding && utf8_validate(sb->s_encoding, &dentry->d_name))
 		return -EINVAL;
 #endif
-<<<<<<< HEAD
-=======
+
+
 
 	if (fscrypt_is_nokey_name(dentry))
 		return -ENOKEY;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	retval = ext4_fname_setup_filename(dir, &dentry->d_name, 0, &fname);
 	if (retval)
@@ -2681,11 +2681,11 @@ int ext4_generic_delete_entry(handle_t *handle,
 	de = (struct ext4_dir_entry_2 *)entry_buf;
 	while (i < buf_size - csum_size) {
 		if (ext4_check_dir_entry(dir, NULL, de, bh,
-<<<<<<< HEAD
+
 					 bh->b_data, bh->b_size, i))
-=======
+
 					 entry_buf, buf_size, lblk, i))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			return -EFSCORRUPTED;
 		if (de == de_del)  {
 			if (pde)
@@ -3805,8 +3805,8 @@ static int ext4_setent(handle_t *handle, struct ext4_renament *ent,
 	return 0;
 }
 
-<<<<<<< HEAD
-=======
+
+
 static void ext4_resetent(handle_t *handle, struct ext4_renament *ent,
 			  unsigned ino, unsigned file_type)
 {
@@ -3833,7 +3833,7 @@ static void ext4_resetent(handle_t *handle, struct ext4_renament *ent,
 	brelse(old.bh);
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int ext4_find_delete_entry(handle_t *handle, struct inode *dir,
 				  const struct qstr *d_name)
 {

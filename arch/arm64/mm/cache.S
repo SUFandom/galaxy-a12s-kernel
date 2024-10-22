@@ -86,11 +86,11 @@ ENDPROC(__flush_dcache_all)
  *
  *	Flush the entire cache system.  The data cache flush is now achieved
  *	using atomic clean / invalidates working outwards from L1 cache. This
-<<<<<<< HEAD
+
  *	is done using Set/Way based cache maintainance instructions.  The
 =======
  *	is done using Set/Way based cache maintenance instructions.  The
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *	instruction cache can still be invalidated back to the point of
  *	unification in a single instruction.
  */
@@ -102,7 +102,7 @@ ENTRY(flush_cache_all)
 	ret	x12
 ENDPROC(flush_cache_all)
 
-<<<<<<< HEAD
+
 ENTRY(__flush_dcache_louis)
         dmb     ish
         mrs     x0, clidr_el1
@@ -124,7 +124,7 @@ ENTRY(flush_cache_louis)
 ENDPROC(flush_cache_louis)
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 /*
  *	flush_icache_range(start,end)
  *

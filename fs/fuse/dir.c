@@ -325,7 +325,7 @@ static void fuse_dentry_release(struct dentry *dentry)
 	kfree_rcu(fd, rcu);
 }
 
-<<<<<<< HEAD
+
 /* @fs.sec -- 63ff82f9216c9b6d003e7d45699d54b833344719 -- */
 static int fuse_dentry_delete(const struct dentry *dentry)
 {
@@ -339,7 +339,7 @@ static int fuse_dentry_delete(const struct dentry *dentry)
 		return 1;
 
 	return 0;
-=======
+
 /*
  * Get the canonical path. Since we must translate to a path, this must be done
  * in the context of the userspace daemon, however, the userspace daemon cannot
@@ -376,7 +376,7 @@ default_path:
 	canonical_path->dentry = path->dentry;
 	canonical_path->mnt = path->mnt;
 	path_get(canonical_path);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 const struct dentry_operations fuse_dentry_operations = {

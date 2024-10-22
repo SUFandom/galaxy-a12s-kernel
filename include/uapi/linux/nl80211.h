@@ -1294,12 +1294,12 @@ enum nl80211_commands {
 	NL80211_CMD_PEER_MEASUREMENT_COMPLETE,
 
 	NL80211_CMD_NOTIFY_RADAR,
-<<<<<<< HEAD
-=======
+
+
 
 	NL80211_CMD_UPDATE_OWE_INFO,
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/* add new commands above here */
 
 	/* used to define NL80211_CMD_MAX below */
@@ -6061,7 +6061,7 @@ enum nl80211_external_auth_action {
 	NL80211_EXTERNAL_AUTH_ABORT,
 };
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_SCSC_WLAN_SAE_PWE
 /**
  * enum nl80211_sae_pwe_mechanism - The mechanism(s) allowed for SAE PWE
@@ -6082,7 +6082,7 @@ enum nl80211_sae_pwe_mechanism {
 	NL80211_SAE_PWE_BOTH,
 };
 #endif
-=======
+
 /**
  * enum nl80211_iftype_akm_attributes - interface type AKM attributes
  * @__NL80211_IFTYPE_AKM_ATTR_INVALID: Invalid
@@ -6106,6 +6106,6 @@ enum nl80211_iftype_akm_attributes {
 	__NL80211_IFTYPE_AKM_ATTR_LAST,
 	NL80211_IFTYPE_AKM_ATTR_MAX = __NL80211_IFTYPE_AKM_ATTR_LAST - 1,
 };
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #endif /* __LINUX_NL80211_H */

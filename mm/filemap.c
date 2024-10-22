@@ -2468,7 +2468,7 @@ static struct file *maybe_unlock_mmap_for_io(struct vm_fault *vmf,
 		up_read(&vmf->vma->vm_mm->mmap_sem);
 	}
 	return fpin;
-<<<<<<< HEAD
+
 }
 
 /*
@@ -2536,7 +2536,7 @@ static void filemap_systrace_mark_end()
 {
     systrace_mark_end();
 }
-=======
+
 }
 
 /*
@@ -2582,7 +2582,7 @@ static int lock_page_maybe_drop_mmap(struct vm_fault *vmf, struct page *page,
 	return 1;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /*
  * Synchronous readahead happens when we don't even find a page in the page
@@ -2598,10 +2598,10 @@ static struct file *do_sync_mmap_readahead(struct vm_fault *vmf)
 	struct address_space *mapping = file->f_mapping;
 	struct file *fpin = NULL;
 	pgoff_t offset = vmf->pgoff;
-<<<<<<< HEAD
+
 	unsigned int ra_pages;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	/* If we don't want any read-ahead, don't bother */
 	if (vmf->vma->vm_flags & VM_RAND_READ)
@@ -2611,15 +2611,15 @@ static struct file *do_sync_mmap_readahead(struct vm_fault *vmf)
 
 	if (vmf->vma->vm_flags & VM_SEQ_READ) {
 		fpin = maybe_unlock_mmap_for_io(vmf, fpin);
-<<<<<<< HEAD
+
 		filemap_systrace_mark_begin(file, offset, ra->ra_pages, 1);
 		page_cache_sync_readahead(mapping, ra, file, offset,
 					  ra->ra_pages);
 		filemap_systrace_mark_end();
-=======
+
 		page_cache_sync_readahead(mapping, ra, file, offset,
 					  ra->ra_pages);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return fpin;
 	}
 
@@ -2638,7 +2638,7 @@ static struct file *do_sync_mmap_readahead(struct vm_fault *vmf)
 	 * mmap read-around
 	 */
 	fpin = maybe_unlock_mmap_for_io(vmf, fpin);
-<<<<<<< HEAD
+
 #if CONFIG_MMAP_READAROUND_LIMIT == 0
 	ra_pages = ra->ra_pages;
 #else
@@ -2650,12 +2650,12 @@ static struct file *do_sync_mmap_readahead(struct vm_fault *vmf)
 	filemap_systrace_mark_begin(file, offset, ra_pages, 1);
 	ra_submit(ra, mapping, file);
 	filemap_systrace_mark_end();
-=======
+
 	ra->start = max_t(long, 0, offset - ra->ra_pages / 2);
 	ra->size = ra->ra_pages;
 	ra->async_size = ra->ra_pages / 4;
 	ra_submit(ra, mapping, file);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return fpin;
 }
 
@@ -2674,25 +2674,25 @@ static struct file *do_async_mmap_readahead(struct vm_fault *vmf,
 	pgoff_t offset = vmf->pgoff;
 
 	/* If we don't want any read-ahead, don't bother */
-<<<<<<< HEAD
+
 	if (vmf->vma->vm_flags & VM_RAND_READ)
-=======
+
 	if (vmf->vma->vm_flags & VM_RAND_READ || !ra->ra_pages)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return fpin;
 	if (ra->mmap_miss > 0)
 		ra->mmap_miss--;
 	if (PageReadahead(page)) {
 		fpin = maybe_unlock_mmap_for_io(vmf, fpin);
-<<<<<<< HEAD
+
 		filemap_systrace_mark_begin(file, offset, ra->ra_pages, 0);
 		page_cache_async_readahead(mapping, ra, file,
 					   page, offset, ra->ra_pages);
 		filemap_systrace_mark_end();
-=======
+
 		page_cache_async_readahead(mapping, ra, file,
 					   page, offset, ra->ra_pages);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 	return fpin;
 }
@@ -2815,10 +2815,10 @@ page_not_uptodate:
 	 */
 	ClearPageError(page);
 	fpin = maybe_unlock_mmap_for_io(vmf, fpin);
-<<<<<<< HEAD
+
 	filemap_systrace_mark_begin(file, offset, 1, 1);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	error = mapping->a_ops->readpage(file, page);
 	filemap_systrace_mark_end();
 	if (!error) {

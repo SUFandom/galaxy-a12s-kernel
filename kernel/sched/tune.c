@@ -186,7 +186,7 @@ schedtune_boost_group_active(int idx, struct boost_groups* bg, u64 now)
 	return !schedtune_boost_timeout(now, bg->group[idx].ts);
 }
 
-<<<<<<< HEAD
+
 bool schedtune_cpu_boost_group_active(int idx, int cpu, u64 now)
 {
 	struct boost_groups *bg = &per_cpu(cpu_boost_groups, cpu);
@@ -206,8 +206,8 @@ bool schedtune_cpu_boost_group_active(int idx, int cpu, u64 now)
 	return !schedtune_boost_timeout(now, bg->group[idx].ts);
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 static void
 schedtune_cpu_update(int cpu, u64 now)
 {
@@ -290,10 +290,10 @@ schedtune_boostgroup_update(int idx, int boost)
 		/* Check if this update has decreased current max */
 		if (cur_boost_max == old_boost && old_boost > boost) {
 			schedtune_cpu_update(cpu, now);
-<<<<<<< HEAD
+
 			emstune_cpu_update(cpu, now);
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 			trace_sched_tune_boostgroup_update(cpu, -1, bg->boost_max);
 			continue;
 		}
@@ -333,15 +333,15 @@ schedtune_tasks_update(struct task_struct *p, int cpu, int idx, int task_count)
 			bg->group[idx].ts = now;
 
 		/* Boost group activation or deactivation on that RQ */
-<<<<<<< HEAD
+
 		if (bg->group[idx].tasks == 1) {
 			schedtune_cpu_update(cpu, now);
 			emstune_cpu_update(cpu, now);
 		}
-=======
+
 		if (bg->group[idx].tasks == 1)
 			schedtune_cpu_update(cpu, now);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 
 	trace_sched_tune_tasks_update(p, cpu, tasks, idx,
@@ -397,12 +397,12 @@ int schedtune_can_attach(struct cgroup_taskset *tset)
 
 
 	cgroup_taskset_for_each(task, css, tset) {
-<<<<<<< HEAD
+
 		util_est_update(task,
 			emstune_util_est_group(task_schedtune(task)->idx),
 			emstune_util_est_group(css_st(css)->idx));
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 		/*
 		 * Lock the CPU's RQ the task is enqueued to avoid race
@@ -499,24 +499,24 @@ void schedtune_dequeue_task(struct task_struct *p, int cpu)
 	raw_spin_unlock_irqrestore(&bg->lock, irq_flags);
 }
 
-<<<<<<< HEAD
+
 int schedtune_cpu_boost(int cpu)
 {
 	struct boost_groups *bg;
 	u64 now;
-=======
+
 int schedtune_cpu_boost_with(int cpu, struct task_struct *p)
 {
 	struct boost_groups *bg;
 	u64 now;
 	int task_boost = p ? schedtune_task_boost(p) : -100;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	bg = &per_cpu(cpu_boost_groups, cpu);
 	now = sched_clock_cpu(cpu);
 
 	/* Check to see if we have a hold in effect */
-<<<<<<< HEAD
+
 	if (schedtune_boost_timeout(now, bg->boost_ts)) {
 		schedtune_cpu_update(cpu, now);
 		emstune_cpu_update(cpu, now);
@@ -540,12 +540,12 @@ int schedtune_task_group_idx(struct task_struct *p)
 	rcu_read_unlock();
 
 	return group_idx;
-=======
+
 	if (schedtune_boost_timeout(now, bg->boost_ts))
 		schedtune_cpu_update(cpu, now);
 
 	return max(bg->boost_max, task_boost);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 int schedtune_task_boost(struct task_struct *p)

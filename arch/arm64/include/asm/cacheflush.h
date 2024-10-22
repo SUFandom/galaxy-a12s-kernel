@@ -76,10 +76,10 @@
  *		- kaddr  - page address
  *		- size   - region size
  */
-<<<<<<< HEAD
+
 extern void flush_cache_louis(void);
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 extern void flush_cache_all(void);
 extern void __flush_icache_range(unsigned long start, unsigned long end);
 extern void flush_icache_range_poc(unsigned long start, unsigned long end);

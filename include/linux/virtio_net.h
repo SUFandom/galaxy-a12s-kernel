@@ -62,11 +62,11 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
 		 * probe and drop if does not match one of the above types.
 		 */
 		if (gso_type && skb->network_header) {
-<<<<<<< HEAD
-=======
+
+
 			struct flow_keys_basic keys;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			if (!skb->protocol)
 				virtio_net_hdr_set_proto(skb, hdr);
 retry:

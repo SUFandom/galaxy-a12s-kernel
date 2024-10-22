@@ -248,11 +248,11 @@ __LL_SC_PREFIX(atomic64_dec_if_positive(atomic64_t *v))
 }
 __LL_SC_EXPORT(atomic64_dec_if_positive);
 
-<<<<<<< HEAD
+
 #define __CMPXCHG_CASE(w, sz, name, mb, acq, rel, cl)			\
 =======
 #define __CMPXCHG_CASE(w, sz, name, mb, acq, rel, cl, constraint)	\
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 __LL_SC_INLINE unsigned long						\
 __LL_SC_PREFIX(__cmpxchg_case_##name(volatile void *ptr,		\
 				     unsigned long old,			\
@@ -271,18 +271,18 @@ __LL_SC_PREFIX(__cmpxchg_case_##name(volatile void *ptr,		\
 	"2:"								\
 	: [tmp] "=&r" (tmp), [oldval] "=&r" (oldval),			\
 	  [v] "+Q" (*(unsigned long *)ptr)				\
-<<<<<<< HEAD
+
 	: [old] "Lr" (old), [new] "r" (new)				\
 =======
 	: [old] #constraint "r" (old), [new] "r" (new)				\
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	: cl);								\
 									\
 	return oldval;							\
 }									\
 __LL_SC_EXPORT(__cmpxchg_case_##name);
 
-<<<<<<< HEAD
+
 __CMPXCHG_CASE(w, b,     1,        ,  ,  ,         )
 __CMPXCHG_CASE(w, h,     2,        ,  ,  ,         )
 __CMPXCHG_CASE(w,  ,     4,        ,  ,  ,         )
@@ -321,7 +321,7 @@ __CMPXCHG_CASE(w, b,  mb_1, dmb ish,  , l, "memory", )
 __CMPXCHG_CASE(w, h,  mb_2, dmb ish,  , l, "memory", )
 __CMPXCHG_CASE(w,  ,  mb_4, dmb ish,  , l, "memory", )
 __CMPXCHG_CASE( ,  ,  mb_8, dmb ish,  , l, "memory", L)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #undef __CMPXCHG_CASE
 

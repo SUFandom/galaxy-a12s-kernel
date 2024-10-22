@@ -66,13 +66,13 @@
 #include <linux/ftrace.h>
 #include <linux/lockdep.h>
 #include <linux/nmi.h>
-<<<<<<< HEAD
+
 #include <linux/psi.h>
 #include <linux/sched/cputime.h>
-=======
+
 #include <linux/khugepaged.h>
 #include <linux/psi.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #include <asm/sections.h>
 #include <asm/tlbflush.h>
@@ -143,8 +143,8 @@ DEFINE_STATIC_KEY_TRUE(init_on_alloc);
 DEFINE_STATIC_KEY_FALSE(init_on_alloc);
 #endif
 EXPORT_SYMBOL(init_on_alloc);
-<<<<<<< HEAD
-=======
+
+
 
 #ifdef CONFIG_INIT_ON_FREE_DEFAULT_ON
 DEFINE_STATIC_KEY_TRUE(init_on_free);
@@ -188,7 +188,7 @@ static int __init early_init_on_free(char *buf)
 	return ret;
 }
 early_param("init_on_free", early_init_on_free);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #ifdef CONFIG_INIT_ON_FREE_DEFAULT_ON
 DEFINE_STATIC_KEY_TRUE(init_on_free);
@@ -1106,16 +1106,16 @@ static void kernel_init_free_pages(struct page *page, int numpages)
 {
 	int i;
 
-<<<<<<< HEAD
+
 	for (i = 0; i < numpages; i++)
 		clear_highpage(page + i);
-=======
+
 	/* s390's use of memset() could override KASAN redzones. */
 	kasan_disable_current();
 	for (i = 0; i < numpages; i++)
 		clear_highpage(page + i);
 	kasan_enable_current();
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static __always_inline bool free_pages_prepare(struct page *page,
@@ -2643,22 +2643,22 @@ __rmqueue(struct zone *zone, unsigned int order, int migratetype,
 retry:
 	page = __rmqueue_smallest(zone, order, migratetype);
 
-<<<<<<< HEAD
+
 		if (!page && __rmqueue_fallback(zone, order, migratetype,
 						alloc_flags))
 			goto retry;
 	}
-=======
+
 	if (unlikely(!page) && __rmqueue_fallback(zone, order, migratetype))
 		goto retry;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	trace_mm_page_alloc_zone_locked(page, order, migratetype);
 	return page;
 }
 
-<<<<<<< HEAD
-=======
+
+
 #ifdef CONFIG_CMA
 static struct page *__rmqueue_cma(struct zone *zone, unsigned int order)
 {
@@ -2671,15 +2671,15 @@ static struct page *__rmqueue_cma(struct zone *zone, unsigned int order)
 	return page;
 }
 #else
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline struct page *__rmqueue_cma(struct zone *zone, unsigned int order)
 {
 	return NULL;
 }
-<<<<<<< HEAD
-=======
+
+
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /*
  * Obtain a specified number of elements from the buddy allocator, all under
@@ -2694,10 +2694,10 @@ static int rmqueue_bulk(struct zone *zone, unsigned int order,
 
 	spin_lock(&zone->lock);
 	for (i = 0; i < count; ++i) {
-<<<<<<< HEAD
+
 		struct page *page = __rmqueue(zone, order, migratetype,
 								alloc_flags);
-=======
+
 		struct page *page;
 
 		/*
@@ -2710,7 +2710,7 @@ static int rmqueue_bulk(struct zone *zone, unsigned int order,
 		else
 			page = __rmqueue(zone, order, migratetype);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		if (unlikely(page == NULL))
 			break;
 
@@ -2750,37 +2750,37 @@ static int rmqueue_bulk(struct zone *zone, unsigned int order,
  * empty.
  * If the list is empty return NULL.
  */
-<<<<<<< HEAD
+
 /*
 static struct list_head *get_populated_pcp_list(struct zone *zone,
 			unsigned int order, struct per_cpu_pages *pcp,
 			int migratetype, unsigned int alloc_flags)
-=======
+
 static struct list_head *get_populated_pcp_list(struct zone *zone,
 			unsigned int order, struct per_cpu_pages *pcp,
 			int migratetype)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	struct list_head *list = &pcp->lists[migratetype];
 
 	if (list_empty(list)) {
 		pcp->count += rmqueue_bulk(zone, order,
 				pcp->batch, list,
-<<<<<<< HEAD
+
 				migratetype, alloc_flags);
-=======
+
 				migratetype);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 		if (list_empty(list))
 			list = NULL;
 	}
 	return list;
 }
-<<<<<<< HEAD
+
 */
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 #ifdef CONFIG_NUMA
 /*
@@ -3208,7 +3208,7 @@ static struct page *__rmqueue_pcplist(struct zone *zone, int migratetype,
 			gfp_t gfp_flags)
 {
 	struct page *page = NULL;
-<<<<<<< HEAD
+
 
 	do {
 		if (list_empty(list)) {
@@ -3216,7 +3216,7 @@ static struct page *__rmqueue_pcplist(struct zone *zone, int migratetype,
 					pcp->batch, list,
 					migratetype, alloc_flags);
 			if (unlikely(list_empty(list)))
-=======
+
 	struct list_head *list = NULL;
 
 	do {
@@ -3236,7 +3236,7 @@ static struct page *__rmqueue_pcplist(struct zone *zone, int migratetype,
 					migratetype);
 			if (unlikely(list == NULL) ||
 					unlikely(list_empty(list)))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				return NULL;
 		}
 
@@ -3282,13 +3282,13 @@ static struct page *rmqueue_pcplist(struct zone *preferred_zone,
 
 	local_irq_save(flags);
 	pcp = &this_cpu_ptr(zone->pageset)->pcp;
-<<<<<<< HEAD
+
 	list = &pcp->lists[migratetype];
 	page = __rmqueue_pcplist(zone,  migratetype_rmqueue, alloc_flags, pcp, list);
-=======
+
 	page = __rmqueue_pcplist(zone,  migratetype, pcp,
 				 gfp_flags);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (page) {
 		__count_zid_vm_events(PGALLOC, page_zonenum(page), 1 << order);
 		zone_statistics(preferred_zone, zone);
@@ -7756,11 +7756,11 @@ static void __setup_per_zone_wmarks(void)
 			 * If it's a lowmem zone, reserve a number of pages
 			 * proportionate to the zone's size.
 			 */
-<<<<<<< HEAD
+
 			zone->_watermark[WMARK_MIN] = min;
-=======
+
 			zone->watermark[WMARK_MIN] = min;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		}
 
 		/*
@@ -7772,18 +7772,18 @@ static void __setup_per_zone_wmarks(void)
 			    mult_frac(zone->managed_pages,
 				      watermark_scale_factor, 10000));
 
-<<<<<<< HEAD
+
 		zone->_watermark[WMARK_LOW]  = min_wmark_pages(zone) +
 					low + min;
 		zone->_watermark[WMARK_HIGH] = min_wmark_pages(zone) +
 					low + min * 2;
 		zone->watermark_boost = 0;
-=======
+
 		zone->watermark[WMARK_LOW]  = min_wmark_pages(zone) +
 					low + min;
 		zone->watermark[WMARK_HIGH] = min_wmark_pages(zone) +
 					low + min * 2;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 		spin_unlock_irqrestore(&zone->lock, flags);
 	}

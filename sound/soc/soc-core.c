@@ -2769,11 +2769,11 @@ int snd_soc_register_card(struct snd_soc_card *card)
 	card->instantiated = 0;
 	mutex_init(&card->mutex);
 	mutex_init(&card->dapm_mutex);
-<<<<<<< HEAD
+
 	spin_lock_init(&card->dpcm_lock);
-=======
+
 	mutex_init(&card->dapm_power_mutex);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	ret = snd_soc_instantiate_card(card);
 	if (ret != 0)

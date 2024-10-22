@@ -3551,10 +3551,10 @@ static void cgroup_pressure_release(struct kernfs_open_file *of)
 {
 	psi_trigger_replace(&of->priv, NULL);
 }
-<<<<<<< HEAD
+
 #endif /* CONFIG_PSI */
 
-=======
+
 
 bool cgroup_psi_enabled(void)
 {
@@ -3603,7 +3603,7 @@ static ssize_t cgroup_freeze_write(struct kernfs_open_file *of,
 	return nbytes;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int cgroup_file_open(struct kernfs_open_file *of)
 {
 	struct cftype *cft = of->kn->priv;
@@ -4811,11 +4811,11 @@ static struct cftype cgroup_base_files[] = {
 #ifdef CONFIG_PSI
 	{
 		.name = "io.pressure",
-<<<<<<< HEAD
+
 		.flags = CFTYPE_NOT_ON_ROOT,
-=======
+
 		.flags = CFTYPE_NOT_ON_ROOT | CFTYPE_PRESSURE,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.seq_show = cgroup_io_pressure_show,
 		.write = cgroup_io_pressure_write,
 		.poll = cgroup_pressure_poll,
@@ -4823,11 +4823,11 @@ static struct cftype cgroup_base_files[] = {
 	},
 	{
 		.name = "memory.pressure",
-<<<<<<< HEAD
+
 		.flags = CFTYPE_NOT_ON_ROOT,
-=======
+
 		.flags = CFTYPE_NOT_ON_ROOT | CFTYPE_PRESSURE,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.seq_show = cgroup_memory_pressure_show,
 		.write = cgroup_memory_pressure_write,
 		.poll = cgroup_pressure_poll,
@@ -4835,11 +4835,11 @@ static struct cftype cgroup_base_files[] = {
 	},
 	{
 		.name = "cpu.pressure",
-<<<<<<< HEAD
+
 		.flags = CFTYPE_NOT_ON_ROOT,
-=======
+
 		.flags = CFTYPE_NOT_ON_ROOT | CFTYPE_PRESSURE,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.seq_show = cgroup_cpu_pressure_show,
 		.write = cgroup_cpu_pressure_write,
 		.poll = cgroup_pressure_poll,
@@ -5174,8 +5174,8 @@ static struct cgroup *cgroup_create(struct cgroup *parent)
 	if (ret)
 		goto out_psi_free;
 
-<<<<<<< HEAD
-=======
+
+
 	/*
 	 * New cgroup inherits effective freeze counter, and
 	 * if the parent has to be frozen, the child has too.
@@ -5192,7 +5192,7 @@ static struct cgroup *cgroup_create(struct cgroup *parent)
 		set_bit(CGRP_FROZEN, &cgrp->flags);
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	spin_lock_irq(&css_set_lock);
 	for (tcgrp = cgrp; tcgrp; tcgrp = cgroup_parent(tcgrp)) {
 		cgrp->ancestor_ids[tcgrp->level] = tcgrp->id;
@@ -6430,7 +6430,7 @@ static int __init cgroup_sysfs_init(void)
 }
 subsys_initcall(cgroup_sysfs_init);
 
-<<<<<<< HEAD
+
 static u64 power_of_ten(int power)
 {
 	u64 v = 1;
@@ -6473,6 +6473,6 @@ int cgroup_parse_float(const char *input, unsigned dec_shift, s64 *v)
 	return 0;
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 #endif /* CONFIG_SYSFS */

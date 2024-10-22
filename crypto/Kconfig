@@ -508,20 +508,20 @@ config CRYPTO_KEYWRAP
 config CRYPTO_NHPOLY1305
 	tristate
 	select CRYPTO_HASH
-<<<<<<< HEAD
+
 	select CRYPTO_POLY1305
 =======
 	select CRYPTO_LIB_POLY1305_GENERIC
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 config CRYPTO_ADIANTUM
 	tristate "Adiantum support"
 	select CRYPTO_CHACHA20
-<<<<<<< HEAD
+
 	select CRYPTO_POLY1305
 =======
 	select CRYPTO_LIB_POLY1305_GENERIC
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	select CRYPTO_NHPOLY1305
 	help
 	  Adiantum is a tweakable, length-preserving encryption mode
@@ -1516,10 +1516,10 @@ config CRYPTO_SALSA20
 
 config CRYPTO_CHACHA20
 	tristate "ChaCha stream cipher algorithms"
-<<<<<<< HEAD
+
 =======
 	select CRYPTO_LIB_CHACHA_GENERIC
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	select CRYPTO_BLKCIPHER
 	help
 	  The ChaCha20, XChaCha20, and XChaCha12 stream cipher algorithms.

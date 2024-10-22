@@ -3627,15 +3627,15 @@ static inline void update_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *s
 	 * Track task load average for carrying it to new CPU after migrated, and
 	 * track group sched_entity load average for task_h_load calc in migration
 	 */
-<<<<<<< HEAD
+
 	if (se->avg.last_update_time && !(flags & SKIP_AGE_LOAD)) {
 		__update_load_avg_se(now, cfs_rq, se);
 		update_multi_load_se(cfs_rq_clock_task(cfs_rq), cfs_rq, se);
 	}
-=======
+
 	if (se->avg.last_update_time && !(flags & SKIP_AGE_LOAD))
 		__update_load_avg_se(now, cfs_rq, se);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	decayed  = update_cfs_rq_load_avg(now, cfs_rq);
 	decayed |= propagate_entity_load_avg(se);
@@ -3900,14 +3900,14 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
 	if (!static_branch_unlikely(&sched_asym_cpucapacity))
 		return;
 
-<<<<<<< HEAD
+
 	if (sched_feat(EMS)) {
 		lb_update_misfit_status(p, rq, p ? task_h_load(p) : 0);
 		return;
 	}
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	if (!p) {
 		rq->misfit_task_load = 0;
 		return;
@@ -5257,11 +5257,11 @@ static inline void hrtick_update(struct rq *rq)
 #endif
 
 #ifdef CONFIG_SMP
-<<<<<<< HEAD
+
 unsigned long cpu_util(int cpu);
-=======
+
 static inline unsigned long cpu_util(int cpu);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static unsigned long capacity_of(int cpu);
 
 static inline bool cpu_overutilized(int cpu)
@@ -5271,7 +5271,7 @@ static inline bool cpu_overutilized(int cpu)
 
 static inline void update_overutilized_status(struct rq *rq)
 {
-<<<<<<< HEAD
+
 	if (!READ_ONCE(rq->rd->overutilized)) {
 		if (sched_feat(EMS)) {
 			struct sched_domain *sd;
@@ -5287,11 +5287,11 @@ static inline void update_overutilized_status(struct rq *rq)
 			WRITE_ONCE(rq->rd->overutilized, SG_OVERUTILIZED);
 			trace_sched_overutilized(1);
 		}
-=======
+
 	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu)) {
 		WRITE_ONCE(rq->rd->overutilized, SG_OVERUTILIZED);
 		trace_sched_overutilized(1);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 }
 #else
@@ -5376,8 +5376,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 
 	if (!se) {
 		add_nr_running(rq, 1);
-<<<<<<< HEAD
-=======
+
+
 		/*
 		 * Since new tasks are assigned an initial util_avg equal to
 		 * half of the spare capacity of their CPU, tiny tasks have the
@@ -5398,7 +5398,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	}
 
 	if (cfs_bandwidth_used()) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		/*
 		 * Since new tasks are assigned an initial util_avg equal to
 		 * half of the spare capacity of their CPU, tiny tasks have the
@@ -5971,13 +5971,13 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
 #ifdef CONFIG_SCHED_TUNE
 struct reciprocal_value schedtune_spc_rdiv;
 
-<<<<<<< HEAD
+
 long
 schedtune_margin(unsigned long capacity, unsigned long signal, long boost)
-=======
+
 static long
 schedtune_margin(unsigned long signal, long boost)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	long long margin = 0;
 
@@ -5986,19 +5986,19 @@ schedtune_margin(unsigned long signal, long boost)
 	 *
 	 * The Boost (B) value is used to compute a Margin (M) which is
 	 * proportional to the complement of the original Signal (S):
-<<<<<<< HEAD
+
 	 *   M = B * (capacity - S)
 	 * The obtained M could be used by the caller to "boost" S.
 	 */
 	if (boost >= 0) {
 		margin  = capacity - signal;
-=======
+
 	 *   M = B * (SCHED_CAPACITY_SCALE - S)
 	 * The obtained M could be used by the caller to "boost" S.
 	 */
 	if (boost >= 0) {
 		margin  = SCHED_CAPACITY_SCALE - signal;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		margin *= boost;
 	} else
 		margin = -signal * boost;
@@ -6010,7 +6010,7 @@ schedtune_margin(unsigned long signal, long boost)
 	return margin;
 }
 
-<<<<<<< HEAD
+
 static inline int
 schedtune_cpu_margin(unsigned long util, int cpu)
 {
@@ -6020,7 +6020,7 @@ schedtune_cpu_margin(unsigned long util, int cpu)
 		return 0;
 
 	return schedtune_margin(capacity_of(cpu), util, boost);
-=======
+
 inline long
 schedtune_cpu_margin_with(unsigned long util, int cpu, struct task_struct *p)
 {
@@ -6035,7 +6035,7 @@ schedtune_cpu_margin_with(unsigned long util, int cpu, struct task_struct *p)
 	trace_sched_boost_cpu(cpu, util, margin);
 
 	return margin;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 long schedtune_task_margin(struct task_struct *task)
@@ -6048,16 +6048,16 @@ long schedtune_task_margin(struct task_struct *task)
 		return 0;
 
 	util = task_util_est(task);
-<<<<<<< HEAD
+
 	margin = schedtune_margin(capacity_of(task_cpu(task)), util, boost);
-=======
+
 	margin = schedtune_margin(util, boost);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return margin;
 }
 
-<<<<<<< HEAD
+
 unsigned long
 stune_util(int cpu, unsigned long other_util)
 {
@@ -6074,19 +6074,19 @@ stune_util(int cpu, unsigned long other_util)
 
 static inline int
 schedtune_cpu_margin(unsigned long util, int cpu)
-=======
+
 #else /* CONFIG_SCHED_TUNE */
 
 inline long
 schedtune_cpu_margin_with(unsigned long util, int cpu, struct task_struct *p)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 {
 	return 0;
 }
 
 #endif /* CONFIG_SCHED_TUNE */
 
-<<<<<<< HEAD
+
 unsigned long
 boosted_task_util(struct task_struct *task)
 {
@@ -6098,8 +6098,8 @@ boosted_task_util(struct task_struct *task)
 	return util + margin;
 }
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 static unsigned long cpu_util_without(int cpu, struct task_struct *p);
 
 static unsigned long capacity_spare_without(int cpu, struct task_struct *p)
@@ -7419,7 +7419,7 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int sd_flag, int wake_f
 	int want_affine = 0;
 	int sync = (wake_flags & WF_SYNC) && !(current->flags & PF_EXITING);
 
-<<<<<<< HEAD
+
 	if (sched_feat(EMS)) {
 		new_cpu = exynos_select_task_rq(p, prev_cpu, sd_flag, sync, 1);
 		if (new_cpu >= 0)
@@ -7445,7 +7445,7 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int sd_flag, int wake_f
 			      cpumask_test_cpu(cpu, &p->cpus_allowed);
 	}
 
-=======
+
 	if (sd_flag & SD_BALANCE_WAKE) {
 		record_wakee(p);
 
@@ -7464,7 +7464,7 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int sd_flag, int wake_f
 			      cpumask_test_cpu(cpu, &p->cpus_allowed);
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 sd_loop:
 	rcu_read_lock();
 	for_each_domain(cpu, tmp) {
@@ -8899,11 +8899,11 @@ static void update_cpu_capacity(struct sched_domain *sd, int cpu)
 		mcc->cpu = cpu;
 #ifdef CONFIG_SCHED_DEBUG
 		raw_spin_unlock_irqrestore(&mcc->lock, flags);
-<<<<<<< HEAD
-=======
+
+
 		printk_deferred(KERN_INFO "CPU%d: update max cpu_capacity %lu\n",
 				cpu, capacity);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		goto skip_unlock;
 #endif
 	}
@@ -9187,13 +9187,13 @@ static inline void update_sg_lb_stats(struct lb_env *env,
 		if (nr_running > 1)
 			*sg_status |= SG_OVERLOAD;
 
-<<<<<<< HEAD
+
 		if (sched_feat(EMS) && lbt_overutilized(rq->cpu, env->sd->level))
 			*sg_status |= SG_OVERUTILIZED;
 		else if (cpu_overutilized(i))
-=======
+
 		if (cpu_overutilized(i))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 			*sg_status |= SG_OVERUTILIZED;
 
 #ifdef CONFIG_NUMA_BALANCING
@@ -11134,11 +11134,11 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
 
 	update_misfit_status(curr, rq);
 	update_overutilized_status(task_rq(curr));
-<<<<<<< HEAD
+
 
 	ecs_update();
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 }
 
 /*

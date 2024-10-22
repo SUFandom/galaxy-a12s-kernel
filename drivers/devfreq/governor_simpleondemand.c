@@ -48,7 +48,7 @@ static int devfreq_simple_ondemand_func(struct devfreq *df,
 	unsigned int dfso_multiplication_weight = DFSO_WEIGHT;
 	struct devfreq_simple_ondemand_data *data = df->data;
 	unsigned long max = (df->max_freq) ? df->max_freq : UINT_MAX;
-<<<<<<< HEAD
+
 	unsigned long pm_qos_min = 0;
 
 	if (data && !df->disabled_pm_qos) {
@@ -60,7 +60,7 @@ static int devfreq_simple_ondemand_func(struct devfreq *df,
 	}
 =======
 	unsigned long min = (df->min_freq) ? df->min_freq : 0;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 
 	stat = &df->last_status;
@@ -86,7 +86,7 @@ static int devfreq_simple_ondemand_func(struct devfreq *df,
 	    dfso_upthreshold < dfso_downdifferential)
 		return -EINVAL;
 
-<<<<<<< HEAD
+
 	if (data && data->cal_qos_max)
 		max = (df->max_freq) ? df->max_freq : 0;
 
@@ -99,14 +99,14 @@ static int devfreq_simple_ondemand_func(struct devfreq *df,
 	}
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/* Prevent overflow */
 	if (stat->busy_time >= (1 << 24) || stat->total_time >= (1 << 24)) {
 		stat->busy_time >>= 7;
 		stat->total_time >>= 7;
 	}
 
-<<<<<<< HEAD
+
 	stat->busy_time *= dfso_multiplication_weight;
 	stat->busy_time = div64_u64(stat->busy_time, 100);
 =======
@@ -127,7 +127,7 @@ static int devfreq_simple_ondemand_func(struct devfreq *df,
 		*freq = max;
 		return 0;
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	/* Set MAX if it's busy enough */
 	if (stat->busy_time * 100 >

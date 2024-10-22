@@ -17,13 +17,13 @@
 #include "fscrypt_private.h"
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_policies_equal - check whether two encryption policies are the same
 =======
  * fscrypt_policies_equal() - check whether two encryption policies are the same
  * @policy1: the first policy
  * @policy2: the second policy
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Return: %true if equal, else %false
  */
@@ -82,7 +82,7 @@ static bool supported_iv_ino_lblk_policy(const struct fscrypt_policy_v2 *policy,
 	int ino_bits = 64, lblk_bits = 64;
 
 	/*
-<<<<<<< HEAD
+
 =======
 	 * IV_INO_LBLK_* exist only because of hardware limitations, and
 	 * currently the only known use case for them involves AES-256-XTS.
@@ -98,7 +98,7 @@ static bool supported_iv_ino_lblk_policy(const struct fscrypt_policy_v2 *policy,
 	}
 
 	/*
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	 * It's unsafe to include inode numbers in the IVs if the filesystem can
 	 * potentially renumber inodes, e.g. via filesystem shrinking.
 	 */
@@ -199,7 +199,7 @@ static bool fscrypt_supported_v2_policy(const struct fscrypt_policy_v2 *policy,
 					  32, 32))
 		return false;
 
-<<<<<<< HEAD
+
 	if ((policy->flags & FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32) &&
 	    /* This uses hashed inode numbers, so ino_bits doesn't matter. */
 	    !supported_iv_ino_lblk_policy(policy, inode, "IV_INO_LBLK_32",
@@ -214,7 +214,7 @@ static bool fscrypt_supported_v2_policy(const struct fscrypt_policy_v2 *policy,
 	if ((policy->flags & FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32) &&
 	    !supported_iv_ino_lblk_policy(policy, inode, "IV_INO_LBLK_32",
 					  32, 32))
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		return false;
 
 	if (memchr_inv(policy->__reserved, 0, sizeof(policy->__reserved))) {
@@ -226,13 +226,13 @@ static bool fscrypt_supported_v2_policy(const struct fscrypt_policy_v2 *policy,
 }
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_supported_policy - check whether an encryption policy is supported
 =======
  * fscrypt_supported_policy() - check whether an encryption policy is supported
  * @policy_u: the encryption policy
  * @inode: the inode on which the policy will be used
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Given an encryption policy, check whether all its encryption modes and other
  * settings are supported by this kernel on the given inode.  (But we don't
@@ -254,14 +254,14 @@ bool fscrypt_supported_policy(const union fscrypt_policy *policy_u,
 }
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_new_context_from_policy - create a new fscrypt_context from a policy
 =======
  * fscrypt_new_context_from_policy() - create a new fscrypt_context from
  *				       an fscrypt_policy
  * @ctx_u: output context
  * @policy_u: input policy
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Create an fscrypt_context for an inode that is being assigned the given
  * encryption policy.  A new nonce is randomly generated.
@@ -288,7 +288,7 @@ static int fscrypt_new_context_from_policy(union fscrypt_context *ctx_u,
 		       policy->master_key_descriptor,
 		       sizeof(ctx->master_key_descriptor));
 		get_random_bytes(ctx->nonce, sizeof(ctx->nonce));
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 		BUILD_BUG_ON((sizeof(*ctx) - sizeof(ctx->knox_flags))
@@ -300,7 +300,7 @@ static int fscrypt_new_context_from_policy(union fscrypt_context *ctx_u,
 #endif
 =======
 		return sizeof(*ctx);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 	case FSCRYPT_POLICY_V2: {
 		const struct fscrypt_policy_v2 *policy = &policy_u->v2;
@@ -316,7 +316,7 @@ static int fscrypt_new_context_from_policy(union fscrypt_context *ctx_u,
 		       policy->master_key_identifier,
 		       sizeof(ctx->master_key_identifier));
 		get_random_bytes(ctx->nonce, sizeof(ctx->nonce));
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 		BUILD_BUG_ON((sizeof(*ctx) - sizeof(ctx->knox_flags))
@@ -328,14 +328,14 @@ static int fscrypt_new_context_from_policy(union fscrypt_context *ctx_u,
 #endif
 =======
 		return sizeof(*ctx);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	}
 	}
 	BUG();
 }
 
 /**
-<<<<<<< HEAD
+
  * fscrypt_policy_from_context - convert an fscrypt_context to an fscrypt_policy
 =======
  * fscrypt_policy_from_context() - convert an fscrypt_context to
@@ -343,7 +343,7 @@ static int fscrypt_new_context_from_policy(union fscrypt_context *ctx_u,
  * @policy_u: output policy
  * @ctx_u: input context
  * @ctx_size: size of input context in bytes
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Given an fscrypt_context, build the corresponding fscrypt_policy.
  *
@@ -421,7 +421,7 @@ static int fscrypt_get_policy(struct inode *inode, union fscrypt_policy *policy)
 	if (ret < 0)
 		return (ret == -ERANGE) ? -EINVAL : ret;
 
-<<<<<<< HEAD
+
 #ifdef CONFIG_FSCRYPT_SDP
 	switch (ctx.version) {
 	case FSCRYPT_CONTEXT_V1: {
@@ -442,7 +442,7 @@ static int fscrypt_get_policy(struct inode *inode, union fscrypt_policy *policy)
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return fscrypt_policy_from_context(policy, &ctx, ret);
 }
 
@@ -617,7 +617,7 @@ int fscrypt_ioctl_get_nonce(struct file *filp, void __user *arg)
 	ret = inode->i_sb->s_cop->get_context(inode, &ctx, sizeof(ctx));
 	if (ret < 0)
 		return ret;
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 	switch (ctx.version) {
@@ -639,7 +639,7 @@ int fscrypt_ioctl_get_nonce(struct file *filp, void __user *arg)
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (!fscrypt_context_is_valid(&ctx, ret))
 		return -EINVAL;
 	if (copy_to_user(arg, fscrypt_context_nonce(&ctx),
@@ -748,7 +748,7 @@ int fscrypt_inherit_context(struct inode *parent, struct inode *child,
 	ctxsize = fscrypt_new_context_from_policy(&ctx, &ci->ci_policy);
 
 	BUILD_BUG_ON(sizeof(ctx) != FSCRYPT_SET_CONTEXT_MAX_SIZE);
-<<<<<<< HEAD
+
 
 #ifdef CONFIG_FSCRYPT_SDP
 	res = fscrypt_sdp_inherit_context(parent, child, &ctx, fs_data);
@@ -773,7 +773,7 @@ int fscrypt_inherit_context(struct inode *parent, struct inode *child,
 #endif
 
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	res = parent->i_sb->s_cop->set_context(child, &ctx, ctxsize, fs_data);
 	if (res)
 		return res;

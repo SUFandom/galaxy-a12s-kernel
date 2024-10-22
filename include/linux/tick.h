@@ -283,9 +283,9 @@ static inline void tick_nohz_task_switch(void)
 		__tick_nohz_task_switch();
 }
 
-<<<<<<< HEAD
+
 extern ktime_t *get_next_event_cpu(unsigned int cpu);
-=======
+
 ktime_t *get_next_event_cpu(unsigned int cpu);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 #endif

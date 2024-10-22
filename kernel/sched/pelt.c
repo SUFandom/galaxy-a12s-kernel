@@ -322,11 +322,11 @@ int __update_load_avg_cfs_rq(u64 now, struct cfs_rq *cfs_rq)
 
 int update_rt_rq_load_avg(u64 now, struct rq *rq, int running)
 {
-<<<<<<< HEAD
+
 	frt_update_rt_rq_load_avg(rq);
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 	if (___update_load_sum(now, &rq->avg_rt,
 				running,
 				running,

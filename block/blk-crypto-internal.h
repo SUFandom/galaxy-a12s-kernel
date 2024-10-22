@@ -19,11 +19,11 @@ extern const struct blk_crypto_mode blk_crypto_modes[];
 
 #ifdef CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK
 
-<<<<<<< HEAD
+
 =======
 int blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num);
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 int blk_crypto_fallback_submit_bio(struct bio **bio_ptr);
 
 bool blk_crypto_queue_decrypt_bio(struct bio *bio);
@@ -34,7 +34,7 @@ bool bio_crypt_fallback_crypted(const struct bio_crypt_ctx *bc);
 
 #else /* CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK */
 
-<<<<<<< HEAD
+
 =======
 static inline int
 blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
@@ -43,7 +43,7 @@ blk_crypto_fallback_start_using_mode(enum blk_crypto_mode_num mode_num)
 	return -ENOPKG;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static inline bool bio_crypt_fallback_crypted(const struct bio_crypt_ctx *bc)
 {
 	return false;

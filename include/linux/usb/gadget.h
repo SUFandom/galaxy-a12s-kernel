@@ -116,11 +116,11 @@ struct usb_request {
 
 	int			status;
 	unsigned		actual;
-<<<<<<< HEAD
+
 
 	/* Device Specific Flag */
 	u32			func_flag;
-=======
+
 	unsigned int		udc_priv;
 };
 
@@ -171,7 +171,7 @@ enum gsi_ep_op {
 	GSI_EP_OP_SET_CLR_BLOCK_DBL,
 	GSI_EP_OP_CHECK_FOR_SUSPEND,
 	GSI_EP_OP_DISABLE,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /*-------------------------------------------------------------------------*/

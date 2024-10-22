@@ -140,17 +140,17 @@ static void sysrq_handle_crash(int key)
 {
 	/* release the RCU read lock before crashing */
 	rcu_read_unlock();
-<<<<<<< HEAD
+
 	panic_on_oops = 1;	/* force panic */
 	wmb();
 
 	secdbg_base_set_sysrq_crash(current);
 
 	*killer = 1;
-=======
+
 
 	panic("sysrq triggered crash\n");
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 static struct sysrq_key_op sysrq_crash_op = {
 	.handler	= sysrq_handle_crash,

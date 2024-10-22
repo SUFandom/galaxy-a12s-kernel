@@ -2894,13 +2894,13 @@ static int claim_swapfile(struct swap_info_struct *p, struct inode *inode)
 	} else if (S_ISREG(inode->i_mode)) {
 		p->bdev = inode->i_sb->s_bdev;
 	}
-<<<<<<< HEAD
+
 
 	inode_lock(inode);
 	if (IS_SWAPFILE(inode))
 		return -EBUSY;
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 
 	return 0;
 }
@@ -3350,15 +3350,15 @@ bad_swap:
 	kvfree(frontswap_map);
 	if (inced_nr_rotate_swap)
 		atomic_dec(&nr_rotate_swap);
-<<<<<<< HEAD
+
 	if (swap_file) {
 		if (inode) {
 			inode_unlock(inode);
 			inode = NULL;
 		}
-=======
+
 	if (swap_file)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		filp_close(swap_file, NULL);
 out:
 	if (page && !IS_ERR(page)) {

@@ -24,13 +24,13 @@
 #include <linux/io-pgtable.h>
 #include <linux/kernel.h>
 #include <linux/types.h>
-<<<<<<< HEAD
+
 =======
 #include <linux/iommu.h>
 #include <linux/debugfs.h>
 #include <linux/atomic.h>
 #include <linux/module.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static const struct io_pgtable_init_fns *
 io_pgtable_init_table[IO_PGTABLE_NUM_FMTS] = {
@@ -92,7 +92,7 @@ void free_io_pgtable_ops(struct io_pgtable_ops *ops)
 	io_pgtable_init_table[iop->fmt]->free(iop);
 }
 EXPORT_SYMBOL_GPL(free_io_pgtable_ops);
-<<<<<<< HEAD
+
 =======
 
 static atomic_t pages_allocated;
@@ -142,4 +142,4 @@ static void __exit io_pgtable_exit(void)
 
 module_init(io_pgtable_init);
 module_exit(io_pgtable_exit);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

@@ -106,7 +106,7 @@ config PROC_CHILDREN
 	  Say Y if you are running any user-space software which takes benefit from
 	  this interface. For example, rkt is such a piece of software.
 
-<<<<<<< HEAD
+
 config PROC_FSLOG
 	bool "Enable FS logs for improving filesystem debug"
 	depends on PROC_FS
@@ -122,8 +122,8 @@ config PROC_DLOG
 	depends on PROC_FSLOG
 	default y
 
-=======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
+
 config PROC_UID
 	bool "Include /proc/uid/ files"
 	depends on PROC_FS && RT_MUTEXES

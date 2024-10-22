@@ -28,10 +28,10 @@ KBUILD_CFLAGS			:= $(cflags-y) -DDISABLE_BRANCH_PROFILING \
 				   -D__NO_FORTIFY \
 				   $(call cc-option,-ffreestanding) \
 				   $(call cc-option,-fno-stack-protector) \
-<<<<<<< HEAD
+
 =======
 				   $(call cc-option,-fno-addrsig) \
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 				   -D__DISABLE_EXPORTS \
 				   $(DISABLE_LTO)
 

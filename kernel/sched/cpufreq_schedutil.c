@@ -136,16 +136,16 @@ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
 	if (sg_policy->next_freq == next_freq)
 		return false;
 
-<<<<<<< HEAD
+
 	if (sugov_up_down_rate_limit(sg_policy, time, next_freq))
 		return false;
-=======
+
 	if (sugov_up_down_rate_limit(sg_policy, time, next_freq)) {
 		/* Restore cached freq as next_freq is not changed */
 		sg_policy->cached_raw_freq = sg_policy->prev_cached_raw_freq;
 		return false;
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	sg_policy->next_freq = next_freq;
 	sg_policy->last_freq_update_time = time;
@@ -287,15 +287,15 @@ unsigned long schedutil_cpu_util(int cpu, unsigned long util_cfs,
 	 */
 	util = util_cfs + cpu_util_rt(rq);
 	if (type == FREQUENCY_UTIL)
-<<<<<<< HEAD
+
 		util = uclamp_rq_util_with(rq, util, p);
-=======
+
 #ifdef CONFIG_SCHED_TUNE
 		util += schedtune_cpu_margin_with(util, cpu, p);
 #else
 		util = uclamp_rq_util_with(rq, util, p);
 #endif
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	dl_util = cpu_util_dl(rq);
 
@@ -349,31 +349,31 @@ unsigned long schedutil_cpu_util(int cpu, unsigned long util_cfs,
 static unsigned long sugov_get_util(struct sugov_cpu *sg_cpu)
 {
 	struct rq *rq = cpu_rq(sg_cpu->cpu);
-<<<<<<< HEAD
+
 #ifdef CONFIG_SCHED_TUNE
 	unsigned long util = stune_util(sg_cpu->cpu, cpu_util_rt(rq));
 #else
 	unsigned long util = cpu_util_freq(sg_cpu->cpu);
 #endif
 	//unsigned long util_cfs = util - cpu_util_rt(rq);
-=======
+
 	unsigned long util_cfs = cpu_util_cfs(rq);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	unsigned long max = arch_scale_cpu_capacity(NULL, sg_cpu->cpu);
 
 	sg_cpu->max = max;
 	sg_cpu->bw_dl = cpu_bw_dl(rq);
 
-<<<<<<< HEAD
+
 	util = emstune_freq_boost(sg_cpu->cpu, util);
 
 	part_cpu_active_ratio(&util, &max, sg_cpu->cpu);
 
 	return schedutil_cpu_util(sg_cpu->cpu, util, max, FREQUENCY_UTIL, NULL);
-=======
+
 	return schedutil_cpu_util(sg_cpu->cpu, util_cfs, max,
 				  FREQUENCY_UTIL, NULL);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 /**

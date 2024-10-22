@@ -554,10 +554,10 @@ static int __init reboot_setup(char *str)
 			break;
 
 		case 's':
-<<<<<<< HEAD
+
 		{
 			int rc;
-=======
+
 			if (isdigit(*(str+1)))
 				reboot_cpu = simple_strtoul(str+1, NULL, 0);
 			else if (str[1] == 'm' && str[2] == 'p' &&
@@ -573,7 +573,7 @@ static int __init reboot_setup(char *str)
 				break;
 			}
 			break;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 			if (isdigit(*(str+1))) {
 				rc = kstrtoint(str+1, 0, &reboot_cpu);

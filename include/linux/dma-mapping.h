@@ -72,11 +72,11 @@
 #define DMA_ATTR_PRIVILEGED		(1UL << 9)
 
 /*
-<<<<<<< HEAD
+
  * DMA_ATTR_SKIP_ZEROING: Do not zero mapping.
  */
 #define DMA_ATTR_SKIP_ZEROING		(1UL << 11)
-=======
+
  * DMA_ATTR_STRONGLY_ORDERED: Specifies that accesses to the mapping must
  * not be buffered, reordered, merged with other accesses, or unaligned.
  * No speculative access may occur in this mapping.
@@ -127,7 +127,7 @@
 #define DMA_ATTR_IOMMU_USE_LLC_NWA	(1UL << 18)
 
 #define DMA_ERROR_CODE       (~(dma_addr_t)0)
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 /*
  * A dma_addr_t can hold any valid DMA or bus address for the platform.
@@ -189,10 +189,10 @@ struct dma_map_ops {
 			enum dma_data_direction direction);
 	int (*mapping_error)(struct device *dev, dma_addr_t dma_addr);
 	int (*dma_supported)(struct device *dev, u64 mask);
-<<<<<<< HEAD
-=======
+
+
 	int (*set_dma_mask)(struct device *dev, u64 mask);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	void *(*remap)(struct device *dev, void *cpu_addr, dma_addr_t handle,
 			size_t size, unsigned long attrs);
 	void (*unremap)(struct device *dev, void *remapped_address,

@@ -5,11 +5,11 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 
-<<<<<<< HEAD
+
 #include "../../include/uapi/linux/incrementalfs.h"
-=======
+
 #include <include/uapi/linux/incrementalfs.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 

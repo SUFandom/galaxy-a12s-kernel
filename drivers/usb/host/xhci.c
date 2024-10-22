@@ -5316,7 +5316,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
 }
 EXPORT_SYMBOL_GPL(xhci_gen_setup);
 
-<<<<<<< HEAD
+
 int xhci_wake_lock(struct usb_hcd *hcd, int is_lock) {
 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
 
@@ -5333,7 +5333,7 @@ int xhci_wake_lock(struct usb_hcd *hcd, int is_lock) {
 			xhci_info(xhci, "%s: wake unlock ignored due to USB3\n", __func__);
 	} else
 		xhci_info(xhci, "%s: %d - no main hcd\n", __func__, is_lock);
-=======
+
 static phys_addr_t xhci_get_sec_event_ring_phys_addr(struct usb_hcd *hcd,
 	unsigned int intr_num, dma_addr_t *dma)
 {
@@ -5364,13 +5364,13 @@ static phys_addr_t xhci_get_sec_event_ring_phys_addr(struct usb_hcd *hcd,
 
 		return pa;
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	return 0;
 }
 
-<<<<<<< HEAD
-=======
+
+
 static phys_addr_t xhci_get_xfer_ring_phys_addr(struct usb_hcd *hcd,
 	struct usb_device *udev, struct usb_host_endpoint *ep, dma_addr_t *dma)
 {
@@ -5467,7 +5467,7 @@ free_cmd:
 	return ret;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static const struct hc_driver xhci_hc_driver = {
 	.description =		"xhci-hcd",
 	.product_desc =		"xHCI Host Controller",

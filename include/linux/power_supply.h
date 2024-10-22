@@ -46,11 +46,11 @@ enum {
 	POWER_SUPPLY_CHARGE_TYPE_NONE,
 	POWER_SUPPLY_CHARGE_TYPE_TRICKLE,
 	POWER_SUPPLY_CHARGE_TYPE_FAST,
-<<<<<<< HEAD
+
 	POWER_SUPPLY_CHARGE_TYPE_SLOW,
-=======
+
 	POWER_SUPPLY_CHARGE_TYPE_TAPER,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 enum {
@@ -65,16 +65,16 @@ enum {
 	POWER_SUPPLY_HEALTH_COOL,
 	POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE,
 	POWER_SUPPLY_HEALTH_SAFETY_TIMER_EXPIRE,
-<<<<<<< HEAD
+
 	POWER_SUPPLY_HEALTH_UNDERVOLTAGE,
 	POWER_SUPPLY_HEALTH_OVERHEATLIMIT,
 	POWER_SUPPLY_HEALTH_MAX,
-=======
+
 	POWER_SUPPLY_HEALTH_OVERCURRENT,
 	POWER_SUPPLY_HEALTH_WARM,
 	POWER_SUPPLY_HEALTH_COOL,
 	POWER_SUPPLY_HEALTH_HOT,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 enum {
@@ -256,7 +256,7 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_USB_HC,
 	POWER_SUPPLY_PROP_USB_OTG,
 	POWER_SUPPLY_PROP_CHARGE_ENABLED,
-<<<<<<< HEAD
+
 	POWER_SUPPLY_PROP_FUELGAUGE_RESET,
 	POWER_SUPPLY_PROP_USBPD_RESET,
 	POWER_SUPPLY_PROP_FACTORY_MODE,
@@ -264,7 +264,7 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_PD_SUPPORT,
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_PROP_CHARGE_COUNTER_EXT,
-=======
+
 	POWER_SUPPLY_PROP_SET_SHIP_MODE,
 	POWER_SUPPLY_PROP_REAL_TYPE,
 	POWER_SUPPLY_PROP_CHARGE_NOW_RAW,
@@ -423,7 +423,7 @@ enum power_supply_property {
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_PROP_CHARGE_COUNTER_EXT,
 	POWER_SUPPLY_PROP_CHARGE_CHARGER_STATE,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	/* Properties of type `const char *' */
 	POWER_SUPPLY_PROP_MODEL_NAME,
 	POWER_SUPPLY_PROP_PTMC_ID,
@@ -459,7 +459,7 @@ enum power_supply_property {
 
 enum power_supply_type {
 	POWER_SUPPLY_TYPE_UNKNOWN = 0,
-<<<<<<< HEAD
+
 	POWER_SUPPLY_TYPE_BATTERY,			/* 1 */
 	POWER_SUPPLY_TYPE_UPS,				/* 2 */
 	POWER_SUPPLY_TYPE_MAINS,			/* 3 */
@@ -503,7 +503,7 @@ enum power_supply_type {
 	POWER_SUPPLY_TYPE_HV_QC30,			/* 41 - ILIM 3.0A - CHG 3.5A (Step Charging 4.2A -> 3.0A) */
 	POWER_SUPPLY_TYPE_POGO,			/* POGO */
 	POWER_SUPPLY_TYPE_MAX,
-=======
+
 	POWER_SUPPLY_TYPE_BATTERY,
 	POWER_SUPPLY_TYPE_UPS,
 	POWER_SUPPLY_TYPE_MAINS,
@@ -539,7 +539,7 @@ enum power_supply_usb_type {
 	POWER_SUPPLY_USB_TYPE_PD_DRP,		/* PD Dual Role Port */
 	POWER_SUPPLY_USB_TYPE_PD_PPS,		/* PD Programmable Power Supply */
 	POWER_SUPPLY_USB_TYPE_APPLE_BRICK_ID,	/* Apple Charging Method */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /* Indicates USB Type-C CC connection status */

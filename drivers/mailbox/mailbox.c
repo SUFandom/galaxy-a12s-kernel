@@ -85,7 +85,7 @@ static int __msg_submit(struct mbox_chan *chan)
 exit:
 	spin_unlock_irqrestore(&chan->lock, flags);
 
-<<<<<<< HEAD
+
 	if (!err && (chan->txdone_method & TXDONE_BY_POLL))
 		/* kick start the timer immediately to avoid delays */
 		hrtimer_start(&chan->mbox->poll_hrt, 0, HRTIMER_MODE_REL);
@@ -114,7 +114,7 @@ static void msg_submit(struct mbox_chan *chan)
 		if (!hrtimer_active(&chan->mbox->poll_hrt))
 			hrtimer_start(&chan->mbox->poll_hrt, 0, HRTIMER_MODE_REL);
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 }
 
 static void tx_tick(struct mbox_chan *chan, int r)

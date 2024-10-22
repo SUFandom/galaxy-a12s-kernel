@@ -890,7 +890,7 @@ TRACE_EVENT(sched_find_best_target,
  */
 TRACE_EVENT(sched_boost_cpu,
 
-<<<<<<< HEAD
+
 	TP_PROTO(int cpu, unsigned long util, unsigned long rt_util, long margin),
 
 	TP_ARGS(cpu, util, rt_util, margin),
@@ -898,22 +898,22 @@ TRACE_EVENT(sched_boost_cpu,
 	TP_PROTO(int cpu, unsigned long util, long margin),
 
 	TP_ARGS(cpu, util, margin),
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 	TP_STRUCT__entry(
 		__field( int,           cpu	)
 		__field( unsigned long, util	)
-<<<<<<< HEAD
+
 		__field( unsigned long, rt_util	)
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		__field(long,           margin	)
 	),
 
 	TP_fast_assign(
 		__entry->cpu    = cpu;
 		__entry->util   = util;
-<<<<<<< HEAD
+
 		__entry->rt_util   = rt_util;
 		__entry->margin = margin;
 	),
@@ -929,7 +929,7 @@ TRACE_EVENT(sched_boost_cpu,
 	TP_printk("cpu=%d util=%lu margin=%ld",
 		__entry->cpu,
 		__entry->util,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		__entry->margin)
 );
 

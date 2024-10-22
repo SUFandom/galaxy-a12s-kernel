@@ -18,11 +18,11 @@
 #include <crypto/skcipher.h>
 #include "fscrypt_private.h"
 
-<<<<<<< HEAD
+
 /**
 =======
 /*
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * struct fscrypt_nokey_name - identifier for directory entry when key is absent
  *
  * When userspace lists an encrypted directory without access to the key, the
@@ -110,7 +110,7 @@ static inline bool fscrypt_is_dot_dotdot(const struct qstr *str)
 
 /**
  * fscrypt_fname_encrypt() - encrypt a filename
-<<<<<<< HEAD
+
  *
  * The output buffer must be at least as large as the input buffer.
  * Any extra space is filled with NUL padding before encryption.
@@ -121,7 +121,7 @@ static inline bool fscrypt_is_dot_dotdot(const struct qstr *str)
  * @out: (output) the encrypted filename
  * @olen: size of the encrypted filename.  It must be at least @iname->len.
  *	  Any extra space is filled with NUL padding before encryption.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Return: 0 on success, -errno on failure
  */
@@ -223,14 +223,14 @@ static const char lookup_table[65] =
 #define BASE64_CHARS(nbytes)	DIV_ROUND_UP((nbytes) * 4, 3)
 
 /**
-<<<<<<< HEAD
+
  * base64_encode() -
 =======
  * base64_encode() - base64-encode some bytes
  * @src: the bytes to encode
  * @len: number of bytes to encode
  * @dst: (output) the base64-encoded string.  Not NUL-terminated.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  *
  * Encodes the input string using characters from the set [A-Za-z0-9+,].
  * The encoded string is roughly 4/3 times the size of the input string.
@@ -355,11 +355,11 @@ EXPORT_SYMBOL(fscrypt_fname_free_buffer);
  *	   have allocated enough space for this, e.g. using
  *	   fscrypt_fname_alloc_buffer().
  *
-<<<<<<< HEAD
+
  * The caller must have allocated sufficient memory for the @oname string.
  *
 =======
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
  * If the key is available, we'll decrypt the disk name.  Otherwise, we'll
  * encode it for presentation in fscrypt_nokey_name format.
  * See struct fscrypt_nokey_name for details.
@@ -621,8 +621,8 @@ int fscrypt_d_revalidate(struct dentry *dentry, unsigned int flags)
 
 	return valid;
 }
-<<<<<<< HEAD
+
 EXPORT_SYMBOL(fscrypt_d_revalidate);
 =======
 EXPORT_SYMBOL_GPL(fscrypt_d_revalidate);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+

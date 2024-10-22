@@ -18,7 +18,7 @@ ccflags-vdso := \
 	$(filter -mno-loongson-%,$(KBUILD_CFLAGS)) \
 	-D__VDSO__
 
-<<<<<<< HEAD
+
 ifeq ($(cc-name),clang)
 ccflags-vdso += $(filter --target=%,$(KBUILD_CFLAGS))
 endif
@@ -28,7 +28,7 @@ endif
 # The -fno-jump-tables flag only prevents the compiler from generating
 # jump tables but does not prevent the compiler from emitting absolute
 # offsets.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 cflags-vdso := $(ccflags-vdso) \
 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \

@@ -221,11 +221,11 @@ test_dummy_encryption
 test_dummy_encryption=%s
                        Enable dummy encryption, which provides a fake fscrypt
                        context. The fake fscrypt context is used by xfstests.
-<<<<<<< HEAD
+
 =======
                        The argument may be either "v1" or "v2", in order to
                        select the corresponding fscrypt policy version.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 checkpoint=%s[:%u[%]]     Set to "disable" to turn off checkpointing. Set to "enable"
                        to reenable checkpointing. Is enabled by default. While
                        disabled, any unmounting or unexpected shutdowns will cause
@@ -242,13 +242,13 @@ checkpoint=%s[:%u[%]]     Set to "disable" to turn off checkpointing. Set to "en
                        hide up to all remaining free space. The actual space that
                        would be unusable can be viewed at /sys/fs/f2fs/<disk>/unusable
                        This space is reclaimed once checkpoint=enable.
-<<<<<<< HEAD
+
 compress_algorithm=%s  Control compress algorithm, currently f2fs supports "lzo"
                        and "lz4" algorithm.
 =======
 compress_algorithm=%s  Control compress algorithm, currently f2fs supports "lzo",
                        "lz4" and "zstd" algorithm.
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 compress_log_size=%u   Support configuring compress cluster size, the size will
                        be 4KB * (1 << %u), 16KB is minimum size, also it's
                        default size.

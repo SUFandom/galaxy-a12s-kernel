@@ -22,13 +22,13 @@
  */
 struct binderfs_device {
 	char name[BINDERFS_MAX_NAME + 1];
-<<<<<<< HEAD
+
 	__u32 major;
 	__u32 minor;
-=======
+
 	__u8 major;
 	__u8 minor;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /**

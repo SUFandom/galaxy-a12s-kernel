@@ -621,7 +621,7 @@ static void dm_bow_dtr(struct dm_target *ti)
 	kfree(bc);
 }
 
-<<<<<<< HEAD
+
 =======
 static void dm_bow_io_hints(struct dm_target *ti, struct queue_limits *limits)
 {
@@ -689,7 +689,7 @@ static int dm_bow_ctr_optional(struct dm_target *ti, unsigned int argc,
 	return 0;
 }
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 static int dm_bow_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 {
 	struct bow_context *bc;
@@ -697,11 +697,11 @@ static int dm_bow_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	int ret;
 	struct mapped_device *md = dm_table_get_md(ti->table);
 
-<<<<<<< HEAD
+
 	if (argc != 1) {
 =======
 	if (argc < 1) {
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		ti->error = "Invalid argument count";
 		return -EINVAL;
 	}
@@ -724,7 +724,7 @@ static int dm_bow_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 		goto bad;
 	}
 
-<<<<<<< HEAD
+
 	if (bc->dev->bdev->bd_queue->limits.max_discard_sectors == 0) {
 		bc->dev->bdev->bd_queue->limits.discard_granularity = 1 << 12;
 		bc->dev->bdev->bd_queue->limits.max_hw_discard_sectors = 1 << 15;
@@ -743,7 +743,7 @@ static int dm_bow_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 			goto bad;
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	bc->block_shift = ilog2(bc->block_size);
 	bc->log_sector = kzalloc(bc->block_size, GFP_KERNEL);
 	if (!bc->log_sector) {
@@ -875,10 +875,10 @@ static int prepare_unchanged_range(struct bow_context *bc, struct bow_range *br,
 	 */
 	original_type = br->type;
 	sector0 = backup_br->sector;
-<<<<<<< HEAD
+
 =======
 	bc->trims_total -= range_size(backup_br);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	if (backup_br->type == TRIMMED)
 		list_del(&backup_br->trimmed_list);
 	backup_br->type = br->type == SECTOR0_CURRENT ? SECTOR0_CURRENT
@@ -1289,11 +1289,11 @@ static int dm_bow_iterate_devices(struct dm_target *ti,
 
 static struct target_type bow_target = {
 	.name   = "bow",
-<<<<<<< HEAD
+
 	.version = {1, 1, 1},
 =======
 	.version = {1, 2, 0},
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	.module = THIS_MODULE,
 	.ctr    = dm_bow_ctr,
 	.dtr    = dm_bow_dtr,
@@ -1301,10 +1301,10 @@ static struct target_type bow_target = {
 	.status = dm_bow_status,
 	.prepare_ioctl  = dm_bow_prepare_ioctl,
 	.iterate_devices = dm_bow_iterate_devices,
-<<<<<<< HEAD
+
 =======
 	.io_hints = dm_bow_io_hints,
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 int __init dm_bow_init(void)

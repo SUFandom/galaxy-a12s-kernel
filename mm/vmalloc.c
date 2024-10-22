@@ -369,11 +369,11 @@ static unsigned long cached_align;
 
 static unsigned long vmap_area_pcpu_hole;
 
-<<<<<<< HEAD
-=======
+
+
 static atomic_long_t nr_vmalloc_pages;
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 unsigned long vmalloc_nr_pages(void)
 {
 	return atomic_long_read(&nr_vmalloc_pages);

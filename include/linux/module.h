@@ -22,10 +22,10 @@
 #include <linux/error-injection.h>
 #include <linux/tracepoint-defs.h>
 #include <linux/cfi.h>
-<<<<<<< HEAD
-=======
+
+
 #include <linux/android_kabi.h>
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 #include <linux/percpu.h>
 #include <asm/module.h>

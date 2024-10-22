@@ -33330,14 +33330,14 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 			  "\x57\x78\x8e\x6f\xae\x90\xfc\x31"
 			  "\x09\x7c\xfc",
 		.len	= 91,
-<<<<<<< HEAD
+
 	}, { /* Taken from the ChaCha20 test vectors, appended 16 random bytes
 		to nonce, and recomputed the ciphertext with libsodium */
-=======
+
 	}, { /* Taken from the ChaCha20 test vectors, appended 12 random bytes
 		to the nonce, zero-padded the stream position from 4 to 8 bytes,
 		and recomputed the ciphertext using libsodium's XChaCha20 */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.key	= "\x00\x00\x00\x00\x00\x00\x00\x00"
 			  "\x00\x00\x00\x00\x00\x00\x00\x00"
 			  "\x00\x00\x00\x00\x00\x00\x00\x00"
@@ -33364,12 +33364,12 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 			  "\x03\xdc\xf8\x2b\xc1\xe1\x75\x67"
 			  "\x23\x7b\xe6\xfc\xd4\x03\x86\x54",
 		.len	= 64,
-<<<<<<< HEAD
+
 	}, { /* Taken from the ChaCha20 test vectors, appended 16 random bytes
 		to nonce, and recomputed the ciphertext with libsodium */
-=======
+
 	}, { /* Derived from a ChaCha20 test vector, via the process above */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.key	= "\x00\x00\x00\x00\x00\x00\x00\x00"
 			  "\x00\x00\x00\x00\x00\x00\x00\x00"
 			  "\x00\x00\x00\x00\x00\x00\x00\x00"
@@ -33478,12 +33478,12 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 		.np	= 3,
 		.tap	= { 375 - 20, 4, 16 },
 
-<<<<<<< HEAD
+
 	}, { /* Taken from the ChaCha20 test vectors, appended 16 random bytes
 		to nonce, and recomputed the ciphertext with libsodium */
-=======
+
 	}, { /* Derived from a ChaCha20 test vector, via the process above */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.key	= "\x1c\x92\x40\xa5\xeb\x55\xd3\x8a"
 			  "\xf3\x33\x88\x86\x04\xf6\xb5\xf0"
 			  "\x47\x39\x17\xc1\x40\x2b\x80\x09"
@@ -33526,12 +33526,12 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 			  "\x65\x03\xfa\x45\xf7\x9e\x53\x7a"
 			  "\x99\xf1\x82\x25\x4f\x8d\x07",
 		.len	= 127,
-<<<<<<< HEAD
+
 	}, { /* Taken from the ChaCha20 test vectors, appended 16 random bytes
 		to nonce, and recomputed the ciphertext with libsodium */
-=======
+
 	}, { /* Derived from a ChaCha20 test vector, via the process above */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 		.key	= "\x1c\x92\x40\xa5\xeb\x55\xd3\x8a"
 			  "\xf3\x33\x88\x86\x04\xf6\xb5\xf0"
 			  "\x47\x39\x17\xc1\x40\x2b\x80\x09"
@@ -33867,9 +33867,9 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 		.also_non_np = 1,
 		.np	= 3,
 		.tap	= { 1200, 1, 80 },
-<<<<<<< HEAD
+
 	},
-=======
+
 	}, { /* test vector from https://tools.ietf.org/html/draft-arciszewski-xchacha-02#appendix-A.3.2 */
 		.key	= "\x80\x81\x82\x83\x84\x85\x86\x87"
 			  "\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f"
@@ -33958,7 +33958,7 @@ static const struct cipher_testvec xchacha20_tv_template[] = {
 			  "\x42\x1a\x10\x18\x49\x74\xc7\xc5",
 		.len	= 304,
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /*
@@ -34536,9 +34536,9 @@ static const struct cipher_testvec xchacha12_tv_template[] = {
 		.also_non_np = 1,
 		.np	= 3,
 		.tap	= { 1200, 1, 80 },
-<<<<<<< HEAD
+
 	},
-=======
+
 	}, {
 		.key	= "\x80\x81\x82\x83\x84\x85\x86\x87"
 			  "\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f"
@@ -34627,7 +34627,7 @@ static const struct cipher_testvec xchacha12_tv_template[] = {
 			  "\x50\x70\x44\x29\x6d\x6e\x62\x68",
 		.len	= 304,
 	}
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 };
 
 /* Adiantum test vectors from https://github.com/google/adiantum */

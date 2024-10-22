@@ -22,8 +22,8 @@
 #include "f2fs.h"
 #include "xattr.h"
 #include "segment.h"
-<<<<<<< HEAD
-=======
+
+
 
 static void *xattr_alloc(struct f2fs_sb_info *sbi, int size, bool *is_inline)
 {
@@ -43,7 +43,7 @@ static void xattr_free(struct f2fs_sb_info *sbi, void *xattr_addr,
 	else
 		kvfree(xattr_addr);
 }
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 static int f2fs_xattr_generic_get(const struct xattr_handler *handler,
 		struct dentry *unused, struct inode *inode,
@@ -385,11 +385,11 @@ check:
 	*base_addr = txattr_addr;
 	return 0;
 out:
-<<<<<<< HEAD
+
 	kvfree(txattr_addr);
-=======
+
 	xattr_free(F2FS_I_SB(inode), txattr_addr, *is_inline);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return err;
 }
 
@@ -560,11 +560,11 @@ int f2fs_getxattr(struct inode *inode, int index, const char *name,
 	}
 	error = size;
 out:
-<<<<<<< HEAD
+
 	kvfree(base_addr);
-=======
+
 	xattr_free(F2FS_I_SB(inode), base_addr, is_inline);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	return error;
 }
 

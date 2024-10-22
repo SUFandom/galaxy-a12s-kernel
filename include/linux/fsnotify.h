@@ -221,17 +221,17 @@ static inline void fsnotify_open(struct file *file)
 	if (path->dentry->d_op && path->dentry->d_op->d_canonical_path) {
 		path->dentry->d_op->d_canonical_path(path, &lower_path);
 		fsnotify_parent(&lower_path, NULL, mask);
-<<<<<<< HEAD
+
 		fsnotify(lower_path.dentry->d_inode, mask, &lower_path, FSNOTIFY_EVENT_PATH, NULL, 0);
 		path_put(&lower_path);
 	}
-=======
+
 		fsnotify(lower_path.dentry->d_inode, mask, &lower_path,
 			 FSNOTIFY_EVENT_PATH, NULL, 0);
 		path_put(&lower_path);
 	}
 
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 	fsnotify_parent(path, NULL, mask);
 	fsnotify(inode, mask, path, FSNOTIFY_EVENT_PATH, NULL, 0);
 }

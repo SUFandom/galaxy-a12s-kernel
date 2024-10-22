@@ -42,15 +42,15 @@
 /* duty cycle call may be forwarded to the parent clock */
 #define CLK_DUTY_CYCLE_PARENT	BIT(13)
 #define CLK_DONT_HOLD_STATE	BIT(14) /* Don't hold state */
-<<<<<<< HEAD
-=======
+
+
 #define CLK_ENABLE_HAND_OFF	BIT(15) /* enable clock when registered. */
 					/*
 					 * hand-off enable_count & prepare_count
 					 * to first consumer that enables clk
 					 */
 #define CLK_IS_MEASURE          BIT(16) /* measure clock */
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
+
 
 struct clk;
 struct clk_hw;
