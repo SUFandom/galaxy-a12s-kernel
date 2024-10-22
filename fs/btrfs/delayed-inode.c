@@ -1021,20 +1021,11 @@ static int __btrfs_update_delayed_inode(struct btrfs_trans_handle *trans,
 		mod = 1;
 
 	ret = btrfs_lookup_inode(trans, root, path, &key, mod);
-<<<<<<< HEAD
-	if (ret > 0) {
-		btrfs_release_path(path);
-		return -ENOENT;
-	} else if (ret < 0) {
-		return ret;
-	}
-=======
 	memalloc_nofs_restore(nofs_flag);
 	if (ret > 0)
 		ret = -ENOENT;
 	if (ret < 0)
 		goto out;
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 
 	leaf = path->nodes[0];
 	inode_item = btrfs_item_ptr(leaf, path->slots[0],

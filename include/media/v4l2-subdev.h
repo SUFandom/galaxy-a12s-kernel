@@ -206,7 +206,6 @@ struct v4l2_subdev_core_ops {
 	int (*reset)(struct v4l2_subdev *sd, u32 val);
 	int (*s_gpio)(struct v4l2_subdev *sd, u32 val);
 	long (*command)(struct v4l2_subdev *sd, unsigned int cmd, void *arg);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	long (*ioctl)(struct v4l2_subdev *sd, unsigned int cmd, void *arg);
 #ifdef CONFIG_COMPAT
 	long (*compat_ioctl32)(struct v4l2_subdev *sd, unsigned int cmd,

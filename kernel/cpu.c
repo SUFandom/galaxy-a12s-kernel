@@ -1046,15 +1046,7 @@ out:
 	 */
 	lockup_detector_cleanup();
 	arch_smt_update();
-<<<<<<< HEAD
-
-#ifndef CONFIG_TINY_RCU
-	rcu_expedited = rcu_expedited_back;
-#endif
-
-=======
 	cpu_up_down_serialize_trainwrecks(tasks_frozen);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return ret;
 }
 
@@ -1196,14 +1188,7 @@ static int _cpu_up(unsigned int cpu, int tasks_frozen, enum cpuhp_state target)
 out:
 	cpus_write_unlock();
 	arch_smt_update();
-<<<<<<< HEAD
-
-#ifndef CONFIG_TINY_RCU
-	rcu_expedited = rcu_expedited_back;
-#endif
-=======
 	cpu_up_down_serialize_trainwrecks(tasks_frozen);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 	return ret;
 }
 

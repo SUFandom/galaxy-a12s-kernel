@@ -406,16 +406,12 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
 	    !forwarding)
 		return dst_mtu(dst);
 
-<<<<<<< HEAD
-	return min(READ_ONCE(dst->dev->mtu), IP_MAX_MTU);
-=======
 	/* 'forwarding = true' case should always honour route mtu */
 	mtu = dst_metric_raw(dst, RTAX_MTU);
 	if (!mtu)
 		mtu = min(READ_ONCE(dst->dev->mtu), IP_MAX_MTU);
 
 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
->>>>>>> 97fd50773c53 (Merge 4.19.198 into android-4.19-stable)
 }
 
 static inline unsigned int ip_skb_dst_mtu(struct sock *sk,

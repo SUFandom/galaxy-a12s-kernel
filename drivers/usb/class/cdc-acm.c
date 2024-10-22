@@ -1905,8 +1905,6 @@ static const struct usb_device_id acm_ids[] = {
 	.driver_info = SEND_ZERO_PACKET,
 	},
 
-<<<<<<< HEAD
-=======
 	/* Exclude Goodix Fingerprint Reader */
 	{ USB_DEVICE(0x27c6, 0x5395),
 	.driver_info = IGNORE_DEVICE,
